@@ -251,7 +251,6 @@ namespace AP_CINE_APPLI
                 }
                 cmdnogenre.CommandText = cmdnogenre.CommandText.Remove(cmdnogenre.CommandText.Length - 1);
                 cmdnogenre.CommandText += ")";
-                MessageBox.Show(cmdnogenre.CommandText.ToString());
 
                 cmdnogenre.Connection = cnn;
                 drrnogenre = cmdnogenre.ExecuteReader();
@@ -266,7 +265,6 @@ namespace AP_CINE_APPLI
                     cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + drrnogenre["nogenre"] + ")";
                     cmdconcerner.Connection = cnn;
                     cmdconcerner.ExecuteNonQuery();
-                    MessageBox.Show(cmdconcerner.CommandText.ToString());
                     existennogenre = drrnogenre.Read();
                 }
                 drrnogenre.Close();
@@ -299,11 +297,20 @@ namespace AP_CINE_APPLI
             if (grdFilm.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + grdFilm[1, grdFilm.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 OdbcConnection cnn = new OdbcConnection();
-                OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
-
+                
                 cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
                 cnn.Open();
 
+                OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;
+
+                cmdconcerner.CommandText = "delete from concerner where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
+                cmdconcerner.Connection = cnn;
+                drrconcerner = cmdconcerner.ExecuteReader();
+
+                drrconcerner.Close();
+
+
+                OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
                 cmdfilm.CommandText = "delete from film where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
                 cmdfilm.Connection = cnn;
                 drrfilm = cmdfilm.ExecuteReader();
