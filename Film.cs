@@ -156,7 +156,7 @@ namespace AP_CINE_APPLI
             namePicture = null;
             cboPublic.SelectedIndex = 0;
 
-            Boolean test = false;
+            Boolean test = true;
             if (test == true)
             {
                 txtTitle.Text = "test";
@@ -176,7 +176,7 @@ namespace AP_CINE_APPLI
 
         private void btnAddFilm_Click(object sender, EventArgs e)
         {
-            if (cboPublic.Text.ToString() != "" && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && timeFilm.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && namePicture != "" && cboPublic.SelectedIndex != -1)
+            if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && cboPublic.SelectedIndex > 0)
             {
                 OdbcConnection cnn = new OdbcConnection();
                 OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
@@ -204,7 +204,17 @@ namespace AP_CINE_APPLI
             }
             else
             {
-                MessageBox.Show("Données manquantes");
+                string message = "Données manquantes :\n";
+                message += txtTitle.Text != "" ? "" : "Titre\n";
+                message += txtDirector.Text.ToString() != "" ? "" : "Réalisateur(s)\n";
+                message += txtActor.Text.ToString() != "" ? "" : "Acteur(s)\n";
+                message += txtSynopsis.Text.ToString() != "" ? "" : "Synopsis\n";
+                message += timeFilm.Text.ToString() != "00:00:00" ? "" : "Durée\n";
+                message += txtInfo.Text.ToString() != "" ? "" : "Information(s) supplémentaire(s)\n";
+                message += cboPublic.SelectedIndex > 0 ? "" : "Type de public\n";
+                message += lstGenre.SelectedItems.Count != 0 ? "" : "Genre(s)\n";
+
+                MessageBox.Show(message);
             }
         }
 
@@ -253,7 +263,7 @@ namespace AP_CINE_APPLI
                 dureeFilm = timeFilm.Text.ToString();
             }
 
-OdbcConnection cnn = new OdbcConnection();
+            OdbcConnection cnn = new OdbcConnection();
             OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
 
             cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
