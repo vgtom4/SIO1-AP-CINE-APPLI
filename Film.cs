@@ -16,6 +16,7 @@ namespace AP_CINE_APPLI
     {
         string namePicture = null;
         string pwdDb = "root";
+        string patate;
 
         public Film()
         {
