@@ -20,12 +20,12 @@ namespace AP_CINE_APPLI
         public Film()
         {
             InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void Film_Load(object sender, EventArgs e)
         {
-            namePicture = null;
-            
 
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             grdFilm.AllowUserToAddRows = false;
@@ -146,8 +146,17 @@ namespace AP_CINE_APPLI
             //grdFilm.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //grdFilm.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 
-            Boolean test = true;
 
+            txtTitle.Text = "";
+            txtDirector.Text = "";
+            txtActor.Text = "";
+            timeFilm.Text = "00:00:00";
+            txtSynopsis.Text = "";
+            txtInfo.Text = "";
+            namePicture = null;
+            cboPublic.SelectedIndex = 0;
+
+            Boolean test = false;
             if (test == true)
             {
                 txtTitle.Text = "test";
@@ -160,55 +169,42 @@ namespace AP_CINE_APPLI
                 cboPublic.SelectedIndex = 1;
             }
 
-            pictureBox1.Image = Image.FromFile(@Application.StartupPath + "\\affiches\\" + namePicture);
+            pictureBox1.Image = Properties.Resources.noimg;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             
         }
 
         private void btnAddFilm_Click(object sender, EventArgs e)
         {
-            if (cboPublic.Text.ToString() != "" && timeFilm.Text.ToString() != "00:00:00") {
-                if (txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && timeFilm.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && namePicture != "" && cboPublic.SelectedIndex != -1)
-                {
-                    OdbcConnection cnn = new OdbcConnection();
-                    OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
+            if (cboPublic.Text.ToString() != "" && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && timeFilm.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && namePicture != "" && cboPublic.SelectedIndex != -1)
+            {
+                OdbcConnection cnn = new OdbcConnection();
+                OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
 
-                    cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
-                    cnn.Open();
+                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+                cnn.Open();
 
-                    cmdfilm.CommandText = "insert into film values (null, " +
-                                                              "'" + txtTitle.Text.ToString() + "', " +
-                                                              "'" + txtDirector.Text.ToString() + "', " +
-                                                              "'" + txtActor.Text.ToString() + "', " +
-                                                              "'" + timeFilm.Text + "', " +
-                                                              "'" + txtSynopsis.Text.ToString() + "', " +
-                                                              "'" + txtInfo.Text.ToString() + "', " +
-                                                              "'" + namePicture + "', " +
-                                                              "(select nopublic from public " +
-                                                              "where libpublic = '" + cboPublic.SelectedItem + "'))";
-                    cmdfilm.Connection = cnn;
-                    drrfilm = cmdfilm.ExecuteReader();
+                cmdfilm.CommandText = "insert into film values (null, " +
+                                                            "'" + txtTitle.Text.ToString() + "', " +
+                                                            "'" + txtDirector.Text.ToString() + "', " +
+                                                            "'" + txtActor.Text.ToString() + "', " +
+                                                            "'" + timeFilm.Text + "', " +
+                                                            "'" + txtSynopsis.Text.ToString() + "', " +
+                                                            "'" + txtInfo.Text.ToString() + "', " +
+                                                            "'" + namePicture + "', " +
+                                                            "(select nopublic from public " +
+                                                            "where libpublic = '" + cboPublic.SelectedItem + "'))";
+                cmdfilm.Connection = cnn;
+                drrfilm = cmdfilm.ExecuteReader();
 
-                    drrfilm.Close();
-                    MessageBox.Show("Le film \"" + txtTitle.Text + "\" a été ajouté");
-                    namePicture = null;
-                    Film_Load(sender, e);
-                }
-                else
-                {
-                    MessageBox.Show("Données manquantes");
-                }
+                drrfilm.Close();
+                MessageBox.Show("Le film \"" + txtTitle.Text + "\" a été ajouté");
+                namePicture = null;
+                Film_Load(sender, e);
             }
             else
             {
-                if (cboPublic.Text.ToString() == "")
-                {
-                    MessageBox.Show("Veuillez saisir le type de public");
-                }
-                if (timeFilm.Text.ToString() == "00:00:00")
-                {
-                    MessageBox.Show("Veuillez saisir la durée du film");
-                }
+                MessageBox.Show("Données manquantes");
             }
         }
 
