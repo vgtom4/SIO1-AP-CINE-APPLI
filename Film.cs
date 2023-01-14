@@ -88,7 +88,7 @@ namespace AP_CINE_APPLI
                     synopsis = synopsis.Substring(0, 100) + "...";
                 }
 
-                grdFilm.Rows.Add(drrfilm["nofilm"], drrfilm["titre"], null, drrfilm["realisateurs"], drrfilm["acteurs"], drrfilm["duree"], synopsis,  null, drrfilm["libpublic"] , drrfilm["infofilm"]);
+                grdFilm.Rows.Add(drrfilm["nofilm"], drrfilm["titre"], null, drrfilm["realisateurs"], drrfilm["acteurs"], drrfilm["duree"], synopsis,  "", drrfilm["libpublic"] , drrfilm["infofilm"]);
 
                 grdFilm[2, grdFilm.RowCount - 1] = new DataGridViewImageCell();
                 
@@ -105,29 +105,54 @@ namespace AP_CINE_APPLI
                     grdFilm[2, grdFilm.RowCount - 1].Value = new Bitmap(img, grdFilm.Columns[2].Width, img.Height * grdFilm.Columns[2].Width / img.Width);
                 }
 
+
+                //affichage des genres dans grdFilm
+
+                OdbcCommand cmdgenre = new OdbcCommand(); OdbcDataReader drrgenre; Boolean existengenre;
+                cmdgenre.CommandText = "SELECT libgenre FROM genre natural join concerner where nofilm = " + drrfilm["nofilm"] + "";
+
+                
+
+                cmdgenre.Connection = cnn;
+                drrgenre = cmdgenre.ExecuteReader();
+                existengenre = drrgenre.Read();
+
+                while (existengenre == true)
+                {
+                    grdFilm[7, grdFilm.RowCount - 1].Value += drrgenre["libgenre"].ToString() + ",\n";
+                    existengenre = drrgenre.Read();
+                }
+                string genres = grdFilm[7, grdFilm.RowCount - 1].Value.ToString();
+
+                grdFilm[7, grdFilm.RowCount-1].Value = genres.Remove(genres.Length - 2);
+                drrgenre.Close();
+
                 existenfilm = drrfilm.Read();
             }
 
             drrfilm.Close();
 
 
-            OdbcCommand cmdgenre = new OdbcCommand(); OdbcDataReader drrgenre; Boolean existengenre;
-            cmdgenre.CommandText = "select * from genre";
-            cmdgenre.Connection = cnn;
-            drrgenre = cmdgenre.ExecuteReader();
-            existengenre = drrgenre.Read();
+            //affichage des genres dans lstGenre
+
+            OdbcCommand cmdlstgenre = new OdbcCommand(); OdbcDataReader drrlstgenre; Boolean existenlstgenre;
+            cmdlstgenre.CommandText = "select * from genre";
+            cmdlstgenre.Connection = cnn;
+            drrlstgenre = cmdlstgenre.ExecuteReader();
+            existenlstgenre = drrlstgenre.Read();
 
             lstGenre.Items.Clear();
             lstGenre.MultiColumn= true;
             lstGenre.SelectionMode = SelectionMode.MultiSimple;
 
-            while (existengenre == true)
+            while (existenlstgenre == true)
             {
-                lstGenre.Items.Add(drrgenre["libgenre"]);
+                lstGenre.Items.Add(drrlstgenre["libgenre"]);
 
-                existengenre = drrgenre.Read();
+                existenlstgenre = drrlstgenre.Read();
             }
-            drrgenre.Close();
+            drrlstgenre.Close();
+
 
             OdbcCommand cmdpublic = new OdbcCommand(); OdbcDataReader drrpublic; Boolean existenpublic;
             cmdpublic.CommandText = "select * from public";
@@ -153,7 +178,6 @@ namespace AP_CINE_APPLI
 
             //grdFilm.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
             //grdFilm.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
 
 
             txtTitle.Text = "";
@@ -233,7 +257,7 @@ namespace AP_CINE_APPLI
                 drrnogenre = cmdnogenre.ExecuteReader();
                 existennogenre = drrnogenre.Read();
 
-                OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;
+                OdbcCommand cmdconcerner = new OdbcCommand();
 
 
 
