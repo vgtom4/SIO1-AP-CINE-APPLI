@@ -34,19 +34,26 @@ namespace AP_CINE_APPLI
             grdFilm.ColumnCount = 10;
             grdFilm.RowHeadersVisible = true;
 
-            grdFilm.Columns[0].Width = 25;
+            grdFilm.Columns[0].Width = 30;
+            grdFilm.Columns[1].Width = 100;
             grdFilm.Columns[2].Width = 100;
+            grdFilm.Columns[3].Width = 100;
+            grdFilm.Columns[4].Width = 100;
             grdFilm.Columns[5].Width = 50;
+            grdFilm.Columns[6].Width = 127;
+            grdFilm.Columns[7].Width = 100;
+            grdFilm.Columns[8].Width = 100;
+            grdFilm.Columns[9].Width = 100;
 
             grdFilm.Columns[0].HeaderText = "N°";
-            grdFilm.Columns[1].HeaderText = "Titres";
+            grdFilm.Columns[1].HeaderText = "Titre";
             grdFilm.Columns[2].HeaderText = "Affiche";
-            grdFilm.Columns[3].HeaderText = "Réalisateurs";
-            grdFilm.Columns[4].HeaderText = "Acteurs";
+            grdFilm.Columns[3].HeaderText = "Réalisateur(s)";
+            grdFilm.Columns[4].HeaderText = "Acteur(s)";
             grdFilm.Columns[5].HeaderText = "Durée";
             grdFilm.Columns[6].HeaderText = "Synopsis";
-            grdFilm.Columns[7].HeaderText = "Genre";
-            grdFilm.Columns[8].HeaderText = "Public";
+            grdFilm.Columns[7].HeaderText = "Genre(s)";
+            grdFilm.Columns[8].HeaderText = "Type de public";
             grdFilm.Columns[9].HeaderText = "Informations du film";
 
             for (int j = 1; j <= grdFilm.ColumnCount - 1; j++)
@@ -143,8 +150,10 @@ namespace AP_CINE_APPLI
             cboPublic.SelectedValue = "";
 
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            //grdFilm.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
             //grdFilm.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            //grdFilm.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
 
 
             txtTitle.Text = "";
@@ -195,9 +204,52 @@ namespace AP_CINE_APPLI
                                                             "(select nopublic from public " +
                                                             "where libpublic = '" + cboPublic.SelectedItem + "'))";
                 cmdfilm.Connection = cnn;
-                drrfilm = cmdfilm.ExecuteReader();
+                cmdfilm.ExecuteReader();
 
-                drrfilm.Close();
+
+                OdbcCommand cmdnofilm = new OdbcCommand(); OdbcDataReader drrnofilm; bool existennofilm;
+
+                cmdnofilm.CommandText = "SELECT nofilm FROM film ORDER BY nofilm DESC LIMIT 1";
+                cmdnofilm.Connection = cnn;
+                drrnofilm = cmdnofilm.ExecuteReader();
+                existennofilm = drrnofilm.Read();
+
+                OdbcCommand cmdnogenre = new OdbcCommand(); OdbcDataReader drrnogenre; bool existennogenre;
+
+                cmdnogenre.CommandText = "SELECT nogenre FROM genre where libgenre IN (";
+                
+                for (int i = 0; i < lstGenre.Items.Count; i++)
+                {
+                    if (lstGenre.GetSelected(i) == true)
+                    {
+                        cmdnogenre.CommandText += "'" + lstGenre.Items[i] + "',";
+                    }
+                }
+                cmdnogenre.CommandText = cmdnogenre.CommandText.Remove(cmdnogenre.CommandText.Length - 1);
+                cmdnogenre.CommandText += ")";
+                MessageBox.Show(cmdnogenre.CommandText.ToString());
+
+                cmdnogenre.Connection = cnn;
+                drrnogenre = cmdnogenre.ExecuteReader();
+                existennogenre = drrnogenre.Read();
+
+                OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;
+
+
+
+                while (existennogenre == true)
+                {
+                    cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + drrnogenre["nogenre"] + ")";
+                    cmdconcerner.Connection = cnn;
+                    cmdconcerner.ExecuteNonQuery();
+                    MessageBox.Show(cmdconcerner.CommandText.ToString());
+                    existennogenre = drrnogenre.Read();
+                }
+                drrnogenre.Close();
+                drrnofilm.Close();
+                drrnogenre.Close();
+
+                cnn.Close();
                 MessageBox.Show("Le film \"" + txtTitle.Text + "\" a été ajouté");
                 namePicture = null;
                 Film_Load(sender, e);
