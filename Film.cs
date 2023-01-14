@@ -390,6 +390,27 @@ namespace AP_CINE_APPLI
                     grdFilm[2, grdFilm.RowCount - 1].Value = new Bitmap(img, grdFilm.Columns[2].Width, img.Height * grdFilm.Columns[2].Width / img.Width);
                 }
 
+                //affichage des genres dans grdFilm
+
+                OdbcCommand cmdgenre = new OdbcCommand(); OdbcDataReader drrgenre; Boolean existengenre;
+                cmdgenre.CommandText = "SELECT libgenre FROM genre natural join concerner where nofilm = " + drrfilm["nofilm"] + "";
+
+
+
+                cmdgenre.Connection = cnn;
+                drrgenre = cmdgenre.ExecuteReader();
+                existengenre = drrgenre.Read();
+
+                while (existengenre == true)
+                {
+                    grdFilm[7, grdFilm.RowCount - 1].Value += drrgenre["libgenre"].ToString() + ",\n";
+                    existengenre = drrgenre.Read();
+                }
+                string genres = grdFilm[7, grdFilm.RowCount - 1].Value.ToString();
+
+                grdFilm[7, grdFilm.RowCount - 1].Value = genres.Remove(genres.Length - 2);
+                drrgenre.Close();
+
                 existenfilm = drrfilm.Read();
             }
 
