@@ -65,6 +65,7 @@
             this.publicToolStripMenuItem.Name = "publicToolStripMenuItem";
             this.publicToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
             this.publicToolStripMenuItem.Text = "Salles";
+            this.publicToolStripMenuItem.Click += new System.EventHandler(this.publicToolStripMenuItem_Click);
             // 
             // filmToolStripMenuItem
             // 

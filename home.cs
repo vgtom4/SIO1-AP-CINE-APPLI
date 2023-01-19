@@ -15,6 +15,7 @@ namespace AP_CINE_APPLI
     {
         Film film;
         Genre genre;
+        Salle salle;
 
         public home()
         {
@@ -52,6 +53,20 @@ namespace AP_CINE_APPLI
             else
             {
                 genre.Activate();
+            }
+        }
+
+        private void publicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (salle == null || salle.IsDisposed == true)
+            {
+                salle = new Salle();
+                salle.MdiParent = this;
+                salle.Show();
+            }
+            else
+            {
+                salle.Activate();
             }
         }
     }
