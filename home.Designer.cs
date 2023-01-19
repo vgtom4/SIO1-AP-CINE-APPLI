@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(home));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.filmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.publicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ajouterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,18 +44,17 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.filmToolStripMenuItem,
             this.genreToolStripMenuItem,
-            this.publicToolStripMenuItem,
-            this.ajouterToolStripMenuItem});
+            this.publicToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1546, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1546, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // filmToolStripMenuItem
             // 
             this.filmToolStripMenuItem.Name = "filmToolStripMenuItem";
-            this.filmToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
+            this.filmToolStripMenuItem.Size = new System.Drawing.Size(51, 26);
             this.filmToolStripMenuItem.Text = "Film";
             this.filmToolStripMenuItem.Click += new System.EventHandler(this.filmToolStripMenuItem_Click);
             // 
@@ -65,7 +64,7 @@
             this.viewToolStripMenuItem1,
             this.editToolStripMenuItem1});
             this.genreToolStripMenuItem.Name = "genreToolStripMenuItem";
-            this.genreToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this.genreToolStripMenuItem.Size = new System.Drawing.Size(61, 26);
             this.genreToolStripMenuItem.Text = "genre";
             // 
             // viewToolStripMenuItem1
@@ -83,14 +82,8 @@
             // publicToolStripMenuItem
             // 
             this.publicToolStripMenuItem.Name = "publicToolStripMenuItem";
-            this.publicToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.publicToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
             this.publicToolStripMenuItem.Text = "public";
-            // 
-            // ajouterToolStripMenuItem
-            // 
-            this.ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            this.ajouterToolStripMenuItem.Size = new System.Drawing.Size(70, 24);
-            this.ajouterToolStripMenuItem.Text = "ajouter";
             // 
             // home
             // 
@@ -99,9 +92,10 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1546, 871);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "home";
-            this.Text = "home";
+            this.Text = "Outil Pathé Gaumont";
             this.Load += new System.EventHandler(this.home_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -118,6 +112,5 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem publicToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ajouterToolStripMenuItem;
     }
 }

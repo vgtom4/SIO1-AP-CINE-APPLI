@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="itextsharp">
       <HintPath>..\outils, utiles\itextsharp.dll</HintPath>
@@ -55,18 +58,6 @@
     <Compile Include="Film.Designer.cs">
       <DependentUpon>Film.cs</DependentUpon>
     </Compile>
-    <Compile Include="FilmEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FilmEdit.Designer.cs">
-      <DependentUpon>FilmEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FilmView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FilmView.Designer.cs">
-      <DependentUpon>FilmView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,12 +74,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Film.resx">
       <DependentUpon>Film.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FilmEdit.resx">
-      <DependentUpon>FilmEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FilmView.resx">
-      <DependentUpon>FilmView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -120,6 +105,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="logo.ico" />
+    <Content Include="logo2.ico" />
+    <Content Include="logo3.ico" />
     <Content Include="ressources\noimg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

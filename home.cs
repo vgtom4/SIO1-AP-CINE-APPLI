@@ -17,6 +17,7 @@ namespace AP_CINE_APPLI
         public home()
         {
             InitializeComponent();
+            //this.Text = "Outil Pathé Gaumont";
         }
 
         private void home_Load(object sender, EventArgs e)

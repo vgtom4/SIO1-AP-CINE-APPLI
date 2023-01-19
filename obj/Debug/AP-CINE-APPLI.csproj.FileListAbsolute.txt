@@ -12,6 +12,4 @@ C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-AP
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.exe
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.pdb
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.home.resources
-C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FilmView.resources
-C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FilmEdit.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Film.resources

@@ -267,6 +267,7 @@ namespace AP_CINE_APPLI
                     cmdconcerner.ExecuteNonQuery();
                     existennogenre = drrnogenre.Read();
                 }
+
                 drrnogenre.Close();
                 drrnofilm.Close();
                 drrnogenre.Close();
