@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.Odbc;
 
 namespace AP_CINE_APPLI
 {
     public partial class home : Form
     {
         Film film;
+        Genre genre;
 
         public home()
         {
@@ -36,6 +38,20 @@ namespace AP_CINE_APPLI
             else
             {
                 film.Activate();
+            }
+        }
+
+        private void genreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (genre == null || genre.IsDisposed == true)
+            {
+                genre = new Genre();
+                genre.MdiParent = this;
+                genre.Show();
+            }
+            else
+            {
+                genre.Activate();
             }
         }
     }

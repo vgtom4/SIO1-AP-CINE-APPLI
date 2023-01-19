@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(home));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.filmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.publicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.générerUnPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,48 +42,48 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filmToolStripMenuItem,
             this.genreToolStripMenuItem,
-            this.publicToolStripMenuItem});
+            this.publicToolStripMenuItem,
+            this.filmToolStripMenuItem,
+            this.projectionsToolStripMenuItem,
+            this.générerUnPDFToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1546, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1546, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // filmToolStripMenuItem
-            // 
-            this.filmToolStripMenuItem.Name = "filmToolStripMenuItem";
-            this.filmToolStripMenuItem.Size = new System.Drawing.Size(51, 26);
-            this.filmToolStripMenuItem.Text = "Film";
-            this.filmToolStripMenuItem.Click += new System.EventHandler(this.filmToolStripMenuItem_Click);
-            // 
             // genreToolStripMenuItem
             // 
-            this.genreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewToolStripMenuItem1,
-            this.editToolStripMenuItem1});
             this.genreToolStripMenuItem.Name = "genreToolStripMenuItem";
-            this.genreToolStripMenuItem.Size = new System.Drawing.Size(61, 26);
-            this.genreToolStripMenuItem.Text = "genre";
-            // 
-            // viewToolStripMenuItem1
-            // 
-            this.viewToolStripMenuItem1.Name = "viewToolStripMenuItem1";
-            this.viewToolStripMenuItem1.Size = new System.Drawing.Size(122, 26);
-            this.viewToolStripMenuItem1.Text = "view";
-            // 
-            // editToolStripMenuItem1
-            // 
-            this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
-            this.editToolStripMenuItem1.Size = new System.Drawing.Size(122, 26);
-            this.editToolStripMenuItem1.Text = "edit";
+            this.genreToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
+            this.genreToolStripMenuItem.Text = "Genres";
+            this.genreToolStripMenuItem.Click += new System.EventHandler(this.genreToolStripMenuItem_Click);
             // 
             // publicToolStripMenuItem
             // 
             this.publicToolStripMenuItem.Name = "publicToolStripMenuItem";
-            this.publicToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
-            this.publicToolStripMenuItem.Text = "public";
+            this.publicToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
+            this.publicToolStripMenuItem.Text = "Salles";
+            // 
+            // filmToolStripMenuItem
+            // 
+            this.filmToolStripMenuItem.Name = "filmToolStripMenuItem";
+            this.filmToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
+            this.filmToolStripMenuItem.Text = "Films";
+            this.filmToolStripMenuItem.Click += new System.EventHandler(this.filmToolStripMenuItem_Click);
+            // 
+            // projectionsToolStripMenuItem
+            // 
+            this.projectionsToolStripMenuItem.Name = "projectionsToolStripMenuItem";
+            this.projectionsToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
+            this.projectionsToolStripMenuItem.Text = "Projections";
+            // 
+            // générerUnPDFToolStripMenuItem
+            // 
+            this.générerUnPDFToolStripMenuItem.Name = "générerUnPDFToolStripMenuItem";
+            this.générerUnPDFToolStripMenuItem.Size = new System.Drawing.Size(125, 24);
+            this.générerUnPDFToolStripMenuItem.Text = "Générer un PDF";
             // 
             // home
             // 
@@ -109,8 +109,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem filmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem genreToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem publicToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem projectionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem générerUnPDFToolStripMenuItem;
     }
 }

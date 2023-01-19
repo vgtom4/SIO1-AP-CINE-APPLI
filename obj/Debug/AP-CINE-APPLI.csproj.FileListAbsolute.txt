@@ -4,7 +4,6 @@ C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-AP
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\bin\Debug\itextsharp.dll
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.AssemblyReference.cache
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.SuggestedBindingRedirects.cache
-C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Form1.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Properties.Resources.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.GenerateResource.cache
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.CoreCompileInputs.cache
@@ -13,3 +12,4 @@ C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-AP
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.pdb
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.home.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Film.resources
+C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Genre.resources

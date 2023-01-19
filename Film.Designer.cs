@@ -297,7 +297,7 @@
             this.Controls.Add(this.btnAddFilm);
             this.Controls.Add(this.grdFilm);
             this.Name = "Film";
-            this.Text = "Film";
+            this.Text = "Gestion des films";
             this.Load += new System.EventHandler(this.Film_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdFilm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
