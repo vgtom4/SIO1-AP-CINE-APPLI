@@ -102,11 +102,12 @@ namespace AP_CINE_APPLI
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(dateProj.Value.ToString());
-            MessageBox.Show(DateTime.Now.ToString());
-            MessageBox.Show((dateProj.Value >= DateTime.Now).ToString());
+            MessageBox.Show("oui : " + dateProj.Value.Date.ToString("t"));
+            MessageBox.Show(dateProj.Text);
+            MessageBox.Show(DateTime.Now.Date.ToString());
+            MessageBox.Show((dateProj.Value.Date >= DateTime.Now.Date).ToString());
 
-            if (timeProj.Value.ToString("t") != "00:00" && dateProj.Value >= DateTime.Now && cboFilm.SelectedIndex > 0 && cboSalle.SelectedIndex > 0)
+            if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > 0 && cboSalle.SelectedIndex > 0)
             {
                 //OdbcConnection cnn = new OdbcConnection();
                 //OdbcCommand cmd = new OdbcCommand();
@@ -118,6 +119,7 @@ namespace AP_CINE_APPLI
                 //cmd.Connection = cnn;
                 //cmd.ExecuteReader();
                 //cnn.Close();
+                
                 MessageBox.Show("Projection suivante enregistrée :" +
                                 "\n Film : " + cboFilm.SelectedItem.ToString() + 
                                 "\nSalle : " + cboSalle.SelectedItem.ToString() + 
@@ -128,7 +130,6 @@ namespace AP_CINE_APPLI
             else
             {
                 string message = "Données manquantes :\n";
-                message += timeProj.Value.ToString("t") != "00:00" ? "" : "Heure de projection\n";
                 message += dateProj.Value.ToString("d") != "" ? "" : "Date de projection\n";
                 message += cboFilm.SelectedIndex > 0 ? "" : "Film\n";
                 message += cboSalle.SelectedIndex > 0 ? "" : "Salle";
