@@ -29,17 +29,18 @@
         private void InitializeComponent()
         {
             this.grdProjection = new System.Windows.Forms.DataGridView();
-            this.dateProj = new System.Windows.Forms.DateTimePicker();
-            this.cboSalle = new System.Windows.Forms.ComboBox();
-            this.cboFilm = new System.Windows.Forms.ComboBox();
-            this.timeProj = new System.Windows.Forms.DateTimePicker();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateProj = new System.Windows.Forms.DateTimePicker();
+            this.cboSalle = new System.Windows.Forms.ComboBox();
+            this.cboFilm = new System.Windows.Forms.ComboBox();
+            this.timeProj = new System.Windows.Forms.DateTimePicker();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.txtInfo = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grdProjection)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,36 +60,6 @@
             this.grdProjection.RowTemplate.Height = 24;
             this.grdProjection.Size = new System.Drawing.Size(1095, 464);
             this.grdProjection.TabIndex = 0;
-            // 
-            // dateProj
-            // 
-            this.dateProj.Location = new System.Drawing.Point(29, 48);
-            this.dateProj.Name = "dateProj";
-            this.dateProj.Size = new System.Drawing.Size(240, 22);
-            this.dateProj.TabIndex = 1;
-            // 
-            // cboSalle
-            // 
-            this.cboSalle.FormattingEnabled = true;
-            this.cboSalle.Location = new System.Drawing.Point(340, 46);
-            this.cboSalle.Name = "cboSalle";
-            this.cboSalle.Size = new System.Drawing.Size(121, 24);
-            this.cboSalle.TabIndex = 2;
-            // 
-            // cboFilm
-            // 
-            this.cboFilm.FormattingEnabled = true;
-            this.cboFilm.Location = new System.Drawing.Point(536, 46);
-            this.cboFilm.Name = "cboFilm";
-            this.cboFilm.Size = new System.Drawing.Size(231, 24);
-            this.cboFilm.TabIndex = 3;
-            // 
-            // timeProj
-            // 
-            this.timeProj.Location = new System.Drawing.Point(29, 107);
-            this.timeProj.Name = "timeProj";
-            this.timeProj.Size = new System.Drawing.Size(109, 22);
-            this.timeProj.TabIndex = 4;
             // 
             // Column1
             // 
@@ -132,6 +103,36 @@
             this.Column6.Name = "Column6";
             this.Column6.Width = 125;
             // 
+            // dateProj
+            // 
+            this.dateProj.Location = new System.Drawing.Point(29, 48);
+            this.dateProj.Name = "dateProj";
+            this.dateProj.Size = new System.Drawing.Size(240, 22);
+            this.dateProj.TabIndex = 1;
+            // 
+            // cboSalle
+            // 
+            this.cboSalle.FormattingEnabled = true;
+            this.cboSalle.Location = new System.Drawing.Point(340, 46);
+            this.cboSalle.Name = "cboSalle";
+            this.cboSalle.Size = new System.Drawing.Size(121, 24);
+            this.cboSalle.TabIndex = 2;
+            // 
+            // cboFilm
+            // 
+            this.cboFilm.FormattingEnabled = true;
+            this.cboFilm.Location = new System.Drawing.Point(536, 46);
+            this.cboFilm.Name = "cboFilm";
+            this.cboFilm.Size = new System.Drawing.Size(231, 24);
+            this.cboFilm.TabIndex = 3;
+            // 
+            // timeProj
+            // 
+            this.timeProj.Location = new System.Drawing.Point(29, 107);
+            this.timeProj.Name = "timeProj";
+            this.timeProj.Size = new System.Drawing.Size(109, 22);
+            this.timeProj.TabIndex = 4;
+            // 
             // btnAdd
             // 
             this.btnAdd.Location = new System.Drawing.Point(921, 58);
@@ -142,11 +143,19 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // txtInfo
+            // 
+            this.txtInfo.Location = new System.Drawing.Point(340, 124);
+            this.txtInfo.Name = "txtInfo";
+            this.txtInfo.Size = new System.Drawing.Size(163, 22);
+            this.txtInfo.TabIndex = 6;
+            // 
             // Projection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1119, 690);
+            this.Controls.Add(this.txtInfo);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.timeProj);
             this.Controls.Add(this.cboFilm);
@@ -158,6 +167,7 @@
             this.Load += new System.EventHandler(this.Projection_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdProjection)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -175,5 +185,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.TextBox txtInfo;
     }
 }

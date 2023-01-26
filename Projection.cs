@@ -15,7 +15,7 @@ namespace AP_CINE_APPLI
     public partial class Projection : Form
     {
         string pwdDb = "root";
-
+        List<string[]> lstFilms = new List<string[]>();
         public Projection()
         {
             InitializeComponent();
@@ -25,6 +25,8 @@ namespace AP_CINE_APPLI
 
         private void Projection_Load(object sender, EventArgs e)
         {
+
+
             timeProj.Format = DateTimePickerFormat.Custom;
             timeProj.CustomFormat = "HH:mm";
             timeProj.ShowUpDown = true;
@@ -58,10 +60,8 @@ namespace AP_CINE_APPLI
             drrproj.Close();
 
 
-            //affichage des genres dans lstGenre
-
             OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
-            cmdfilm.CommandText = "select titre from film";
+            cmdfilm.CommandText = "select titre, nofilm from film";
             cmdfilm.Connection = cnn;
             drrfilm = cmdfilm.ExecuteReader();
             existenfilm = drrfilm.Read();
@@ -71,6 +71,7 @@ namespace AP_CINE_APPLI
 
             while (existenfilm == true)
             {
+                lstFilms.Add(new string[] { drrfilm["titre"].ToString(), drrfilm["nofilm"].ToString() });
                 cboFilm.Items.Add(drrfilm["titre"]);
 
                 existenfilm = drrfilm.Read();
@@ -102,34 +103,34 @@ namespace AP_CINE_APPLI
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("oui : " + dateProj.Value.Date.ToString("t"));
-            MessageBox.Show(dateProj.Text);
+            /**MessageBox.Show(dateProj.Value.Date.ToString());
             MessageBox.Show(DateTime.Now.Date.ToString());
-            MessageBox.Show((dateProj.Value.Date >= DateTime.Now.Date).ToString());
+            MessageBox.Show((dateProj.Value.Date >= DateTime.Now.Date).ToString());**/
+            MessageBox.Show(lstFilms[cboFilm.SelectedIndex][1]);
 
             if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > 0 && cboSalle.SelectedIndex > 0)
             {
-                //OdbcConnection cnn = new OdbcConnection();
-                //OdbcCommand cmd = new OdbcCommand();
+                OdbcConnection cnn = new OdbcConnection();
+                OdbcCommand cmd = new OdbcCommand();
 
-                //cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
-                //cnn.Open();
+                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+                cnn.Open();
 
-                //cmd.CommandText = "insert into projection values (null, '" + txtNum.Text + "', '" + numCapac.Value + "')";
-                //cmd.Connection = cnn;
-                //cmd.ExecuteReader();
-                //cnn.Close();
-                
+                cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.Date.ToString("d") + "' , '" + timeProj.Value.Date.ToString("t") + "' , '" + txtInfo.Text + "' , '" + lstFilms[cboFilm.SelectedIndex][1] + "' , '" + cboSalle.SelectedItem.ToString() + "'";
+                cmd.Connection = cnn;
+                cmd.ExecuteReader();
+                cnn.Close();
                 MessageBox.Show("Projection suivante enregistrée :" +
-                                "\n Film : " + cboFilm.SelectedItem.ToString() + 
-                                "\nSalle : " + cboSalle.SelectedItem.ToString() + 
-                                "\nDate : " + dateProj.Value.ToString("d") + 
+                                "\n Film : " + cboFilm.SelectedItem.ToString() +
+                                "\nSalle : " + cboSalle.SelectedItem.ToString() +
+                                "\nDate : " + dateProj.Value.ToString("d") +
                                 "\nHoraire : " + timeProj.Value.ToString("t"));
                 Projection_Load(sender, e);
             }
             else
             {
                 string message = "Données manquantes :\n";
+                message += timeProj.Value.ToString("t") != "00:00" ? "" : "Heure de projection\n";
                 message += dateProj.Value.ToString("d") != "" ? "" : "Date de projection\n";
                 message += cboFilm.SelectedIndex > 0 ? "" : "Film\n";
                 message += cboSalle.SelectedIndex > 0 ? "" : "Salle";
