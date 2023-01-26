@@ -311,6 +311,13 @@ namespace AP_CINE_APPLI
                 drrconcerner.Close();
 
 
+                OdbcCommand cmdprojection = new OdbcCommand();
+
+                cmdprojection.CommandText = "delete from projection where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
+                cmdprojection.Connection = cnn;
+                cmdprojection.ExecuteReader();
+
+
                 OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
                 cmdfilm.CommandText = "delete from film where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
                 cmdfilm.Connection = cnn;

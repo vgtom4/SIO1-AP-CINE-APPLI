@@ -51,7 +51,7 @@ namespace AP_CINE_APPLI
             while (existenproj == true)
             {
 
-                grdProjection.Rows.Add(drrproj["noproj"], drrproj["dateproj"], null, drrproj["heureproj"], drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
+                grdProjection.Rows.Add(drrproj["noproj"], drrproj["dateproj"], drrproj["heureproj"], drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
 
 
                 existenproj = drrproj.Read();
@@ -67,7 +67,6 @@ namespace AP_CINE_APPLI
             existenfilm = drrfilm.Read();
 
             cboFilm.Items.Clear();
-            cboFilm.Items.Add("");
 
             while (existenfilm == true)
             {
@@ -86,7 +85,6 @@ namespace AP_CINE_APPLI
             existensalle = drrsalle.Read();
 
             cboSalle.Items.Clear();
-            cboSalle.Items.Add("");
 
             while (existensalle == true)
             {
@@ -97,18 +95,40 @@ namespace AP_CINE_APPLI
             drrsalle.Close();
 
             cnn.Close();
-            cboFilm.SelectedValue = "";
-            cboSalle.SelectedValue = "";
+        }
+
+        private void refresh(object sender, EventArgs e)
+        {
+            OdbcConnection cnn = new OdbcConnection();
+            OdbcCommand cmdproj = new OdbcCommand(); OdbcDataReader drrproj; Boolean existenproj;
+
+            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+            cnn.Open();
+
+            cmdproj.CommandText = "select * from projection natural join film";
+            cmdproj.Connection = cnn;
+            drrproj = cmdproj.ExecuteReader();
+            existenproj = drrproj.Read();
+
+            grdProjection.Rows.Clear();
+
+            while (existenproj == true)
+            {
+
+                grdProjection.Rows.Add(drrproj["noproj"], drrproj["dateproj"], drrproj["heureproj"], drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
+
+
+                existenproj = drrproj.Read();
+            }
+
+            drrproj.Close();
+            cnn.Close();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            /**MessageBox.Show(dateProj.Value.Date.ToString());
-            MessageBox.Show(DateTime.Now.Date.ToString());
-            MessageBox.Show((dateProj.Value.Date >= DateTime.Now.Date).ToString());**/
-            MessageBox.Show(lstFilms[cboFilm.SelectedIndex][1]);
 
-            if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > 0 && cboSalle.SelectedIndex > 0)
+            if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > -1 && cboSalle.SelectedIndex > -1)
             {
                 OdbcConnection cnn = new OdbcConnection();
                 OdbcCommand cmd = new OdbcCommand();
@@ -116,7 +136,7 @@ namespace AP_CINE_APPLI
                 cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
                 cnn.Open();
 
-                cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.Date.ToString("d") + "' , '" + timeProj.Value.Date.ToString("t") + "' , '" + txtInfo.Text + "' , '" + lstFilms[cboFilm.SelectedIndex][1] + "' , '" + cboSalle.SelectedItem.ToString() + "'";
+                cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Text + "' , '" + txtInfo.Text.ToString() + "' , " + lstFilms[cboFilm.SelectedIndex][1] + " , '" + cboSalle.SelectedItem.ToString() + "')";
                 cmd.Connection = cnn;
                 cmd.ExecuteReader();
                 cnn.Close();
@@ -125,18 +145,34 @@ namespace AP_CINE_APPLI
                                 "\nSalle : " + cboSalle.SelectedItem.ToString() +
                                 "\nDate : " + dateProj.Value.ToString("d") +
                                 "\nHoraire : " + timeProj.Value.ToString("t"));
-                Projection_Load(sender, e);
+                refresh(sender, e);
             }
             else
             {
-                string message = "Données manquantes :\n";
-                message += timeProj.Value.ToString("t") != "00:00" ? "" : "Heure de projection\n";
-                message += dateProj.Value.ToString("d") != "" ? "" : "Date de projection\n";
-                message += cboFilm.SelectedIndex > 0 ? "" : "Film\n";
-                message += cboSalle.SelectedIndex > 0 ? "" : "Salle";
+                string message = "Données invalides :\n";
+                message += dateProj.Value.Date >= DateTime.Now.Date ? "" : "Date de projection\n";
+                message += cboFilm.SelectedIndex > -1 ? "" : "Film\n";
+                message += cboSalle.SelectedIndex > -1 ? "" : "Salle";
 
                 MessageBox.Show(message);
             }
+        }
+
+
+        private void btnDeleteProj_Click(object sender, EventArgs e)
+        {
+            OdbcConnection cnn = new OdbcConnection();
+            OdbcCommand cmd = new OdbcCommand();
+
+            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+            cnn.Open();
+
+            cmd.CommandText = "delete from projection where noproj =" + grdProjection[0, grdProjection.CurrentRow.Index].Value + ";";
+            cmd.Connection = cnn;
+            cmd.ExecuteReader();
+            cnn.Close();
+            MessageBox.Show("Projection supprimée");
+            refresh(sender, e);
         }
     }
 }

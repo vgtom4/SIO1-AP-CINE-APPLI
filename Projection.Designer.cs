@@ -41,6 +41,7 @@
             this.timeProj = new System.Windows.Forms.DateTimePicker();
             this.btnAdd = new System.Windows.Forms.Button();
             this.txtInfo = new System.Windows.Forms.TextBox();
+            this.btnDeleteProj = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdProjection)).BeginInit();
             this.SuspendLayout();
             // 
@@ -150,11 +151,22 @@
             this.txtInfo.Size = new System.Drawing.Size(163, 22);
             this.txtInfo.TabIndex = 6;
             // 
+            // btnDeleteProj
+            // 
+            this.btnDeleteProj.Location = new System.Drawing.Point(921, 124);
+            this.btnDeleteProj.Name = "btnDeleteProj";
+            this.btnDeleteProj.Size = new System.Drawing.Size(128, 43);
+            this.btnDeleteProj.TabIndex = 7;
+            this.btnDeleteProj.Text = "Supprimer";
+            this.btnDeleteProj.UseVisualStyleBackColor = true;
+            this.btnDeleteProj.Click += new System.EventHandler(this.btnDeleteProj_Click);
+            // 
             // Projection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1119, 690);
+            this.Controls.Add(this.btnDeleteProj);
             this.Controls.Add(this.txtInfo);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.timeProj);
@@ -186,5 +198,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TextBox txtInfo;
+        private System.Windows.Forms.Button btnDeleteProj;
     }
 }
