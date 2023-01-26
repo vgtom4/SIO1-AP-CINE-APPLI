@@ -69,7 +69,7 @@ namespace AP_CINE_APPLI
             if (nomGenre!="")
             {
                 OdbcConnection cnn = new OdbcConnection();
-                OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drrfilm;
+                OdbcCommand cmd = new OdbcCommand();
 
                 cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
                 cnn.Open();

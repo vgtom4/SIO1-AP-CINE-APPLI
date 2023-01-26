@@ -160,7 +160,7 @@ namespace AP_CINE_APPLI
                 cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
                 cnn.Open();
 
-                OdbcCommand cmdsalle = new OdbcCommand(); OdbcDataReader drrsalle;
+                OdbcCommand cmdsalle = new OdbcCommand();
 
                 cmdsalle.CommandText = "delete from salle where nosalle ='" + grdSalle[0, grdSalle.CurrentRow.Index].Value + "'";
                 cmdsalle.Connection = cnn;

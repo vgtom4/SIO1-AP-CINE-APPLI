@@ -79,6 +79,7 @@
             this.projectionsToolStripMenuItem.Name = "projectionsToolStripMenuItem";
             this.projectionsToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
             this.projectionsToolStripMenuItem.Text = "Projections";
+            this.projectionsToolStripMenuItem.Click += new System.EventHandler(this.projectionsToolStripMenuItem_Click);
             // 
             // générerUnPDFToolStripMenuItem
             // 

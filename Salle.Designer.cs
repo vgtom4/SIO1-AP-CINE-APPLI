@@ -162,7 +162,7 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.grdSalle);
             this.Name = "Salle";
-            this.Text = "Salle";
+            this.Text = "Gestion des salles";
             this.Load += new System.EventHandler(this.Salle_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdSalle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCapac)).EndInit();

@@ -16,6 +16,8 @@ namespace AP_CINE_APPLI
         Film film;
         Genre genre;
         Salle salle;
+        Projection projection;
+        public string pwdDB = "root";
 
         public home()
         {
@@ -67,6 +69,20 @@ namespace AP_CINE_APPLI
             else
             {
                 salle.Activate();
+            }
+        }
+
+        private void projectionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (projection == null || projection.IsDisposed == true)
+            {
+                projection = new Projection();
+                projection.MdiParent = this;
+                projection.Show();
+            }
+            else
+            {
+                projection.Activate();
             }
         }
     }

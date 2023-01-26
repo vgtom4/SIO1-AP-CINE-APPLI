@@ -212,7 +212,7 @@ namespace AP_CINE_APPLI
             if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && cboPublic.SelectedIndex > 0)
             {
                 OdbcConnection cnn = new OdbcConnection();
-                OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
+                OdbcCommand cmdfilm = new OdbcCommand();
 
                 cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
                 cnn.Open();
