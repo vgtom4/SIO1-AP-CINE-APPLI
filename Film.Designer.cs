@@ -35,7 +35,6 @@
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.txtDirector = new System.Windows.Forms.TextBox();
             this.cboPublic = new System.Windows.Forms.ComboBox();
-            this.txtSynopsis = new System.Windows.Forms.TextBox();
             this.btnResearch = new System.Windows.Forms.Button();
             this.btnImportPicture = new System.Windows.Forms.Button();
             this.txtActor = new System.Windows.Forms.TextBox();
@@ -51,6 +50,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.txtSynopsis = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grdFilm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -123,14 +123,6 @@
             this.cboPublic.Name = "cboPublic";
             this.cboPublic.Size = new System.Drawing.Size(395, 24);
             this.cboPublic.TabIndex = 7;
-            // 
-            // txtSynopsis
-            // 
-            this.txtSynopsis.Location = new System.Drawing.Point(590, 46);
-            this.txtSynopsis.Multiline = true;
-            this.txtSynopsis.Name = "txtSynopsis";
-            this.txtSynopsis.Size = new System.Drawing.Size(221, 134);
-            this.txtSynopsis.TabIndex = 8;
             // 
             // btnResearch
             // 
@@ -267,12 +259,21 @@
             this.label9.TabIndex = 23;
             this.label9.Text = "Aperçu affiche :";
             // 
+            // txtSynopsis
+            // 
+            this.txtSynopsis.Location = new System.Drawing.Point(590, 46);
+            this.txtSynopsis.Name = "txtSynopsis";
+            this.txtSynopsis.Size = new System.Drawing.Size(221, 134);
+            this.txtSynopsis.TabIndex = 24;
+            this.txtSynopsis.Text = "";
+            // 
             // Film
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1530, 797);
+            this.Controls.Add(this.txtSynopsis);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label8);
@@ -288,7 +289,6 @@
             this.Controls.Add(this.txtActor);
             this.Controls.Add(this.btnImportPicture);
             this.Controls.Add(this.btnResearch);
-            this.Controls.Add(this.txtSynopsis);
             this.Controls.Add(this.cboPublic);
             this.Controls.Add(this.txtDirector);
             this.Controls.Add(this.txtTitle);
@@ -315,7 +315,6 @@
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.TextBox txtDirector;
         private System.Windows.Forms.ComboBox cboPublic;
-        private System.Windows.Forms.TextBox txtSynopsis;
         private System.Windows.Forms.Button btnResearch;
         private System.Windows.Forms.Button btnImportPicture;
         private System.Windows.Forms.TextBox txtActor;
@@ -331,5 +330,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.RichTextBox txtSynopsis;
     }
 }
