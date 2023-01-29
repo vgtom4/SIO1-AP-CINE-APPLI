@@ -161,7 +161,6 @@ namespace AP_CINE_APPLI
             existenpublic = drrpublic.Read();
 
             cboPublic.Items.Clear();
-            cboPublic.Items.Add("");
 
             while (existenpublic == true)
             {
@@ -172,7 +171,6 @@ namespace AP_CINE_APPLI
             drrpublic.Close();
 
             cnn.Close();
-            cboPublic.SelectedValue = "";
 
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
@@ -180,14 +178,7 @@ namespace AP_CINE_APPLI
             //grdFilm.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
 
-            txtTitle.Text = "";
-            txtDirector.Text = "";
-            txtActor.Text = "";
-            timeFilm.Text = "00:00:00";
-            txtSynopsis.Text = "";
-            txtInfo.Text = "";
-            namePicture = null;
-            cboPublic.SelectedIndex = 0;
+            btnClear_Click(sender, e);
 
             Boolean test = true;
             if (test == true)
@@ -457,6 +448,18 @@ namespace AP_CINE_APPLI
                 pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
 
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtTitle.Text = "";
+            txtDirector.Text = "";
+            txtActor.Text = "";
+            timeFilm.Text = "00:00:00";
+            txtSynopsis.Text = "";
+            txtInfo.Text = "";
+            namePicture = null;
+            cboPublic.SelectedIndex = -1;
         }
     }
 }

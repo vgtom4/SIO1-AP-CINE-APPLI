@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AP_CINE_APPLI
 {
@@ -20,10 +21,13 @@ namespace AP_CINE_APPLI
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
+            lblMsg.Text = "";
         }
 
         private void Salle_Load(object sender, EventArgs e)
         {
+            lblMsg.BackColor = Color.White;
+
             grdSalle.AllowUserToAddRows = false;
             grdSalle.ReadOnly = true;
             grdSalle.RowHeadersVisible = false;
@@ -61,20 +65,49 @@ namespace AP_CINE_APPLI
             grdSalle.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void checkData()
         {
-            bool existe = false;
-            for (int i = 0; i < grdSalle.Rows.Count ;i++)
+            errorProviderNumSalle.SetError(txtNum, "");
+            errorProviderCapac.SetError(numCapac, "");
+            if (string.IsNullOrEmpty(txtNum.Text))
             {
-                if (grdSalle[0,i].Value.ToString() == txtNum.Text.ToString())
-                {
-                    existe = true;
-                }
+                errorProviderNumSalle.SetError(txtNum, "Veuillez remplir ce champ");
             }
 
-            if (existe == false)
+            if (numCapac.Value == 0)
             {
-                if (txtNum.Text != "" && numCapac.Value > 0)
+                errorProviderCapac.SetError(numCapac, "Veuillez remplir ce champ");
+            }
+        }
+
+            private bool checkExistSalle(string numsalle)
+        {
+            lblMsg.Text = "";
+            lblMsg.ForeColor = Color.Black;
+            errorProviderNumSalle.SetError(txtNum, "");
+            bool existensalle = false;
+            for (int i = 0; i < grdSalle.Rows.Count; i++)
+            {
+                if (grdSalle[0, i].Value.ToString() == numsalle)
+                {
+                    existensalle = true;
+                    lblMsg.Text = "Ce numéro de salle existe déjà";
+                    errorProviderNumSalle.SetError(txtNum, "Numéro de salle déjà existant");
+                    lblMsg.ForeColor = Color.Red;
+                    break;
+                }
+            }
+            return existensalle;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            checkData();
+
+            if (!string.IsNullOrEmpty(txtNum.Text) && numCapac.Value > 0)
+            {
+                
+                if (!checkExistSalle(txtNum.Text.ToString()))
                 {
                     OdbcConnection cnn = new OdbcConnection();
                     OdbcCommand cmd = new OdbcCommand();
@@ -86,23 +119,64 @@ namespace AP_CINE_APPLI
                     cmd.Connection = cnn;
                     cmd.ExecuteReader();
                     cnn.Close();
-                    MessageBox.Show("La salle " + txtNum.Text + " a été ajoutée avec une capacité de " + numCapac.Value);
+                    lblMsg.Text = "La salle " + txtNum.Text + " a été ajoutée \navec une capacité de " + numCapac.Value + " places";
+                    lblMsg.ForeColor = Color.Blue;
                     Salle_Load(sender, e);
-                }
-                else
-                {
-                    string message = "Données manquantes :\n";
-                    message += txtNum.Text != "" ? "" : "Numéro de salle\n";
-                    message += numCapac.Value > 0 ? "" : "Capacité insuffisante";
-
-                    MessageBox.Show(message);
                 }
             }
             else
             {
-                MessageBox.Show("Le numéro de salle existe déjà");
+                lblMsg.Text = "Donnée(s) manquante(s)";
+                lblMsg.ForeColor = Color.Red;
             }
 
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            checkData();
+
+            if (!string.IsNullOrEmpty(txtNum.Text) && numCapac.Value > 0)
+            {
+                bool unlikeNumSalle = txtNum.Text.ToString() != grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString();
+                bool unlikeCapac = numCapac.Value.ToString() != grdSalle[1, grdSalle.CurrentRow.Index].Value.ToString();
+
+                OdbcConnection cnn = new OdbcConnection();
+
+                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+                cnn.Open();
+
+                if (unlikeCapac)
+                {
+                    OdbcCommand cmdSalleCapac = new OdbcCommand();
+                    cmdSalleCapac.CommandText = "update salle set nbplaces = '" + numCapac.Value.ToString() + "' where nosalle ='" + grdSalle[0, grdSalle.CurrentRow.Index].Value + "'";
+                    cmdSalleCapac.Connection = cnn;
+                    cmdSalleCapac.ExecuteReader();
+                }
+
+
+                if (unlikeNumSalle && !checkExistSalle(txtNum.Text))
+                {
+                    OdbcCommand cmdSalleNum = new OdbcCommand();
+                    cmdSalleNum.CommandText += unlikeNumSalle ? "update salle set nosalle = '" + txtNum.Text.ToString() + "' where nosalle ='" + grdSalle[0, grdSalle.CurrentRow.Index].Value + "';" : "";
+                    cmdSalleNum.Connection = cnn;
+                    cmdSalleNum.ExecuteReader();
+                }
+
+                cnn.Close();
+
+                if ((unlikeNumSalle && !checkExistSalle(txtNum.Text)) || unlikeCapac)
+                {
+                    string message = "Salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString() + " :";
+                    message += unlikeNumSalle ? "\nmodifiée en salle " + txtNum.Text.ToString() : "";
+                    message += unlikeCapac ? "\nnouvelle capacité : " + numCapac.Value : "";
+                    lblMsg.Text = message;
+
+                    Salle_Load(sender, e);
+                }
+                
+            }
+            
         }
 
         private void btnEditCapac_Click(object sender, EventArgs e)
@@ -127,6 +201,11 @@ namespace AP_CINE_APPLI
 
                 Salle_Load(sender, e);
             }
+            else
+            {
+                lblMsg.Text = "Numéro de salle invalide";
+                lblMsg.ForeColor = Color.Red;
+            }
         }
 
         private void btnEditNum_Click(object sender, EventArgs e)
@@ -149,6 +228,11 @@ namespace AP_CINE_APPLI
 
                 Salle_Load(sender, e);
             }
+            else
+            {
+                lblMsg.Text = "Numéro de salle invalide";
+                lblMsg.ForeColor = Color.Red;
+            }
         }
 
             private void btnDelete_Click(object sender, EventArgs e)
@@ -167,10 +251,17 @@ namespace AP_CINE_APPLI
                 cmdsalle.ExecuteReader();
                 cnn.Close();
 
-                MessageBox.Show("La salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " a été supprimée");
+                lblMsg.Text = "La salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " a été supprimée";
+                lblMsg.ForeColor = Color.Red;
 
                 Salle_Load(sender, e);
             }
+        }
+
+        private void grdSalle_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            txtNum.Text = grdSalle[0, grdSalle.CurrentCell.RowIndex].Value.ToString();
+            numCapac.Text = grdSalle[1, grdSalle.CurrentCell.RowIndex].Value.ToString();
         }
     }
 }

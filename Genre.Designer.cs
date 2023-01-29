@@ -42,6 +42,7 @@
             // 
             // grdGenre
             // 
+            this.grdGenre.BackgroundColor = System.Drawing.Color.Wheat;
             this.grdGenre.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdGenre.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -82,7 +83,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.BackColor = System.Drawing.Color.Red;
+            this.btnDelete.BackColor = System.Drawing.Color.Crimson;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Location = new System.Drawing.Point(551, 521);
             this.btnDelete.Name = "btnDelete";

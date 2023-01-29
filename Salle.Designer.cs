@@ -28,33 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grdSalle = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnEditNum = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.btnEditCapac = new System.Windows.Forms.Button();
             this.txtNum = new System.Windows.Forms.TextBox();
             this.numCapac = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblMsg = new System.Windows.Forms.Label();
+            this.errorProviderNumSalle = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderCapac = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnEdit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdSalle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCapac)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderNumSalle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderCapac)).BeginInit();
             this.SuspendLayout();
             // 
             // grdSalle
             // 
+            this.grdSalle.BackgroundColor = System.Drawing.Color.Wheat;
             this.grdSalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdSalle.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            this.grdSalle.Location = new System.Drawing.Point(260, 12);
+            this.grdSalle.Location = new System.Drawing.Point(12, 12);
             this.grdSalle.Name = "grdSalle";
             this.grdSalle.RowHeadersWidth = 51;
             this.grdSalle.RowTemplate.Height = 24;
             this.grdSalle.Size = new System.Drawing.Size(304, 426);
             this.grdSalle.TabIndex = 0;
+            this.grdSalle.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdSalle_CellContentClick);
             // 
             // Column1
             // 
@@ -72,54 +79,36 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(61, 118);
+            this.btnAdd.BackColor = System.Drawing.Color.YellowGreen;
+            this.btnAdd.Location = new System.Drawing.Point(381, 207);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(134, 56);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Ajouter";
-            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnEditNum
-            // 
-            this.btnEditNum.Location = new System.Drawing.Point(12, 246);
-            this.btnEditNum.Name = "btnEditNum";
-            this.btnEditNum.Size = new System.Drawing.Size(108, 69);
-            this.btnEditNum.TabIndex = 2;
-            this.btnEditNum.Text = "Modification numéro";
-            this.btnEditNum.UseVisualStyleBackColor = true;
-            this.btnEditNum.Click += new System.EventHandler(this.btnEditNum_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(61, 354);
+            this.btnDelete.BackColor = System.Drawing.Color.Crimson;
+            this.btnDelete.Location = new System.Drawing.Point(381, 365);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(134, 58);
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "Supprimer";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnEditCapac
-            // 
-            this.btnEditCapac.Location = new System.Drawing.Point(133, 246);
-            this.btnEditCapac.Name = "btnEditCapac";
-            this.btnEditCapac.Size = new System.Drawing.Size(108, 69);
-            this.btnEditCapac.TabIndex = 4;
-            this.btnEditCapac.Text = "Modification capacité";
-            this.btnEditCapac.UseVisualStyleBackColor = true;
-            this.btnEditCapac.Click += new System.EventHandler(this.btnEditCapac_Click);
             // 
             // txtNum
             // 
-            this.txtNum.Location = new System.Drawing.Point(133, 41);
+            this.txtNum.Location = new System.Drawing.Point(460, 52);
             this.txtNum.Name = "txtNum";
             this.txtNum.Size = new System.Drawing.Size(92, 22);
             this.txtNum.TabIndex = 5;
             // 
             // numCapac
             // 
-            this.numCapac.Location = new System.Drawing.Point(133, 74);
+            this.numCapac.Location = new System.Drawing.Point(460, 85);
             this.numCapac.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -132,7 +121,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 44);
+            this.label1.Location = new System.Drawing.Point(332, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 16);
             this.label1.TabIndex = 7;
@@ -141,24 +130,52 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 76);
+            this.label2.Location = new System.Drawing.Point(332, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 16);
             this.label2.TabIndex = 8;
             this.label2.Text = "Capacité de salle :";
             // 
+            // lblMsg
+            // 
+            this.lblMsg.AutoSize = true;
+            this.lblMsg.Location = new System.Drawing.Point(332, 117);
+            this.lblMsg.Name = "lblMsg";
+            this.lblMsg.Size = new System.Drawing.Size(44, 16);
+            this.lblMsg.TabIndex = 9;
+            this.lblMsg.Text = "label3";
+            // 
+            // errorProviderNumSalle
+            // 
+            this.errorProviderNumSalle.ContainerControl = this;
+            // 
+            // errorProviderCapac
+            // 
+            this.errorProviderCapac.ContainerControl = this;
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(381, 284);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(134, 56);
+            this.btnEdit.TabIndex = 10;
+            this.btnEdit.Text = "Modifier";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
             // Salle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(576, 450);
+            this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numCapac);
             this.Controls.Add(this.txtNum);
-            this.Controls.Add(this.btnEditCapac);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnEditNum);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.grdSalle);
             this.Name = "Salle";
@@ -166,6 +183,8 @@
             this.Load += new System.EventHandler(this.Salle_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdSalle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCapac)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderNumSalle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderCapac)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,12 +196,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnEditNum;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnEditCapac;
         private System.Windows.Forms.TextBox txtNum;
         private System.Windows.Forms.NumericUpDown numCapac;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblMsg;
+        private System.Windows.Forms.ErrorProvider errorProviderNumSalle;
+        private System.Windows.Forms.ErrorProvider errorProviderCapac;
+        private System.Windows.Forms.Button btnEdit;
     }
 }
