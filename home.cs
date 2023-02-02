@@ -17,6 +17,7 @@ namespace AP_CINE_APPLI
         Genre genre;
         Salle salle;
         Projection projection;
+        PDF pdf;
         public string pwdDB = "root";
 
         public home()
@@ -83,6 +84,20 @@ namespace AP_CINE_APPLI
             else
             {
                 projection.Activate();
+            }
+        }
+
+        private void générerUnPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pdf == null || pdf.IsDisposed == true)
+            {
+                pdf = new PDF();
+                pdf.MdiParent = this;
+                pdf.Show();
+            }
+            else
+            {
+                pdf.Activate();
             }
         }
     }

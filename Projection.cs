@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -51,7 +53,7 @@ namespace AP_CINE_APPLI
             while (existenproj == true)
             {
 
-                grdProjection.Rows.Add(drrproj["noproj"], drrproj["dateproj"], drrproj["heureproj"], drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
+                grdProjection.Rows.Add(drrproj["noproj"], DateTime.Parse(drrproj["dateproj"].ToString()).ToString("d"), DateTime.Parse(drrproj["heureproj"].ToString()).ToString("HH") + "h" + DateTime.Parse(drrproj["heureproj"].ToString()).ToString("mm"), drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
 
 
                 existenproj = drrproj.Read();

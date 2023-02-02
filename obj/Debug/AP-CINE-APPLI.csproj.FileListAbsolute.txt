@@ -15,3 +15,4 @@ C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-AP
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Genre.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Salle.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Projection.resources
+C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.PDF.resources

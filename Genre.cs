@@ -44,7 +44,7 @@ namespace AP_CINE_APPLI
 
             grdGenre.Rows.Clear();
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=root";
+            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
             cnn.Open();
 
             cmd.CommandText = "select nogenre, libgenre from genre";

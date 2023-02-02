@@ -71,6 +71,12 @@
     <Compile Include="home.Designer.cs">
       <DependentUpon>home.cs</DependentUpon>
     </Compile>
+    <Compile Include="PDF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDF.Designer.cs">
+      <DependentUpon>PDF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Projection.cs">
       <SubType>Form</SubType>
@@ -79,6 +85,11 @@
       <DependentUpon>Projection.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Salle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,19 +105,17 @@
     <EmbeddedResource Include="home.resx">
       <DependentUpon>home.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PDF.resx">
+      <DependentUpon>PDF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Projection.resx">
       <DependentUpon>Projection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Salle.resx">
       <DependentUpon>Salle.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,6 +136,15 @@
     <Content Include="logo.ico" />
     <Content Include="logo2.ico" />
     <Content Include="logo3.ico" />
+    <None Include="ressources\logo2.ico" />
+    <None Include="ressources\logo3.ico" />
+    <None Include="ressources\logo.ico" />
+    <None Include="Resources\logo1.png" />
+    <None Include="Resources\logo2.png" />
+    <None Include="Resources\logo3.png" />
+    <None Include="Resources\film.png" />
+    <None Include="Resources\film2.png" />
+    <None Include="Resources\logo.png" />
     <Content Include="ressources\noimg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

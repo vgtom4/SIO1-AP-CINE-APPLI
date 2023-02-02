@@ -86,6 +86,7 @@
             this.générerUnPDFToolStripMenuItem.Name = "générerUnPDFToolStripMenuItem";
             this.générerUnPDFToolStripMenuItem.Size = new System.Drawing.Size(125, 24);
             this.générerUnPDFToolStripMenuItem.Text = "Générer un PDF";
+            this.générerUnPDFToolStripMenuItem.Click += new System.EventHandler(this.générerUnPDFToolStripMenuItem_Click);
             // 
             // home
             // 
