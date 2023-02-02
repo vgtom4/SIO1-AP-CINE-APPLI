@@ -14,6 +14,7 @@ using System.Data.Odbc;
 using System.Data.Common;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
+using System.Diagnostics;
 
 namespace AP_CINE_APPLI
 {
@@ -47,7 +48,7 @@ namespace AP_CINE_APPLI
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "PDF Files|*.pdf";
             saveFileDialog1.Title = "Enregistrer le fichier PDF";
-            
+            saveFileDialog1.FileName = "projection_" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd") + ".pdf";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -88,7 +89,7 @@ namespace AP_CINE_APPLI
 
                 cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
                 cnn.Open();
-                cmd.CommandText = "select * from projection natural join film where dateproj ='" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd") + "' order by dateproj";
+                cmd.CommandText = "select * from projection natural join film where dateproj ='" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd") + "' order by heureproj, nosalle";
                 cmd.Connection = cnn;
                 drrpdf = cmd.ExecuteReader();
 
@@ -96,7 +97,7 @@ namespace AP_CINE_APPLI
                 while (existenproj == true)
                 {
                     PdfPTable tableau = new PdfPTable(4);
-                    tableau.SetWidths(new float[] { 1, 2, 3, 2 });
+                    tableau.SetWidths(new float[] { 2, 2, 3, 2 });
                     tableau.SpacingBefore = 20f;
 
                     PdfPCell logFilm = new PdfPCell();
@@ -115,28 +116,32 @@ namespace AP_CINE_APPLI
                     salFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
                     tableau.AddCell(salFilm);
 
-                    PdfPCell hourFilm = new PdfPCell(new Phrase("Heure de diffusion : " + DateTime.Parse(drrpdf["heureproj"].ToString()).Hour + "h" + DateTime.Parse(drrpdf["heureproj"].ToString()).ToString("mm")));
+                    PdfPCell hourFilm = new PdfPCell(new Phrase("Heure de diffusion : \n" + DateTime.Parse(drrpdf["heureproj"].ToString()).Hour + "h" + DateTime.Parse(drrpdf["heureproj"].ToString()).ToString("mm")));
                     hourFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
                     tableau.AddCell(hourFilm);
 
-                    PdfPCell infoFilm = new PdfPCell(new Phrase("Informations : " + drrpdf["infoproj"].ToString()));
+                    PdfPCell infoFilm = new PdfPCell(new Phrase("Informations : \n" + drrpdf["infoproj"].ToString()));
                     infoFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
                     tableau.AddCell(infoFilm);
 
+
+                    if (doc.Top - tableau.TotalHeight < doc.Bottom)
+                    {
+                        doc.NewPage();
+                    }
+
                     doc.Add(tableau);
+
                     existenproj = drrpdf.Read();
                 }
 
                 //Fermeture différents éléments + ouverture pdf
                 drrpdf.Close();
                 cnn.Close();
-
+                
                 doc.Close();
-                //System.Diagnostics.Process p = new System.Diagnostics.Process();
-                //p.StartInfo = new System.Diagnostics.ProcessStartInfo("projection_" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd"));
-                //p.Start();
-                //p.Dispose();
 
+                Process.Start(saveFileDialog1.FileName);
             }
         }
     }
