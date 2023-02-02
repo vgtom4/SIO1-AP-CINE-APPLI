@@ -132,10 +132,10 @@ namespace AP_CINE_APPLI
                 cnn.Close();
 
                 doc.Close();
-                System.Diagnostics.Process p = new System.Diagnostics.Process();
-                p.StartInfo = new System.Diagnostics.ProcessStartInfo("projection_" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd"));
-                p.Start();
-                p.Dispose();
+                //System.Diagnostics.Process p = new System.Diagnostics.Process();
+                //p.StartInfo = new System.Diagnostics.ProcessStartInfo("projection_" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd"));
+                //p.Start();
+                //p.Dispose();
 
             }
         }
