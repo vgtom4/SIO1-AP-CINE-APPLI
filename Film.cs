@@ -200,7 +200,7 @@ namespace AP_CINE_APPLI
 
         private void btnAddFilm_Click(object sender, EventArgs e)
         {
-            if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && cboPublic.SelectedIndex > 0)
+            if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
             {
                 OdbcConnection cnn = new OdbcConnection();
                 OdbcCommand cmdfilm = new OdbcCommand();
