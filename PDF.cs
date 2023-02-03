@@ -27,15 +27,6 @@ namespace AP_CINE_APPLI
             InitializeComponent();
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-
-
-
-
-        }
-
         private void PDF_Load(object sender, EventArgs e)
         {
 
@@ -124,7 +115,7 @@ namespace AP_CINE_APPLI
                     infoFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
                     tableau.AddCell(infoFilm);
 
-
+                    //marche pas
                     if (doc.Top - tableau.TotalHeight < doc.Bottom)
                     {
                         doc.NewPage();

@@ -118,31 +118,6 @@ namespace AP_CINE_APPLI
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            // ANCIENNE MÉTHODE
-            //if (grdGenre.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir modifier le libellé du genre suivant :\n" + grdGenre[1, grdGenre.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            //{
-            //    string newNameGenre = Interaction.InputBox("Saisissez le nouveau libellé de " + grdGenre[1, grdGenre.CurrentRow.Index].Value);
-
-            //    if (newNameGenre!="")
-            //    {
-            //        MessageBox.Show("Le libellé du genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été modifié en " + newNameGenre);
-
-            //        OdbcConnection cnn = new OdbcConnection();
-
-            //        cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
-            //        cnn.Open();
-
-            //        OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
-            //        cmdfilm.CommandText = "update genre set libgenre = '" + newNameGenre + "' where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
-            //        cmdfilm.Connection = cnn;
-            //        drrfilm = cmdfilm.ExecuteReader();
-
-            //        drrfilm.Close();
-
-            //        Genre_Load(sender, e);
-            //    }
-            //}
-
             if (grdGenre.RowCount >= 0)
             {
 
