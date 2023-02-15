@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grdFilm = new System.Windows.Forms.DataGridView();
             this.btnAddFilm = new System.Windows.Forms.Button();
             this.btnDeleteFilm = new System.Windows.Forms.Button();
@@ -52,8 +53,25 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtSynopsis = new System.Windows.Forms.RichTextBox();
             this.btnClear = new System.Windows.Forms.Button();
+            this.lblMsg = new System.Windows.Forms.Label();
+            this.errorProviderTitle = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderActor = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderDirector = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderDuree = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderPublic = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderGenre = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderSynopsis = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderInfo = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdFilm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderTitle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderActor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderDirector)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderDuree)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderPublic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderSynopsis)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderInfo)).BeginInit();
             this.SuspendLayout();
             // 
             // grdFilm
@@ -280,12 +298,54 @@
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // lblMsg
+            // 
+            this.lblMsg.AutoSize = true;
+            this.lblMsg.Location = new System.Drawing.Point(1311, 433);
+            this.lblMsg.Name = "lblMsg";
+            this.lblMsg.Size = new System.Drawing.Size(47, 16);
+            this.lblMsg.TabIndex = 26;
+            this.lblMsg.Text = "lblMsg";
+            // 
+            // errorProviderTitle
+            // 
+            this.errorProviderTitle.ContainerControl = this;
+            // 
+            // errorProviderActor
+            // 
+            this.errorProviderActor.ContainerControl = this;
+            // 
+            // errorProviderDirector
+            // 
+            this.errorProviderDirector.ContainerControl = this;
+            // 
+            // errorProviderDuree
+            // 
+            this.errorProviderDuree.ContainerControl = this;
+            // 
+            // errorProviderPublic
+            // 
+            this.errorProviderPublic.ContainerControl = this;
+            // 
+            // errorProviderGenre
+            // 
+            this.errorProviderGenre.ContainerControl = this;
+            // 
+            // errorProviderSynopsis
+            // 
+            this.errorProviderSynopsis.ContainerControl = this;
+            // 
+            // errorProviderInfo
+            // 
+            this.errorProviderInfo.ContainerControl = this;
+            // 
             // Film
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1530, 797);
+            this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.txtSynopsis);
             this.Controls.Add(this.label9);
@@ -315,6 +375,14 @@
             this.Load += new System.EventHandler(this.Film_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdFilm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderTitle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderActor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderDirector)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderDuree)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderPublic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderSynopsis)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderInfo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -346,5 +414,14 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.RichTextBox txtSynopsis;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Label lblMsg;
+        private System.Windows.Forms.ErrorProvider errorProviderTitle;
+        private System.Windows.Forms.ErrorProvider errorProviderActor;
+        private System.Windows.Forms.ErrorProvider errorProviderDirector;
+        private System.Windows.Forms.ErrorProvider errorProviderDuree;
+        private System.Windows.Forms.ErrorProvider errorProviderPublic;
+        private System.Windows.Forms.ErrorProvider errorProviderGenre;
+        private System.Windows.Forms.ErrorProvider errorProviderSynopsis;
+        private System.Windows.Forms.ErrorProvider errorProviderInfo;
     }
 }

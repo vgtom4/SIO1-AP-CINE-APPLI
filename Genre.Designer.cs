@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grdGenre = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -37,7 +38,9 @@
             this.txtGenre = new System.Windows.Forms.TextBox();
             this.lblMsg = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.errorProviderGenre = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdGenre)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).BeginInit();
             this.SuspendLayout();
             // 
             // grdGenre
@@ -130,6 +133,10 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Libellé de genre";
             // 
+            // errorProviderGenre
+            // 
+            this.errorProviderGenre.ContainerControl = this;
+            // 
             // Genre
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -147,6 +154,7 @@
             this.Text = "Gestion des genres";
             this.Load += new System.EventHandler(this.Genre_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdGenre)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,5 +171,6 @@
         private System.Windows.Forms.TextBox txtGenre;
         private System.Windows.Forms.Label lblMsg;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ErrorProvider errorProviderGenre;
     }
 }

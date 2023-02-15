@@ -26,6 +26,8 @@ namespace AP_CINE_APPLI
 
         private void Film_Load(object sender, EventArgs e)
         {
+            lblMsg.BackColor = Color.White;
+            lblMsg.Text = "";
 
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             grdFilm.AllowUserToAddRows = false;
@@ -190,52 +192,69 @@ namespace AP_CINE_APPLI
 
             drrfilm.Close();
 
-
-            //affichage des genres dans lstGenre
-
-            OdbcCommand cmdlstgenre = new OdbcCommand(); OdbcDataReader drrlstgenre; Boolean existenlstgenre;
-            cmdlstgenre.CommandText = "select * from genre";
-            cmdlstgenre.Connection = cnn;
-            drrlstgenre = cmdlstgenre.ExecuteReader();
-            existenlstgenre = drrlstgenre.Read();
-
-            lstGenre.Items.Clear();
-            lstGenre.MultiColumn = true;
-            lstGenre.SelectionMode = SelectionMode.MultiSimple;
-
-            while (existenlstgenre == true)
-            {
-                lstGenre.Items.Add(drrlstgenre["libgenre"]);
-
-                existenlstgenre = drrlstgenre.Read();
-            }
-            drrlstgenre.Close();
-
-
-            OdbcCommand cmdpublic = new OdbcCommand(); OdbcDataReader drrpublic; Boolean existenpublic;
-            cmdpublic.CommandText = "select * from public";
-            cmdpublic.Connection = cnn;
-            drrpublic = cmdpublic.ExecuteReader();
-            existenpublic = drrpublic.Read();
-
-            cboPublic.Items.Clear();
-
-            while (existenpublic == true)
-            {
-                cboPublic.Items.Add(drrpublic["libpublic"]);
-
-                existenpublic = drrpublic.Read();
-            }
-            drrpublic.Close();
-
             cnn.Close();
 
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
 
+        private void checkData()
+        {
+            errorProviderTitle.SetError(txtTitle, "");
+            errorProviderDirector.SetError(txtDirector, "");
+            errorProviderActor.SetError(txtActor, "");
+            errorProviderSynopsis.SetError(txtSynopsis, "");
+            errorProviderDuree.SetError(timeFilm, "");
+            errorProviderInfo.SetError(txtInfo, "");
+            errorProviderPublic.SetError(cboPublic, "");
+            errorProviderGenre.SetError(lstGenre, "");
+
+            if (string.IsNullOrEmpty(txtTitle.Text))
+            {
+                errorProviderTitle.SetError(txtTitle, "Veuillez remplir ce champ");
+            }
+
+            if (string.IsNullOrEmpty(txtDirector.Text))
+            {
+                errorProviderDirector.SetError(txtDirector, "Veuillez remplir ce champ");
+            }
+
+            if (string.IsNullOrEmpty(txtActor.Text))
+            {
+                errorProviderActor.SetError(txtActor, "Veuillez remplir ce champ");
+            }
+
+            if (string.IsNullOrEmpty(txtSynopsis.Text))
+            {
+                errorProviderSynopsis.SetError(txtSynopsis, "Veuillez remplir ce champ");
+            }
+
+            if (timeFilm.Value.ToString("T") == "00:00:00")
+            {
+                errorProviderDuree.SetError(timeFilm, "Veuillez remplir ce champ");
+            }
+
+            if (string.IsNullOrEmpty(txtInfo.Text))
+            {
+                errorProviderInfo.SetError(txtInfo, "Veuillez remplir ce champ");
+            }
+
+            if (cboPublic.SelectedIndex < 0)
+            {
+                errorProviderPublic.SetError(cboPublic, "Veuillez remplir ce champ");
+            }
+
+            if (lstGenre.SelectedItems.Count == 0)
+            {
+                errorProviderGenre.SetError(lstGenre, "Veuillez remplir ce champ");
+            }
+
+
+        }
 
         private void btnAddFilm_Click(object sender, EventArgs e)
         {
+            checkData();
+
             if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
             {
                 OdbcConnection cnn = new OdbcConnection();
@@ -300,7 +319,8 @@ namespace AP_CINE_APPLI
                 drrnogenre.Close();
 
                 cnn.Close();
-                MessageBox.Show("Le film \"" + txtTitle.Text + "\" a été ajouté");
+                lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
+                lblMsg.ForeColor = Color.Blue;
                 namePicture = null;
                 affichageFilm("select * from film natural join public");
             }
@@ -316,7 +336,8 @@ namespace AP_CINE_APPLI
                 message += cboPublic.SelectedIndex > 0 ? "" : "Type de public\n";
                 message += lstGenre.SelectedItems.Count != 0 ? "" : "Genre(s)\n";
 
-                MessageBox.Show(message);
+                lblMsg.Text = message;
+                lblMsg.ForeColor = Color.Red;
             }
         }
 
@@ -351,7 +372,8 @@ namespace AP_CINE_APPLI
                 drrfilm = cmdfilm.ExecuteReader();
 
                 drrfilm.Close();
-                MessageBox.Show("Le film \"" + grdFilm[1, grdFilm.CurrentRow.Index].Value + "\" a été supprimé");
+                lblMsg.Text = "Le film \"" + grdFilm[1, grdFilm.CurrentRow.Index].Value + "\" a été supprimé";
+                lblMsg.ForeColor = Color.Red;
 
                 affichageFilm("select * from film natural join public");
             }
@@ -415,8 +437,6 @@ namespace AP_CINE_APPLI
 
             cmdfilm.CommandText += "group by nofilm";
 
-            MessageBox.Show(cmdfilm.CommandText);
-
             affichageFilm(cmdfilm.CommandText);
 
             cnn.Close();
@@ -440,7 +460,8 @@ namespace AP_CINE_APPLI
                 {
                     File.Copy(filePath, destinationPath, true);
                 }
-                MessageBox.Show("L'image a été enregistrée");
+                lblMsg.Text = "L'image a été enregistrée";
+                lblMsg.ForeColor = Color.Blue;
 
                 pictureBox1.Image = Image.FromFile(@Application.StartupPath + "\\affiches\\" + Path.GetFileName(namePicture));
                 pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;

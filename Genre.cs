@@ -66,9 +66,21 @@ namespace AP_CINE_APPLI
             grdGenre.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
+        private void checkData()
+        {
+            errorProviderGenre.SetError(txtGenre, "");
+            if (string.IsNullOrEmpty(txtGenre.Text))
+            {
+                errorProviderGenre.SetError(txtGenre, "Veuillez remplir ce champ");
+                lblMsg.Text = "Libellé de genre invalide";
+                lblMsg.ForeColor = Color.Red;
+            }
+        }
+
         private bool checkExistGenre(string libgenre)
         {
             lblMsg.Text = "";
+            errorProviderGenre.SetError(txtGenre, "");
             lblMsg.ForeColor = Color.Black;
             bool existengenre = false;
             for (int i = 0; i < grdGenre.Rows.Count; i++)
@@ -77,6 +89,7 @@ namespace AP_CINE_APPLI
                 {
                     existengenre = true;
                     lblMsg.Text = "Ce genre existe déjà";
+                    errorProviderGenre.SetError(txtGenre, "Genre déjà existant");
                     lblMsg.ForeColor = Color.Red;
                     break;
                 }
@@ -87,7 +100,9 @@ namespace AP_CINE_APPLI
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (txtGenre.Text.ToString() != "")
+            checkData();
+
+            if (!string.IsNullOrEmpty(txtGenre.Text))
             { 
                 if (!checkExistGenre(txtGenre.Text.ToString()))
                 {
@@ -108,11 +123,6 @@ namespace AP_CINE_APPLI
 
                     Genre_Load(sender, e);
                 }
-            }
-            else
-            {
-                lblMsg.Text = "Libellé de genre invalide";
-                lblMsg.ForeColor = Color.Red;
             }
         }
 

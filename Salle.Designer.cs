@@ -155,12 +155,13 @@
             // 
             // btnEdit
             // 
+            this.btnEdit.BackColor = System.Drawing.Color.Yellow;
             this.btnEdit.Location = new System.Drawing.Point(381, 284);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(134, 56);
             this.btnEdit.TabIndex = 10;
             this.btnEdit.Text = "Modifier";
-            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // Salle
