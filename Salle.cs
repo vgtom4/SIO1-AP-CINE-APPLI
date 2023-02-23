@@ -64,10 +64,15 @@ namespace AP_CINE_APPLI
             grdSalle.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void checkData()
+        private void removeError()
         {
             errorProviderNumSalle.SetError(txtNum, "");
             errorProviderCapac.SetError(numCapac, "");
+        }
+
+        private void checkData()
+        {
+            removeError();
             if (string.IsNullOrEmpty(txtNum.Text))
             {
                 errorProviderNumSalle.SetError(txtNum, "Veuillez remplir ce champ");
@@ -79,13 +84,14 @@ namespace AP_CINE_APPLI
             }
         }
 
-            private bool checkExistSalle(string numsalle)
+        private bool checkExistSalle(string numsalle)
         {
             lblMsg.Text = "";
             lblMsg.ForeColor = Color.Black;
             errorProviderNumSalle.SetError(txtNum, "");
             bool existensalle = false;
-            for (int i = 0; i < grdSalle.Rows.Count; i++)
+            int i = 0;
+            while (!existensalle && i < grdSalle.Rows.Count)
             {
                 if (grdSalle[0, i].Value.ToString() == numsalle)
                 {
@@ -93,7 +99,10 @@ namespace AP_CINE_APPLI
                     lblMsg.Text = "Ce numéro de salle existe déjà";
                     errorProviderNumSalle.SetError(txtNum, "Numéro de salle déjà existant");
                     lblMsg.ForeColor = Color.Red;
-                    break;
+                }
+                else
+                {
+                    i++;
                 }
             }
             return existensalle;
@@ -178,64 +187,9 @@ namespace AP_CINE_APPLI
             
         }
 
-        private void btnEditCapac_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
-            string newCapacite = Interaction.InputBox("Saisissez la nouvelle capacité de la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + "\nCapacité actuelle : " + grdSalle[1, grdSalle.CurrentRow.Index].Value);
-
-            if (newCapacite != "")
-            {
-                MessageBox.Show("La capacité de la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " est désormais de " + newCapacite.ToString());
-
-                OdbcConnection cnn = new OdbcConnection();
-
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
-                cnn.Open();
-
-                OdbcCommand cmdsalle = new OdbcCommand();
-                cmdsalle.CommandText = "update salle set nbplaces = '" + newCapacite + "' where nosalle ='" + grdSalle[0, grdSalle.CurrentRow.Index].Value + "'";
-                cmdsalle.Connection = cnn;
-                cmdsalle.ExecuteReader();
-
-                cnn.Close();
-
-                Salle_Load(sender, e);
-            }
-            else
-            {
-                lblMsg.Text = "Numéro de salle invalide";
-                lblMsg.ForeColor = Color.Red;
-            }
-        }
-
-        private void btnEditNum_Click(object sender, EventArgs e)
-        {
-            string newNum = Interaction.InputBox("Saisissez le nouveau numéro de la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value);
-
-            if (newNum != "")
-            {
-                MessageBox.Show("Le salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " a été renommée en salle " + newNum.ToString());
-
-                OdbcConnection cnn = new OdbcConnection();
-
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
-                cnn.Open();
-
-                OdbcCommand cmdsalle = new OdbcCommand();
-                cmdsalle.CommandText = "update salle set nosalle = '" + newNum + "' where nosalle ='" + grdSalle[0, grdSalle.CurrentRow.Index].Value + "'";
-                cmdsalle.Connection = cnn;
-                cmdsalle.ExecuteReader();
-
-                Salle_Load(sender, e);
-            }
-            else
-            {
-                lblMsg.Text = "Numéro de salle invalide";
-                lblMsg.ForeColor = Color.Red;
-            }
-        }
-
-            private void btnDelete_Click(object sender, EventArgs e)
-        {
+            removeError();
             if (grdSalle.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 OdbcConnection cnn = new OdbcConnection();

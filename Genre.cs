@@ -63,9 +63,14 @@ namespace AP_CINE_APPLI
             grdGenre.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
-        private void checkData()
+        private void removeError()
         {
             errorProviderGenre.SetError(txtGenre, "");
+        }
+
+        private void checkData()
+        {
+            removeError();
             if (string.IsNullOrEmpty(txtGenre.Text))
             {
                 errorProviderGenre.SetError(txtGenre, "Veuillez remplir ce champ");
@@ -80,7 +85,8 @@ namespace AP_CINE_APPLI
             errorProviderGenre.SetError(txtGenre, "");
             lblMsg.ForeColor = Color.Black;
             bool existengenre = false;
-            for (int i = 0; i < grdGenre.Rows.Count; i++)
+            int i = 0;
+            while (!existengenre && i < grdGenre.Rows.Count)
             {
                 if (grdGenre[1, i].Value.ToString() == libgenre)
                 {
@@ -88,7 +94,10 @@ namespace AP_CINE_APPLI
                     lblMsg.Text = "Ce genre existe déjà";
                     errorProviderGenre.SetError(txtGenre, "Genre déjà existant");
                     lblMsg.ForeColor = Color.Red;
-                    break;
+                }
+                else
+                {
+                    i++;
                 }
             }
             return existengenre;
@@ -127,7 +136,6 @@ namespace AP_CINE_APPLI
         {
             if (grdGenre.RowCount >= 0)
             {
-
                 if (txtGenre.Text.ToString() != "")
                 {
                     if (!checkExistGenre(txtGenre.Text.ToString()))
@@ -160,6 +168,7 @@ namespace AP_CINE_APPLI
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            removeError();
             if (grdGenre.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le genre suivant :\n" + grdGenre[1, grdGenre.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 OdbcConnection cnn = new OdbcConnection();

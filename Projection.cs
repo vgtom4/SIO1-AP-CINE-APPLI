@@ -109,14 +109,16 @@ namespace AP_CINE_APPLI
             cnn.Close();
         }
 
-        private void checkData()
+        private void removeError()
         {
             errorProviderDate.SetError(dateProj, "");
             errorProviderFilm.SetError(cboFilm, "");
-            errorProviderTime.SetError(timeProj, "");
             errorProviderSalle.SetError(cboSalle, "");
-            
+        }
 
+        private void checkData()
+        {
+            removeError();
             if (cboFilm.SelectedIndex == -1)
             {
                 errorProviderFilm.SetError(cboFilm, "Veuillez remplir ce champ");
@@ -131,12 +133,6 @@ namespace AP_CINE_APPLI
             {
                 errorProviderDate.SetError(dateProj, "Veuillez remplir ce champ");
             }
-
-            if (timeProj.Value.ToString("T") == "00:00:00")
-            {
-                errorProviderTime.SetError(timeProj, "Veuillez remplir ce champ");
-            }
-     
         }
 
         private void refresh(object sender, EventArgs e)
@@ -147,7 +143,7 @@ namespace AP_CINE_APPLI
             cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
             cnn.Open();
 
-            cmdproj.CommandText = "select * from projection natural join film";
+            cmdproj.CommandText = "select * from projection natural join film order by dateproj, heureproj, nosalle";
             cmdproj.Connection = cnn;
             drrproj = cmdproj.ExecuteReader();
             existenproj = drrproj.Read();
@@ -209,18 +205,22 @@ namespace AP_CINE_APPLI
 
         private void btnDeleteProj_Click(object sender, EventArgs e)
         {
-            OdbcConnection cnn = new OdbcConnection();
-            OdbcCommand cmd = new OdbcCommand();
+            removeError();
+            if (grdProjection.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la projection ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                OdbcConnection cnn = new OdbcConnection();
+                OdbcCommand cmd = new OdbcCommand();
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
-            cnn.Open();
+                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                cnn.Open();
 
-            cmd.CommandText = "delete from projection where noproj =" + grdProjection[0, grdProjection.CurrentRow.Index].Value + ";";
-            cmd.Connection = cnn;
-            cmd.ExecuteReader();
-            cnn.Close();
-            MessageBox.Show("Projection supprimée");
-            refresh(sender, e);
+                cmd.CommandText = "delete from projection where noproj =" + grdProjection[0, grdProjection.CurrentRow.Index].Value + ";";
+                cmd.Connection = cnn;
+                cmd.ExecuteReader();
+                cnn.Close();
+                lblMsg.Text = "Projection supprimée";
+                refresh(sender, e);
+            }
         }
     }
 }

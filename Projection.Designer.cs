@@ -47,7 +47,6 @@
             this.errorProviderSalle = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderFilm = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderInfo = new System.Windows.Forms.ErrorProvider(this.components);
-            this.errorProviderTime = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderDate = new System.Windows.Forms.ErrorProvider(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -59,7 +58,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSalle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderFilm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderInfo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProviderTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderDate)).BeginInit();
             this.SuspendLayout();
             // 
@@ -223,10 +221,6 @@
             // 
             this.errorProviderInfo.ContainerControl = this;
             // 
-            // errorProviderTime
-            // 
-            this.errorProviderTime.ContainerControl = this;
-            // 
             // errorProviderDate
             // 
             this.errorProviderDate.ContainerControl = this;
@@ -320,7 +314,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSalle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderFilm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderInfo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProviderTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderDate)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -347,7 +340,6 @@
         private System.Windows.Forms.ErrorProvider errorProviderSalle;
         private System.Windows.Forms.ErrorProvider errorProviderFilm;
         private System.Windows.Forms.ErrorProvider errorProviderInfo;
-        private System.Windows.Forms.ErrorProvider errorProviderTime;
         private System.Windows.Forms.ErrorProvider errorProviderDate;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;

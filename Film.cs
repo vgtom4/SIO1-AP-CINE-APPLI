@@ -15,6 +15,8 @@ namespace AP_CINE_APPLI
     public partial class Film : Form
     {
         string namePicture = null;
+        List<int> idPublics = new List<int>();
+        List<int> idGenres = new List<int>();
 
         public Film()
         {
@@ -73,8 +75,6 @@ namespace AP_CINE_APPLI
             cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
             cnn.Open();
 
-            
-
             //affichage des genres dans lstGenre
 
             OdbcCommand cmdlstgenre = new OdbcCommand(); OdbcDataReader drrlstgenre; Boolean existenlstgenre;
@@ -90,6 +90,7 @@ namespace AP_CINE_APPLI
             while (existenlstgenre == true)
             {
                 lstGenre.Items.Add(drrlstgenre["libgenre"]);
+                idGenres.Add(Convert.ToInt16(drrlstgenre["nogenre"]));
 
                 existenlstgenre = drrlstgenre.Read();
             }
@@ -108,20 +109,24 @@ namespace AP_CINE_APPLI
             while (existenpublic == true)
             {
                 cboPublic.Items.Add(drrpublic["libpublic"]);
+                idPublics.Add(Convert.ToInt16(drrpublic["nopublic"]));
 
                 existenpublic = drrpublic.Read();
             }
             drrpublic.Close();
 
             cnn.Close();
+
+            
             // Affichage des films en appelant la méthode affichageFilm avec la requête qui importe tous les films et publics
             affichageFilm("select * from film natural join public");
-            btnClear_Click(sender, e);
+
 
             pictureBox1.Image = Properties.Resources.noimg;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             
         }
+
         // Création d'une méthode affichage film qui appelle un paramètre "requestfilm" pour afficher ensuite dans le combobox
         public void affichageFilm(string requestFilm)
         {
@@ -168,11 +173,8 @@ namespace AP_CINE_APPLI
 
 
                 //affichage des genres dans grdFilm
-
                 OdbcCommand cmdgenre = new OdbcCommand(); OdbcDataReader drrgenre; Boolean existengenre;
                 cmdgenre.CommandText = "SELECT libgenre FROM genre natural join concerner where nofilm = " + drrfilm["nofilm"] + "";
-
-
 
                 cmdgenre.Connection = cnn;
                 drrgenre = cmdgenre.ExecuteReader();
@@ -198,16 +200,21 @@ namespace AP_CINE_APPLI
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
 
-        private void checkData()
+        private void removeError()
         {
             errorProviderTitle.SetError(txtTitle, "");
             errorProviderDirector.SetError(txtDirector, "");
             errorProviderActor.SetError(txtActor, "");
             errorProviderSynopsis.SetError(txtSynopsis, "");
             errorProviderDuree.SetError(timeFilm, "");
-            errorProviderInfo.SetError(txtInfo, "");
             errorProviderPublic.SetError(cboPublic, "");
             errorProviderGenre.SetError(lstGenre, "");
+            lblMsg.Text = "";
+        }
+
+        private void checkData()
+        {
+            removeError();
 
             if (string.IsNullOrEmpty(txtTitle.Text))
             {
@@ -234,11 +241,6 @@ namespace AP_CINE_APPLI
                 errorProviderDuree.SetError(timeFilm, "Veuillez remplir ce champ");
             }
 
-            if (string.IsNullOrEmpty(txtInfo.Text))
-            {
-                errorProviderInfo.SetError(txtInfo, "Veuillez remplir ce champ");
-            }
-
             if (cboPublic.SelectedIndex < 0)
             {
                 errorProviderPublic.SetError(cboPublic, "Veuillez remplir ce champ");
@@ -248,22 +250,14 @@ namespace AP_CINE_APPLI
             {
                 errorProviderGenre.SetError(lstGenre, "Veuillez remplir ce champ");
             }
-
-
         }
 
         private void btnAddFilm_Click(object sender, EventArgs e)
         {
             checkData();
 
-            if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
+            if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
             {
-                txtTitle.Text.Replace("\'","\\'");
-                txtDirector.Text.Replace("\'", "\\'");
-                txtActor.Text.Replace("\'", "\\'");
-                txtSynopsis.Text.Replace("\'", "\\'");
-                txtInfo.Text.Replace("\'", "\\'");
-
                 OdbcConnection cnn = new OdbcConnection();
                 OdbcCommand cmdfilm = new OdbcCommand();
 
@@ -278,58 +272,32 @@ namespace AP_CINE_APPLI
                                                             "'" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "', " +
                                                             "'" + txtInfo.Text.ToString().Replace("\'", "\\'") + "', " +
                                                             "'" + namePicture + "', " +
-                                                            "(select nopublic from public " +
-                                                            "where libpublic = '" + cboPublic.SelectedItem + "'))";
-                MessageBox.Show(cmdfilm.CommandText);
+                                                            "'" + idPublics[cboPublic.SelectedIndex] + "')";
                 cmdfilm.Connection = cnn;
                 cmdfilm.ExecuteReader();
 
-
                 OdbcCommand cmdnofilm = new OdbcCommand(); OdbcDataReader drrnofilm; bool existennofilm;
-
                 cmdnofilm.CommandText = "SELECT nofilm FROM film ORDER BY nofilm DESC LIMIT 1";
                 cmdnofilm.Connection = cnn;
                 drrnofilm = cmdnofilm.ExecuteReader();
                 existennofilm = drrnofilm.Read();
 
-                OdbcCommand cmdnogenre = new OdbcCommand(); OdbcDataReader drrnogenre; bool existennogenre;
-
-                cmdnogenre.CommandText = "SELECT nogenre FROM genre where libgenre IN (";
-                
+                OdbcCommand cmdconcerner = new OdbcCommand();
                 for (int i = 0; i < lstGenre.Items.Count; i++)
                 {
                     if (lstGenre.GetSelected(i) == true)
                     {
-                        cmdnogenre.CommandText += "'" + lstGenre.Items[i] + "',";
+                        cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + idGenres[i] + ")";
+                        cmdconcerner.Connection = cnn;
+                        cmdconcerner.ExecuteNonQuery();
                     }
                 }
-                cmdnogenre.CommandText = cmdnogenre.CommandText.Remove(cmdnogenre.CommandText.Length - 1);
-                cmdnogenre.CommandText += ")";
-
-                cmdnogenre.Connection = cnn;
-                drrnogenre = cmdnogenre.ExecuteReader();
-                existennogenre = drrnogenre.Read();
-
-                OdbcCommand cmdconcerner = new OdbcCommand();
-
-
-
-                while (existennogenre == true)
-                {
-                    cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + drrnogenre["nogenre"] + ")";
-                    cmdconcerner.Connection = cnn;
-                    cmdconcerner.ExecuteNonQuery();
-                    existennogenre = drrnogenre.Read();
-                }
-
-                drrnogenre.Close();
                 drrnofilm.Close();
-                drrnogenre.Close();
-
                 cnn.Close();
+
                 lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
                 lblMsg.ForeColor = Color.Blue;
-                namePicture = null;
+
                 affichageFilm("select * from film natural join public");
             }
             else
@@ -340,7 +308,6 @@ namespace AP_CINE_APPLI
                 message += txtActor.Text.ToString() != "" ? "" : "Acteur(s)\n";
                 message += txtSynopsis.Text.ToString() != "" ? "" : "Synopsis\n";
                 message += timeFilm.Text.ToString() != "00:00:00" ? "" : "Durée\n";
-                message += txtInfo.Text.ToString() != "" ? "" : "Information(s) supplémentaire(s)\n";
                 message += cboPublic.SelectedIndex > 0 ? "" : "Type de public\n";
                 message += lstGenre.SelectedItems.Count != 0 ? "" : "Genre(s)\n";
 
@@ -351,6 +318,7 @@ namespace AP_CINE_APPLI
 
         private void btnDeleteFilm_Click(object sender, EventArgs e)
         {
+            removeError();
             if (grdFilm.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + grdFilm[1, grdFilm.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 OdbcConnection cnn = new OdbcConnection();
@@ -390,57 +358,45 @@ namespace AP_CINE_APPLI
 
         private void btnResearch_Click(object sender, EventArgs e)
         {
+            removeError();
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
-            string dureeFilm, typePublic;
-            if (cboPublic.SelectedIndex == -1)
-            {
-                typePublic = "";
-            }
-            else
-            {
-                typePublic = cboPublic.SelectedItem.ToString();
-            }
 
-            if (timeFilm.Text.ToString() == "00:00:00")
-            {
-                dureeFilm = "";
-            }
-            else
+            string dureeFilm = "";
+            if (timeFilm.Text.ToString() != "00:00:00")
             {
                 dureeFilm = timeFilm.Text.ToString();
             }
 
-            OdbcConnection cnn = new OdbcConnection();
-            OdbcCommand cmdfilm = new OdbcCommand(); //OdbcDataReader drrfilm; Boolean existenfilm;
-
+            OdbcConnection cnn = new OdbcConnection(); OdbcCommand cmdfilm = new OdbcCommand();
+            
             cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
             cnn.Open();
 
-            cmdfilm.CommandText = "select film.*, libgenre, libpublic from film natural join public natural join genre natural join concerner " +
+            cmdfilm.CommandText = "select film.*, libgenre, libpublic from film natural join concerner natural join genre natural join public " +
                                            "where titre like '%" + txtTitle.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                           "and realisateurs like '%" + txtDirector.Text.ToString().Replace("\'", "\\'") + "%'" +
+                                           "and realisateurs like '%" + txtDirector.Text.ToString().Replace("\'", "\\'") + "%' " +
                                            "and acteurs like '%" + txtActor.Text.ToString().Replace("\'", "\\'") + "%' " +
                                            "and duree like '%" + dureeFilm + "%' " +
                                            "and synopsis like '%" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "%' " +
                                            "and infofilm like '%" + txtInfo.Text.ToString().Replace("\'", "\\'") + "%' ";
-            if (typePublic != "")
+            if (cboPublic.SelectedIndex > -1)
             {
-                cmdfilm.CommandText += "and nopublic like (select nopublic from public where libpublic = '" + typePublic + "') ";
+                cmdfilm.CommandText += "and nopublic = " + idPublics[cboPublic.SelectedIndex] + " ";
             }
 
             if (lstGenre.SelectedItems.Count > 0)
             {
-                cmdfilm.CommandText += "and libgenre IN (";
+                cmdfilm.CommandText += "and nogenre IN (";
 
                 for (int i = 0; i < lstGenre.Items.Count; i++)
                 {
                     if (lstGenre.GetSelected(i) == true)
                     {
-                        cmdfilm.CommandText += "'" + lstGenre.Items[i] + "',";
+                        cmdfilm.CommandText += "" + idGenres[i] + ",";
                     }
                 }
                 cmdfilm.CommandText = cmdfilm.CommandText.Remove(cmdfilm.CommandText.Length - 1);
-                cmdfilm.CommandText += ")";
+                cmdfilm.CommandText += ") ";
             }
 
             cmdfilm.CommandText += "group by nofilm";
@@ -479,6 +435,7 @@ namespace AP_CINE_APPLI
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            removeError();
             if (txtTitle.Text == "test")
             {
                 txtTitle.Text = "test";
@@ -503,7 +460,9 @@ namespace AP_CINE_APPLI
                 namePicture = null;
                 cboPublic.SelectedIndex = -1;
                 lstGenre.SelectedIndex = -1;
+                affichageFilm("select * from film natural join public");
             }
+            lblMsg.Text = "";
         }
     }
 }

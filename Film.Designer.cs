@@ -61,7 +61,6 @@
             this.errorProviderPublic = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderGenre = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderSynopsis = new System.Windows.Forms.ErrorProvider(this.components);
-            this.errorProviderInfo = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdFilm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderTitle)).BeginInit();
@@ -71,7 +70,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderPublic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSynopsis)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProviderInfo)).BeginInit();
             this.SuspendLayout();
             // 
             // grdFilm
@@ -335,10 +333,6 @@
             // 
             this.errorProviderSynopsis.ContainerControl = this;
             // 
-            // errorProviderInfo
-            // 
-            this.errorProviderInfo.ContainerControl = this;
-            // 
             // Film
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -382,7 +376,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderPublic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSynopsis)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProviderInfo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -422,6 +415,5 @@
         private System.Windows.Forms.ErrorProvider errorProviderPublic;
         private System.Windows.Forms.ErrorProvider errorProviderGenre;
         private System.Windows.Forms.ErrorProvider errorProviderSynopsis;
-        private System.Windows.Forms.ErrorProvider errorProviderInfo;
     }
 }
