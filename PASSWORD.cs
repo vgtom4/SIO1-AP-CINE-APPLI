@@ -8,7 +8,7 @@ namespace AP_CINE_APPLI
 {
     class password
     {
-        public static string pwdDb = "";
+        public static string pwdDb = "root";
 
         public string getnom()
         {

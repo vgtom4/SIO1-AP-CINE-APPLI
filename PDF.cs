@@ -19,7 +19,6 @@ namespace AP_CINE_APPLI
 {
     public partial class PDF : Form
     {
-        string pwdDb = "";
 
         public PDF()
         {
@@ -80,7 +79,7 @@ namespace AP_CINE_APPLI
 
             // Ajout tableaux pour chaque projection
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
             cnn.Open();
             cmd.CommandText = "select * from projection natural join film where dateproj ='" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd") + "' order by dateproj";
             cmd.Connection = cnn;

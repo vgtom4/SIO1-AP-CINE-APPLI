@@ -15,7 +15,6 @@ namespace AP_CINE_APPLI
     public partial class Film : Form
     {
         string namePicture = null;
-        string pwdDb = "";
 
         public Film()
         {
@@ -71,7 +70,7 @@ namespace AP_CINE_APPLI
             //Initialisation de la connexion à la base de données
             OdbcConnection cnn = new OdbcConnection();
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
             cnn.Open();
 
             
@@ -131,7 +130,7 @@ namespace AP_CINE_APPLI
             OdbcConnection cnn = new OdbcConnection();
             OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
             cnn.Open();
 
             cmdfilm.CommandText = requestFilm;
@@ -259,22 +258,29 @@ namespace AP_CINE_APPLI
 
             if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && txtInfo.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
             {
+                txtTitle.Text.Replace("\'","\\'");
+                txtDirector.Text.Replace("\'", "\\'");
+                txtActor.Text.Replace("\'", "\\'");
+                txtSynopsis.Text.Replace("\'", "\\'");
+                txtInfo.Text.Replace("\'", "\\'");
+
                 OdbcConnection cnn = new OdbcConnection();
                 OdbcCommand cmdfilm = new OdbcCommand();
 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
                 cnn.Open();
 
                 cmdfilm.CommandText = "insert into film values (null, " +
-                                                            "'" + txtTitle.Text.ToString() + "', " +
-                                                            "'" + txtDirector.Text.ToString() + "', " +
-                                                            "'" + txtActor.Text.ToString() + "', " +
+                                                            "'" + txtTitle.Text.Replace("\'", "\\'") + "', " +
+                                                            "'" + txtDirector.Text.Replace("\'", "\\'") + "', " +
+                                                            "'" + txtActor.Text.ToString().Replace("\'", "\\'") + "', " +
                                                             "'" + timeFilm.Text + "', " +
-                                                            "'" + txtSynopsis.Text.ToString() + "', " +
-                                                            "'" + txtInfo.Text.ToString() + "', " +
+                                                            "'" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "', " +
+                                                            "'" + txtInfo.Text.ToString().Replace("\'", "\\'") + "', " +
                                                             "'" + namePicture + "', " +
                                                             "(select nopublic from public " +
                                                             "where libpublic = '" + cboPublic.SelectedItem + "'))";
+                MessageBox.Show(cmdfilm.CommandText);
                 cmdfilm.Connection = cnn;
                 cmdfilm.ExecuteReader();
 
@@ -349,7 +355,7 @@ namespace AP_CINE_APPLI
             {
                 OdbcConnection cnn = new OdbcConnection();
                 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
                 cnn.Open();
 
                 OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;
@@ -407,16 +413,16 @@ namespace AP_CINE_APPLI
             OdbcConnection cnn = new OdbcConnection();
             OdbcCommand cmdfilm = new OdbcCommand(); //OdbcDataReader drrfilm; Boolean existenfilm;
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
+            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
             cnn.Open();
 
             cmdfilm.CommandText = "select film.*, libgenre, libpublic from film natural join public natural join genre natural join concerner " +
-                                           "where titre like '%" + txtTitle.Text.ToString() + "%' " +
-                                           "and realisateurs like '%" + txtDirector.Text.ToString() + "%'" +
-                                           "and acteurs like '%" + txtActor.Text.ToString() + "%' " +
+                                           "where titre like '%" + txtTitle.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                           "and realisateurs like '%" + txtDirector.Text.ToString().Replace("\'", "\\'") + "%'" +
+                                           "and acteurs like '%" + txtActor.Text.ToString().Replace("\'", "\\'") + "%' " +
                                            "and duree like '%" + dureeFilm + "%' " +
-                                           "and synopsis like '%" + txtSynopsis.Text.ToString() + "%' " +
-                                           "and infofilm like '%" + txtInfo.Text.ToString() + "%' ";
+                                           "and synopsis like '%" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                           "and infofilm like '%" + txtInfo.Text.ToString().Replace("\'", "\\'") + "%' ";
             if (typePublic != "")
             {
                 cmdfilm.CommandText += "and nopublic like (select nopublic from public where libpublic = '" + typePublic + "') ";
