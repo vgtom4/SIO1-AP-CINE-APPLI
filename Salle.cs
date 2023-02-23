@@ -15,7 +15,7 @@ namespace AP_CINE_APPLI
 {
     public partial class Salle : Form
     {
-        string pwdDb = "root";
+        string pwdDb = "";
         public Salle()
         {
             InitializeComponent();

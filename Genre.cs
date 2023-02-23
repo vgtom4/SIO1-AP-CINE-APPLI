@@ -14,7 +14,7 @@ namespace AP_CINE_APPLI
 {
     public partial class Genre : Form
     {
-        string pwdDb = "root";
+        string pwdDb = "";
         
 
         public Genre()

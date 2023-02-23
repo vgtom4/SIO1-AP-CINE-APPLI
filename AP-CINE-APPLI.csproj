@@ -59,6 +59,7 @@
     <Compile Include="Film.Designer.cs">
       <DependentUpon>Film.cs</DependentUpon>
     </Compile>
+    <Compile Include="filmClass.cs" />
     <Compile Include="Genre.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +72,8 @@
     <Compile Include="home.Designer.cs">
       <DependentUpon>home.cs</DependentUpon>
     </Compile>
+    <Compile Include="passerell.cs" />
+    <Compile Include="PASSWORD.cs" />
     <Compile Include="PDF.cs">
       <SubType>Form</SubType>
     </Compile>

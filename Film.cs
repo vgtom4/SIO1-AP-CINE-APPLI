@@ -15,7 +15,7 @@ namespace AP_CINE_APPLI
     public partial class Film : Form
     {
         string namePicture = null;
-        string pwdDb = "root";
+        string pwdDb = "";
 
         public Film()
         {
@@ -26,6 +26,7 @@ namespace AP_CINE_APPLI
 
         private void Film_Load(object sender, EventArgs e)
         {
+            // Initialisation du DataGridView et des différents éléments graphiques.
             lblMsg.BackColor = Color.White;
             lblMsg.Text = "";
 
@@ -67,7 +68,7 @@ namespace AP_CINE_APPLI
             timeFilm.ShowUpDown = true;
             timeFilm.Value = DateTime.Parse("00:00:00");
 
-
+            //Initialisation de la connexion à la base de données
             OdbcConnection cnn = new OdbcConnection();
 
             cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
@@ -95,6 +96,7 @@ namespace AP_CINE_APPLI
             }
             drrlstgenre.Close();
 
+            // Remplissage du ComboBox pour les différents publics ciblés possibles (-12, -16...)
 
             OdbcCommand cmdpublic = new OdbcCommand(); OdbcDataReader drrpublic; Boolean existenpublic;
             cmdpublic.CommandText = "select * from public";
@@ -113,7 +115,7 @@ namespace AP_CINE_APPLI
             drrpublic.Close();
 
             cnn.Close();
-
+            // Affichage des films en appelant la méthode affichageFilm avec la requête qui importe tous les films et publics
             affichageFilm("select * from film natural join public");
             btnClear_Click(sender, e);
 
@@ -121,8 +123,8 @@ namespace AP_CINE_APPLI
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             
         }
-
-        public void affichageFilm(string resquestFilm)
+        // Création d'une méthode affichage film qui appelle un paramètre "requestfilm" pour afficher ensuite dans le combobox
+        public void affichageFilm(string requestFilm)
         {
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
@@ -132,7 +134,7 @@ namespace AP_CINE_APPLI
             cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + pwdDb + "";
             cnn.Open();
 
-            cmdfilm.CommandText = resquestFilm;
+            cmdfilm.CommandText = requestFilm;
             cmdfilm.Connection = cnn;
             drrfilm = cmdfilm.ExecuteReader();
             existenfilm = drrfilm.Read();
