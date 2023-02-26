@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AP_CINE_APPLI
 {
@@ -19,17 +20,14 @@ namespace AP_CINE_APPLI
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
+            this.Text = "Genre";
             lblMsg.Text = "";
         }
 
         private void Genre_Load(object sender, EventArgs e)
         {
-            lblMsg.BackColor = Color.White;
-
             grdGenre.AllowUserToAddRows = false;
             grdGenre.ReadOnly = true;
-            grdGenre.RowHeadersVisible = false;
-            grdGenre.RowHeadersVisible = true;
 
             grdGenre.Columns[0].Width = 30;
             grdGenre.Columns[1].Width = 100;
@@ -75,7 +73,6 @@ namespace AP_CINE_APPLI
             {
                 errorProviderGenre.SetError(txtGenre, "Veuillez remplir ce champ");
                 lblMsg.Text = "Libellé de genre invalide";
-                lblMsg.ForeColor = Color.Red;
             }
         }
 
@@ -83,7 +80,6 @@ namespace AP_CINE_APPLI
         {
             lblMsg.Text = "";
             errorProviderGenre.SetError(txtGenre, "");
-            lblMsg.ForeColor = Color.Black;
             bool existengenre = false;
             int i = 0;
             while (!existengenre && i < grdGenre.Rows.Count)
@@ -93,7 +89,6 @@ namespace AP_CINE_APPLI
                     existengenre = true;
                     lblMsg.Text = "Ce genre existe déjà";
                     errorProviderGenre.SetError(txtGenre, "Genre déjà existant");
-                    lblMsg.ForeColor = Color.Red;
                 }
                 else
                 {
@@ -125,7 +120,6 @@ namespace AP_CINE_APPLI
                     cnn.Close();
 
                     lblMsg.Text = "Le genre \"" + txtGenre.Text.ToString() + "\" a été ajouté";
-                    lblMsg.ForeColor = Color.Blue;
 
                     Genre_Load(sender, e);
                 }
@@ -153,7 +147,6 @@ namespace AP_CINE_APPLI
                         drrfilm.Close();
 
                         lblMsg.Text = "Le genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été modifié en \"" + txtGenre.Text.ToString() + "\"";
-                        lblMsg.ForeColor = Color.Blue;
 
                         Genre_Load(sender, e);
                     }
@@ -161,7 +154,6 @@ namespace AP_CINE_APPLI
                 else
                 {
                     lblMsg.Text = "Libellé de genre invalide";
-                    lblMsg.ForeColor = Color.Red;
                 }
             }
         }
@@ -192,13 +184,12 @@ namespace AP_CINE_APPLI
 
                 drrfilm.Close();
                 lblMsg.Text = "Le genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été supprimé";
-                lblMsg.ForeColor = Color.Red;
 
                 Genre_Load(sender, e);
             }
         }
 
-        private void grdGenre_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void grdGenre_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             txtGenre.Text = grdGenre[1, grdGenre.CurrentCell.RowIndex].Value.ToString();
         }

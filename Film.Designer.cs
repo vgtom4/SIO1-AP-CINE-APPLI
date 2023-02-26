@@ -78,6 +78,7 @@
             this.grdFilm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdFilm.Location = new System.Drawing.Point(12, 206);
             this.grdFilm.Name = "grdFilm";
+            this.grdFilm.RowHeadersVisible = false;
             this.grdFilm.RowHeadersWidth = 51;
             this.grdFilm.RowTemplate.Height = 24;
             this.grdFilm.Size = new System.Drawing.Size(1280, 579);
@@ -264,6 +265,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(364, 46);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(103, 136);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
             // 

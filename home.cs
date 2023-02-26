@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Odbc;
+using FontAwesome.Sharp;
+using System.Runtime.InteropServices;
 
 namespace AP_CINE_APPLI
 {
@@ -21,10 +23,43 @@ namespace AP_CINE_APPLI
         PDF pdf;
         public string pwdDB = "root";
 
+        private IconButton currentBtn;
+        private Panel leftBorderBtn;
+        private Form currentChildForm;
+
         public home()
         {
             InitializeComponent();
-            //this.Text = "Outil Pathé Gaumont";
+            leftBorderBtn = new Panel();
+            leftBorderBtn.Size = new Size(149, 222);
+            panelMenu.Controls.Add(leftBorderBtn);
+
+            this.Text = string.Empty;
+            this.ControlBox = false;
+            this.DoubleBuffered = true;
+            this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+        }
+
+        private void ActivateButton(object senderBtn)
+        {
+            if (senderBtn != null)
+            {
+                DisableButton();
+                currentBtn = (IconButton)senderBtn;
+                currentBtn.BackColor = Color.FromArgb(253, 195, 0);
+                currentBtn.ForeColor = Color.FromArgb(32, 32, 32);
+                currentBtn.IconColor = Color.FromArgb(32, 32, 32);
+            }
+        }
+
+        private void DisableButton()
+        {
+            if (currentBtn != null)
+            {
+                currentBtn.BackColor = Color.FromArgb(32, 32, 32);
+                currentBtn.ForeColor = Color.FromArgb(253, 195, 0);
+                currentBtn.IconColor = Color.FromArgb(253, 195, 0);
+            }
         }
 
         private void home_Load(object sender, EventArgs e)
@@ -32,74 +67,94 @@ namespace AP_CINE_APPLI
             this.IsMdiContainer = true;
         }
 
-        private void filmToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenChildForm(Form childForm)
         {
-            if (film == null || film.IsDisposed == true)
+            if (currentChildForm == null || currentChildForm.GetType() != childForm.GetType())
             {
-                film = new Film();
-                film.MdiParent = this;
-                film.Show();
-            }
-            else
-            {
-                film.Activate();
+                currentChildForm?.Close();
+
+                currentChildForm = (Form)Activator.CreateInstance(childForm.GetType());
+                currentChildForm.TopLevel = false;
+                currentChildForm.FormBorderStyle = FormBorderStyle.None;
+                currentChildForm.Dock = DockStyle.Fill;
+                panelDesktop.Controls.Clear();
+                panelDesktop.Controls.Add(currentChildForm);
+                currentChildForm.BringToFront();
+                currentChildForm.Show();
             }
         }
 
-        private void genreToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnGenre_Click(object sender, EventArgs e)
         {
-            if (genre == null || genre.IsDisposed == true)
+            ActivateButton(sender);
+            OpenChildForm(new Genre());
+        }
+
+        private void btnSalle_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            OpenChildForm(new Salle());
+        }
+
+        private void btnFilm_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            OpenChildForm(new Film());
+        }
+
+        private void btnProjection_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            OpenChildForm(new Projection());
+        }
+
+        private void btnPDF_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            OpenChildForm(new PDF());
+        }
+
+        private void btnAccueil_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            if (currentChildForm != null)
             {
-                genre = new Genre();
-                genre.MdiParent = this;
-                genre.Show();
-            }
-            else
-            {
-                genre.Activate();
+                currentChildForm.Close();
+                currentChildForm = null;
             }
         }
 
-        private void publicToolStripMenuItem_Click(object sender, EventArgs e)
+        //Déplacement de la fenêtre
+        [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void panelTitleBar_MouseDown(object sender, MouseEventArgs e)
         {
-            if (salle == null || salle.IsDisposed == true)
-            {
-                salle = new Salle();
-                salle.MdiParent = this;
-                salle.Show();
-            }
-            else
-            {
-                salle.Activate();
-            }
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-        private void projectionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            if (projection == null || projection.IsDisposed == true)
-            {
-                projection = new Projection();
-                projection.MdiParent = this;
-                projection.Show();
-            }
-            else
-            {
-                projection.Activate();
-            }
+            Application.Exit();
         }
 
-        private void générerUnPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnMax_Click(object sender, EventArgs e)
         {
-            if (pdf == null || pdf.IsDisposed == true)
+            if (WindowState == FormWindowState.Normal)
             {
-                pdf = new PDF();
-                pdf.MdiParent = this;
-                pdf.Show();
+                WindowState = FormWindowState.Maximized;
             }
             else
-            {
-                pdf.Activate();
-            }
+                WindowState = FormWindowState.Normal;
+        }
+
+        private void btnMin_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
         }
     }
 }

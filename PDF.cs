@@ -57,7 +57,8 @@ namespace AP_CINE_APPLI
 
 
             // Ajout titre et logo en haut du document pdf
-            iTextSharp.text.Image image0 = iTextSharp.text.Image.GetInstance(System.Windows.Forms.Application.StartupPath + "\\logo.png");
+            //iTextSharp.text.Image image0 = iTextSharp.text.Image.GetInstance(System.Windows.Forms.Application.StartupPath + "\\logo.png");
+            iTextSharp.text.Image image0 = iTextSharp.text.Image.GetInstance(Properties.Resources.logo, BaseColor.WHITE);
 
             image0.SetAbsolutePosition(1, 1);
             image0.Alignment = iTextSharp.text.Image.ALIGN_LEFT;

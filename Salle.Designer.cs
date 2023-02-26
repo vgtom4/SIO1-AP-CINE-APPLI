@@ -57,11 +57,12 @@
             this.Column2});
             this.grdSalle.Location = new System.Drawing.Point(12, 12);
             this.grdSalle.Name = "grdSalle";
+            this.grdSalle.RowHeadersVisible = false;
             this.grdSalle.RowHeadersWidth = 51;
             this.grdSalle.RowTemplate.Height = 24;
             this.grdSalle.Size = new System.Drawing.Size(304, 426);
             this.grdSalle.TabIndex = 0;
-            this.grdSalle.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdSalle_CellContentClick);
+            this.grdSalle.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdSalle_CellClick);
             // 
             // Column1
             // 

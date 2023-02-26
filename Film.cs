@@ -34,9 +34,7 @@ namespace AP_CINE_APPLI
             grdFilm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             grdFilm.AllowUserToAddRows = false;
             grdFilm.ReadOnly = true;
-            grdFilm.RowHeadersVisible = false;
             grdFilm.ColumnCount = 10;
-            grdFilm.RowHeadersVisible = true;
 
             grdFilm.Columns[0].Width = 30;
             grdFilm.Columns[1].Width = 100;
@@ -428,7 +426,7 @@ namespace AP_CINE_APPLI
                 lblMsg.ForeColor = Color.Blue;
 
                 pictureBox1.Image = Image.FromFile(@Application.StartupPath + "\\affiches\\" + Path.GetFileName(namePicture));
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
             }
         }

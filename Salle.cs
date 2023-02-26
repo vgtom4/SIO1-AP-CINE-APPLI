@@ -29,8 +29,6 @@ namespace AP_CINE_APPLI
 
             grdSalle.AllowUserToAddRows = false;
             grdSalle.ReadOnly = true;
-            grdSalle.RowHeadersVisible = false;
-            grdSalle.RowHeadersVisible = true;
 
             grdSalle.Columns[0].Width = 30;
             grdSalle.Columns[1].Width = 100;
@@ -211,7 +209,7 @@ namespace AP_CINE_APPLI
             }
         }
 
-        private void grdSalle_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void grdSalle_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             txtNum.Text = grdSalle[0, grdSalle.CurrentCell.RowIndex].Value.ToString();
             numCapac.Text = grdSalle[1, grdSalle.CurrentCell.RowIndex].Value.ToString();
