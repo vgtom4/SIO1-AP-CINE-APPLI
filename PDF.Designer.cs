@@ -31,6 +31,7 @@
             System.Windows.Forms.Button createPDF;
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.lblMsg = new System.Windows.Forms.Label();
             createPDF = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -64,6 +65,16 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(264, 21);
             this.dateTimePicker1.TabIndex = 1;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            // 
+            // lblMsg
+            // 
+            this.lblMsg.AutoSize = true;
+            this.lblMsg.Location = new System.Drawing.Point(245, 222);
+            this.lblMsg.Name = "lblMsg";
+            this.lblMsg.Size = new System.Drawing.Size(44, 16);
+            this.lblMsg.TabIndex = 3;
+            this.lblMsg.Text = "label2";
             // 
             // PDF
             // 
@@ -71,6 +82,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(778, 499);
+            this.Controls.Add(this.lblMsg);
             this.Controls.Add(createPDF);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label1);
@@ -88,5 +100,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label lblMsg;
     }
 }

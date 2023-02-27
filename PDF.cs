@@ -27,7 +27,7 @@ namespace AP_CINE_APPLI
 
         private void PDF_Load(object sender, EventArgs e)
         {
-
+            dateTimePicker1_ValueChanged(sender, e);
         }
 
         private void createPDF_Click(object sender, EventArgs e)
@@ -127,6 +127,32 @@ namespace AP_CINE_APPLI
                 p.Start();
                 p.Dispose();
             }
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            OdbcConnection cnn = new OdbcConnection();
+            OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;
+
+            cnn.ConnectionString = varglob.strconnect;
+            cnn.Open();
+
+            cmd.CommandText = "select count(noproj) as nbproj from projection where dateproj = '" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd") + "'";
+            cmd.Connection = cnn;
+            drr = cmd.ExecuteReader();
+            drr.Read();
+
+            if (Convert.ToInt32(drr["nbproj"]) > 0)
+            {
+                lblMsg.Text = "Il y a " + Convert.ToInt32(drr["nbproj"]).ToString() + " projection(s) programmée(s) pour cette date";
+            }
+            else
+            {
+                lblMsg.Text = "Aucune projection n'est programmée pour cette date";
+            }
+
+            drr.Close();
+            cnn.Close();
         }
     }
 }
