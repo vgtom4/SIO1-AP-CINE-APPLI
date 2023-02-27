@@ -16,7 +16,7 @@ namespace AP_CINE_APPLI
 {
     public partial class Projection : Form
     {
-        List<string[]> lstFilms = new List<string[]>();
+        List<int> lstIdFilms = new List<int>();
         public Projection()
         {
             InitializeComponent();
@@ -48,29 +48,9 @@ namespace AP_CINE_APPLI
 
             // Initialisation de la connexion à la base de données en passant par ODBC
             OdbcConnection cnn = new OdbcConnection();
-            OdbcCommand cmdproj = new OdbcCommand(); OdbcDataReader drrproj; Boolean existenproj;
 
             cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
             cnn.Open();
-
-            cmdproj.CommandText = "select * from projection natural join film";
-            cmdproj.Connection = cnn;
-            drrproj = cmdproj.ExecuteReader();
-            existenproj = drrproj.Read();
-
-            grdProjection.Rows.Clear();
-
-            while (existenproj == true)
-            {
-
-                grdProjection.Rows.Add(drrproj["noproj"], DateTime.Parse(drrproj["dateproj"].ToString()).ToString("d"), DateTime.Parse(drrproj["heureproj"].ToString()).ToString("HH") + "h" + DateTime.Parse(drrproj["heureproj"].ToString()).ToString("mm"), drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
-
-
-                existenproj = drrproj.Read();
-            }
-
-            drrproj.Close();
-
 
             OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
             cmdfilm.CommandText = "select titre, nofilm from film";
@@ -82,7 +62,7 @@ namespace AP_CINE_APPLI
 
             while (existenfilm == true)
             {
-                lstFilms.Add(new string[] { drrfilm["titre"].ToString(), drrfilm["nofilm"].ToString() });
+                lstIdFilms.Add(Convert.ToInt32(drrfilm["nofilm"]));
                 cboFilm.Items.Add(drrfilm["titre"]);
 
                 existenfilm = drrfilm.Read();
@@ -107,6 +87,8 @@ namespace AP_CINE_APPLI
             drrsalle.Close();
 
             cnn.Close();
+
+            refresh();
         }
 
         private void removeError()
@@ -135,7 +117,30 @@ namespace AP_CINE_APPLI
             }
         }
 
-        private void refresh(object sender, EventArgs e)
+        private bool checkExistProjection(string date, string time, string salle)
+        {
+            lblMsg.Text = "";
+            errorProviderInfo.SetError(lblMsg, "");
+            bool existenproj = false;
+            int i = 0;
+            while (!existenproj && i < grdProjection.Rows.Count)
+            {
+                if (grdProjection[1, i].Value.ToString() == date && grdProjection[2, i].Value.ToString().Replace("h",":") == time && grdProjection[5, i].Value.ToString() == salle)
+                {
+                    grdProjection.Rows[i].Selected = true;
+                    existenproj = true;
+                    lblMsg.Text = "Une projection existe déjà";
+                    errorProviderInfo.SetError(lblMsg, "Projection déjà programmé");
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return existenproj;
+        }
+
+        private void refresh()
         {
             OdbcConnection cnn = new OdbcConnection();
             OdbcCommand cmdproj = new OdbcCommand(); OdbcDataReader drrproj; Boolean existenproj;
@@ -165,28 +170,33 @@ namespace AP_CINE_APPLI
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            
             checkData();
+
             if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > -1 && cboSalle.SelectedIndex > -1)
             {
-                lblMsg.Visible = true;
-                lblDonMan.Visible = false;
-                OdbcConnection cnn = new OdbcConnection();
-                OdbcCommand cmd = new OdbcCommand();
+                if (!checkExistProjection(dateProj.Value.ToString("dd/MM/yyyy"), timeProj.Text, cboSalle.SelectedItem.ToString()))
+                {
+                    lblMsg.Visible = true;
+                    lblDonMan.Visible = false;
+                    OdbcConnection cnn = new OdbcConnection();
+                    OdbcCommand cmd = new OdbcCommand();
 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
-                cnn.Open();
+                    cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                    cnn.Open();
 
-                cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Text + "' , '" + txtInfo.Text.ToString() + "' , " + lstFilms[cboFilm.SelectedIndex][1] + " , '" + cboSalle.SelectedItem.ToString() + "')";
-                cmd.Connection = cnn;
-                cmd.ExecuteReader();
-                cnn.Close();
-                string message = ("Projection suivante enregistrée :" +
-                                "\n Film : " + cboFilm.SelectedItem.ToString() +
-                                "\nSalle : " + cboSalle.SelectedItem.ToString() +
-                                "\nDate : " + dateProj.Value.ToString("d") +
-                                "\nHoraire : " + timeProj.Value.ToString("t"));
-                lblMsg.Text = message;
-                refresh(sender, e);
+                    cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Text + "' , '" + txtInfo.Text.ToString() + "' , " + lstIdFilms[cboFilm.SelectedIndex] + " , '" + cboSalle.SelectedItem.ToString() + "')";
+                    cmd.Connection = cnn;
+                    cmd.ExecuteReader();
+                    cnn.Close();
+                    string message = ("Projection suivante enregistrée :" +
+                                    "\n Film : " + cboFilm.SelectedItem.ToString() +
+                                    "\nSalle : " + cboSalle.SelectedItem.ToString() +
+                                    "\nDate : " + dateProj.Value.ToString("d") +
+                                    "\nHoraire : " + timeProj.Value.ToString("t"));
+                    lblMsg.Text = message;
+                    refresh();
+                }
             }
             else
             {
@@ -198,7 +208,7 @@ namespace AP_CINE_APPLI
                 message += cboFilm.SelectedIndex > -1 ? "" : "Film\n";
                 message += cboSalle.SelectedIndex > -1 ? "" : "Salle";
 
-                lblMsg.Text=message;
+                lblMsg.Text = message;
             }
         }
 
@@ -219,7 +229,7 @@ namespace AP_CINE_APPLI
                 cmd.ExecuteReader();
                 cnn.Close();
                 lblMsg.Text = "Projection supprimée";
-                refresh(sender, e);
+                refresh();
             }
         }
     }

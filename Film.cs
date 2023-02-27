@@ -250,67 +250,92 @@ namespace AP_CINE_APPLI
             }
         }
 
+        private bool checkExistFilm(string titre)
+        {
+            lblMsg.Text = "";
+            errorProviderGenre.SetError(txtTitle, "");
+            bool existenfilm = false;
+            int i = 0;
+            while (!existenfilm && i < grdFilm.Rows.Count)
+            {
+                if (grdFilm[1, i].Value.ToString() == titre)
+                {
+                    existenfilm = true;
+                    lblMsg.Text = "Ce film existe déjà";
+                    errorProviderGenre.SetError(txtTitle, "Film déjà existant");
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return existenfilm;
+        }
+
         private void btnAddFilm_Click(object sender, EventArgs e)
         {
-            checkData();
-
-            if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
+            if (!checkExistFilm(txtTitle.Text))
             {
-                OdbcConnection cnn = new OdbcConnection();
-                OdbcCommand cmdfilm = new OdbcCommand();
+                checkData();
 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
-                cnn.Open();
-
-                cmdfilm.CommandText = "insert into film values (null, " +
-                                                            "'" + txtTitle.Text.Replace("\'", "\\'") + "', " +
-                                                            "'" + txtDirector.Text.Replace("\'", "\\'") + "', " +
-                                                            "'" + txtActor.Text.ToString().Replace("\'", "\\'") + "', " +
-                                                            "'" + timeFilm.Text + "', " +
-                                                            "'" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "', " +
-                                                            "'" + txtInfo.Text.ToString().Replace("\'", "\\'") + "', " +
-                                                            "'" + namePicture + "', " +
-                                                            "'" + idPublics[cboPublic.SelectedIndex] + "')";
-                cmdfilm.Connection = cnn;
-                cmdfilm.ExecuteReader();
-
-                OdbcCommand cmdnofilm = new OdbcCommand(); OdbcDataReader drrnofilm; bool existennofilm;
-                cmdnofilm.CommandText = "SELECT nofilm FROM film ORDER BY nofilm DESC LIMIT 1";
-                cmdnofilm.Connection = cnn;
-                drrnofilm = cmdnofilm.ExecuteReader();
-                existennofilm = drrnofilm.Read();
-
-                OdbcCommand cmdconcerner = new OdbcCommand();
-                for (int i = 0; i < lstGenre.Items.Count; i++)
+                if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
                 {
-                    if (lstGenre.GetSelected(i) == true)
+                    OdbcConnection cnn = new OdbcConnection();
+                    OdbcCommand cmdfilm = new OdbcCommand();
+
+                    cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                    cnn.Open();
+
+                    cmdfilm.CommandText = "insert into film values (null, " +
+                                                                "'" + txtTitle.Text.Replace("\'", "\\'") + "', " +
+                                                                "'" + txtDirector.Text.Replace("\'", "\\'") + "', " +
+                                                                "'" + txtActor.Text.ToString().Replace("\'", "\\'") + "', " +
+                                                                "'" + timeFilm.Text + "', " +
+                                                                "'" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "', " +
+                                                                "'" + txtInfo.Text.ToString().Replace("\'", "\\'") + "', " +
+                                                                "'" + namePicture + "', " +
+                                                                "'" + idPublics[cboPublic.SelectedIndex] + "')";
+                    cmdfilm.Connection = cnn;
+                    cmdfilm.ExecuteReader();
+
+                    OdbcCommand cmdnofilm = new OdbcCommand(); OdbcDataReader drrnofilm; bool existennofilm;
+                    cmdnofilm.CommandText = "SELECT nofilm FROM film ORDER BY nofilm DESC LIMIT 1";
+                    cmdnofilm.Connection = cnn;
+                    drrnofilm = cmdnofilm.ExecuteReader();
+                    existennofilm = drrnofilm.Read();
+
+                    OdbcCommand cmdconcerner = new OdbcCommand();
+                    for (int i = 0; i < lstGenre.Items.Count; i++)
                     {
-                        cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + idGenres[i] + ")";
-                        cmdconcerner.Connection = cnn;
-                        cmdconcerner.ExecuteNonQuery();
+                        if (lstGenre.GetSelected(i) == true)
+                        {
+                            cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + idGenres[i] + ")";
+                            cmdconcerner.Connection = cnn;
+                            cmdconcerner.ExecuteNonQuery();
+                        }
                     }
+                    drrnofilm.Close();
+                    cnn.Close();
+
+                    lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
+                    lblMsg.ForeColor = Color.Blue;
+
+                    affichageFilm("select * from film natural join public");
                 }
-                drrnofilm.Close();
-                cnn.Close();
+                else
+                {
+                    string message = "Données manquantes :\n";
+                    message += txtTitle.Text != "" ? "" : "Titre\n";
+                    message += txtDirector.Text.ToString() != "" ? "" : "Réalisateur(s)\n";
+                    message += txtActor.Text.ToString() != "" ? "" : "Acteur(s)\n";
+                    message += txtSynopsis.Text.ToString() != "" ? "" : "Synopsis\n";
+                    message += timeFilm.Text.ToString() != "00:00:00" ? "" : "Durée\n";
+                    message += cboPublic.SelectedIndex > 0 ? "" : "Type de public\n";
+                    message += lstGenre.SelectedItems.Count != 0 ? "" : "Genre(s)\n";
 
-                lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
-                lblMsg.ForeColor = Color.Blue;
-
-                affichageFilm("select * from film natural join public");
-            }
-            else
-            {
-                string message = "Données manquantes :\n";
-                message += txtTitle.Text != "" ? "" : "Titre\n";
-                message += txtDirector.Text.ToString() != "" ? "" : "Réalisateur(s)\n";
-                message += txtActor.Text.ToString() != "" ? "" : "Acteur(s)\n";
-                message += txtSynopsis.Text.ToString() != "" ? "" : "Synopsis\n";
-                message += timeFilm.Text.ToString() != "00:00:00" ? "" : "Durée\n";
-                message += cboPublic.SelectedIndex > 0 ? "" : "Type de public\n";
-                message += lstGenre.SelectedItems.Count != 0 ? "" : "Genre(s)\n";
-
-                lblMsg.Text = message;
-                lblMsg.ForeColor = Color.Red;
+                    lblMsg.Text = message;
+                    lblMsg.ForeColor = Color.Red;
+                }
             }
         }
 

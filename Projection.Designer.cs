@@ -63,6 +63,11 @@
             // 
             // grdProjection
             // 
+            this.grdProjection.AllowUserToAddRows = false;
+            this.grdProjection.AllowUserToDeleteRows = false;
+            this.grdProjection.AllowUserToOrderColumns = true;
+            this.grdProjection.AllowUserToResizeRows = false;
+            this.grdProjection.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.grdProjection.BackgroundColor = System.Drawing.Color.Black;
             this.grdProjection.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdProjection.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -74,7 +79,10 @@
             this.Column6});
             this.grdProjection.GridColor = System.Drawing.Color.Gold;
             this.grdProjection.Location = new System.Drawing.Point(12, 214);
+            this.grdProjection.MultiSelect = false;
             this.grdProjection.Name = "grdProjection";
+            this.grdProjection.ReadOnly = true;
+            this.grdProjection.RowHeadersVisible = false;
             this.grdProjection.RowHeadersWidth = 51;
             this.grdProjection.RowTemplate.Height = 24;
             this.grdProjection.Size = new System.Drawing.Size(804, 413);
