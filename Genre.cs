@@ -39,7 +39,7 @@ namespace AP_CINE_APPLI
 
             grdGenre.Rows.Clear();
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+            cnn.ConnectionString = varglob.strconnect;
             cnn.Open();
 
             cmd.CommandText = "select nogenre, libgenre from genre";
@@ -51,7 +51,6 @@ namespace AP_CINE_APPLI
             {
                 grdGenre.Rows.Add(drr["nogenre"], drr["libgenre"]);
                 existenreg = drr.Read();
-
             }
 
             drr.Close();
@@ -110,7 +109,7 @@ namespace AP_CINE_APPLI
                     OdbcConnection cnn = new OdbcConnection();
                     OdbcCommand cmd = new OdbcCommand();
 
-                    cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                    cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
                     cmd.CommandText = "insert into genre values (null, '" + txtGenre.Text.ToString() + "')";
@@ -136,7 +135,7 @@ namespace AP_CINE_APPLI
                     {
                         OdbcConnection cnn = new OdbcConnection();
 
-                        cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                        cnn.ConnectionString = varglob.strconnect;
                         cnn.Open();
 
                         OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
@@ -165,7 +164,7 @@ namespace AP_CINE_APPLI
             {
                 OdbcConnection cnn = new OdbcConnection();
 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
                 OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;

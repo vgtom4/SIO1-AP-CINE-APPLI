@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace AP_CINE_APPLI
 {
-    class password
+    class varglob
     {
-        public static string pwdDb = "root";
-
-        public string getnom()
-        {
-            return pwdDb;
-        }
+        public static string strconnect;
     }
 }

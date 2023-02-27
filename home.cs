@@ -10,19 +10,13 @@ using System.Windows.Forms;
 using System.Data.Odbc;
 using FontAwesome.Sharp;
 using System.Runtime.InteropServices;
+using Microsoft.VisualBasic;
 
 namespace AP_CINE_APPLI
 {
     
     public partial class home : Form
     {
-        Film film;
-        Genre genre;
-        Salle salle;
-        Projection projection;
-        PDF pdf;
-        public string pwdDB = "root";
-
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
@@ -38,6 +32,12 @@ namespace AP_CINE_APPLI
             this.ControlBox = false;
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+        }
+
+        private void home_Load(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
         }
 
         private void ActivateButton(object senderBtn)
@@ -60,11 +60,6 @@ namespace AP_CINE_APPLI
                 currentBtn.ForeColor = Color.FromArgb(253, 195, 0);
                 currentBtn.IconColor = Color.FromArgb(253, 195, 0);
             }
-        }
-
-        private void home_Load(object sender, EventArgs e)
-        {
-            this.IsMdiContainer = true;
         }
 
         private void OpenChildForm(Form childForm)

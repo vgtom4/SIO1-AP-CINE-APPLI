@@ -17,13 +17,13 @@ namespace AP_CINE_APPLI
     public partial class Projection : Form
     {
         List<int> lstIdFilms = new List<int>();
+
         public Projection()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
         }
-
         
         private void Projection_Load(object sender, EventArgs e)
         {
@@ -49,7 +49,7 @@ namespace AP_CINE_APPLI
             // Initialisation de la connexion à la base de données en passant par ODBC
             OdbcConnection cnn = new OdbcConnection();
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+            cnn.ConnectionString = varglob.strconnect;
             cnn.Open();
 
             OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
@@ -145,7 +145,7 @@ namespace AP_CINE_APPLI
             OdbcConnection cnn = new OdbcConnection();
             OdbcCommand cmdproj = new OdbcCommand(); OdbcDataReader drrproj; Boolean existenproj;
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+            cnn.ConnectionString = varglob.strconnect;
             cnn.Open();
 
             cmdproj.CommandText = "select * from projection natural join film order by dateproj, heureproj, nosalle";
@@ -157,9 +157,7 @@ namespace AP_CINE_APPLI
 
             while (existenproj == true)
             {
-
                 grdProjection.Rows.Add(drrproj["noproj"], DateTime.Parse(drrproj["dateproj"].ToString()).ToString("d"), DateTime.Parse(drrproj["heureproj"].ToString()).ToString("HH") + "h" + DateTime.Parse(drrproj["heureproj"].ToString()).ToString("mm"), drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
-
 
                 existenproj = drrproj.Read();
             }
@@ -182,7 +180,7 @@ namespace AP_CINE_APPLI
                     OdbcConnection cnn = new OdbcConnection();
                     OdbcCommand cmd = new OdbcCommand();
 
-                    cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                    cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
                     cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Text + "' , '" + txtInfo.Text.ToString() + "' , " + lstIdFilms[cboFilm.SelectedIndex] + " , '" + cboSalle.SelectedItem.ToString() + "')";
@@ -221,7 +219,7 @@ namespace AP_CINE_APPLI
                 OdbcConnection cnn = new OdbcConnection();
                 OdbcCommand cmd = new OdbcCommand();
 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
                 cmd.CommandText = "delete from projection where noproj =" + grdProjection[0, grdProjection.CurrentRow.Index].Value + ";";

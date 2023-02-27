@@ -41,7 +41,7 @@ namespace AP_CINE_APPLI
 
             grdSalle.Rows.Clear();
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+            cnn.ConnectionString = varglob.strconnect;
             cnn.Open();
 
             cmd.CommandText = "select * from salle";
@@ -118,7 +118,7 @@ namespace AP_CINE_APPLI
                     OdbcConnection cnn = new OdbcConnection();
                     OdbcCommand cmd = new OdbcCommand();
 
-                    cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                    cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
                     cmd.CommandText = "insert into salle values ('" + txtNum.Text + "', '" + numCapac.Value + "')";
@@ -149,7 +149,7 @@ namespace AP_CINE_APPLI
 
                 OdbcConnection cnn = new OdbcConnection();
 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
                 if (unlikeCapac)
@@ -192,7 +192,7 @@ namespace AP_CINE_APPLI
             {
                 OdbcConnection cnn = new OdbcConnection();
 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
                 OdbcCommand cmdsalle = new OdbcCommand();

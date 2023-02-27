@@ -79,8 +79,6 @@
     <Compile Include="home.Designer.cs">
       <DependentUpon>home.cs</DependentUpon>
     </Compile>
-    <Compile Include="passerell.cs" />
-    <Compile Include="PASSWORD.cs" />
     <Compile Include="PDF.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +104,7 @@
     <Compile Include="Salle.Designer.cs">
       <DependentUpon>Salle.cs</DependentUpon>
     </Compile>
+    <Compile Include="varglob.cs" />
     <EmbeddedResource Include="Film.resx">
       <DependentUpon>Film.cs</DependentUpon>
     </EmbeddedResource>

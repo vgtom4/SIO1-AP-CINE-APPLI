@@ -55,7 +55,7 @@
             this.grdSalle.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            this.grdSalle.Location = new System.Drawing.Point(12, 12);
+            this.grdSalle.Location = new System.Drawing.Point(200, 147);
             this.grdSalle.Name = "grdSalle";
             this.grdSalle.RowHeadersVisible = false;
             this.grdSalle.RowHeadersWidth = 51;
@@ -81,7 +81,7 @@
             // btnAdd
             // 
             this.btnAdd.BackColor = System.Drawing.Color.YellowGreen;
-            this.btnAdd.Location = new System.Drawing.Point(381, 207);
+            this.btnAdd.Location = new System.Drawing.Point(569, 342);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(134, 56);
             this.btnAdd.TabIndex = 1;
@@ -92,7 +92,7 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.Crimson;
-            this.btnDelete.Location = new System.Drawing.Point(381, 365);
+            this.btnDelete.Location = new System.Drawing.Point(569, 500);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(134, 58);
             this.btnDelete.TabIndex = 3;
@@ -102,14 +102,14 @@
             // 
             // txtNum
             // 
-            this.txtNum.Location = new System.Drawing.Point(460, 52);
+            this.txtNum.Location = new System.Drawing.Point(586, 180);
             this.txtNum.Name = "txtNum";
             this.txtNum.Size = new System.Drawing.Size(92, 22);
             this.txtNum.TabIndex = 5;
             // 
             // numCapac
             // 
-            this.numCapac.Location = new System.Drawing.Point(460, 85);
+            this.numCapac.Location = new System.Drawing.Point(586, 240);
             this.numCapac.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -122,7 +122,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(332, 55);
+            this.label1.Location = new System.Drawing.Point(583, 161);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 16);
             this.label1.TabIndex = 7;
@@ -131,7 +131,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(332, 87);
+            this.label2.Location = new System.Drawing.Point(583, 221);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 16);
             this.label2.TabIndex = 8;
@@ -140,7 +140,7 @@
             // lblMsg
             // 
             this.lblMsg.AutoSize = true;
-            this.lblMsg.Location = new System.Drawing.Point(332, 117);
+            this.lblMsg.Location = new System.Drawing.Point(547, 277);
             this.lblMsg.Name = "lblMsg";
             this.lblMsg.Size = new System.Drawing.Size(44, 16);
             this.lblMsg.TabIndex = 9;
@@ -157,7 +157,7 @@
             // btnEdit
             // 
             this.btnEdit.BackColor = System.Drawing.Color.Yellow;
-            this.btnEdit.Location = new System.Drawing.Point(381, 284);
+            this.btnEdit.Location = new System.Drawing.Point(569, 419);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(134, 56);
             this.btnEdit.TabIndex = 10;
@@ -170,7 +170,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
-            this.ClientSize = new System.Drawing.Size(576, 450);
+            this.ClientSize = new System.Drawing.Size(982, 728);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.label2);

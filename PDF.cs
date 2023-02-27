@@ -25,111 +25,108 @@ namespace AP_CINE_APPLI
             InitializeComponent();
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-
-
-
-
-        }
-
         private void PDF_Load(object sender, EventArgs e)
         {
-
 
         }
 
         private void createPDF_Click(object sender, EventArgs e)
         {
-            String titre = ("Liste des projections du : " + dateTimePicker1.Value.Date.ToString("dd-MM-yyyy"));
-            MessageBox.Show(titre);
-
-
-            OdbcConnection cnn = new OdbcConnection();
-            OdbcCommand cmd = new OdbcCommand();
-            OdbcDataReader drrpdf;
-            Boolean existenproj;
-            Document doc = new Document();
-            PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream("Cinéma.pdf", FileMode.Create));
-            doc.Open();
-            PdfContentByte cb = writer.DirectContent;
-
-
-            // Ajout titre et logo en haut du document pdf
-            //iTextSharp.text.Image image0 = iTextSharp.text.Image.GetInstance(System.Windows.Forms.Application.StartupPath + "\\logo.png");
-            iTextSharp.text.Image image0 = iTextSharp.text.Image.GetInstance(Properties.Resources.logo, BaseColor.WHITE);
-
-            image0.SetAbsolutePosition(1, 1);
-            image0.Alignment = iTextSharp.text.Image.ALIGN_LEFT;
-            image0.ScalePercent(30f);
-
-            PdfPTable head = new PdfPTable(new Single[] { 30, 70 });
-            Paragraph title = new Paragraph();
-            title.Font = FontFactory.GetFont("Arial", 15);
-            title.Add(titre);
-
-            head.DefaultCell.Border = 0;
-            head.DefaultCell.HorizontalAlignment = 1;
-            head.DefaultCell.VerticalAlignment = 1;
-
-            head.AddCell(image0);
-            head.AddCell(title);
-
-            doc.Add(head);
-
-            // Ajout tableaux pour chaque projection
-
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
-            cnn.Open();
-            cmd.CommandText = "select * from projection natural join film where dateproj ='" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd") + "' order by dateproj";
-            cmd.Connection = cnn;
-            drrpdf = cmd.ExecuteReader();
-
-            existenproj = drrpdf.Read();
-            while (existenproj == true)
+            SaveFileDialog createPDF = new SaveFileDialog();
+            createPDF.FileName = "Projections_" + dateTimePicker1.Value.Date.ToString("dd-MM-yyyy");
+            createPDF.Filter = "PDF Files|*.pdf";
+            createPDF.Title = "Enregistrer le fichier PDF";
+            if (createPDF.ShowDialog() == DialogResult.OK)
             {
-                PdfPTable tableau = new PdfPTable(4);
-                tableau.SetWidths(new float[] { 1, 2, 3, 2 });
-                tableau.SpacingBefore = 40f;
+                string PDFName = createPDF.FileName;
 
-                PdfPCell logFilm = new PdfPCell();
-                logFilm.Image = iTextSharp.text.Image.GetInstance(System.Windows.Forms.Application.StartupPath + "\\affiches\\" + drrpdf["imgaffiche"].ToString());
+                //génération du PDF
+                String titre = ("Liste des projections du : " + dateTimePicker1.Value.Date.ToString("dd-MM-yyyy"));
 
-                logFilm.Rowspan = 2;
-                logFilm.HorizontalAlignment = Element.ALIGN_CENTER;
-                tableau.AddCell(logFilm);
+                OdbcConnection cnn = new OdbcConnection();
+                OdbcCommand cmd = new OdbcCommand();
+                OdbcDataReader drrpdf;
+                Boolean existenproj;
+                Document doc = new Document();
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(PDFName, FileMode.Create));
+                doc.Open();
+                PdfContentByte cb = writer.DirectContent;
 
-                PdfPCell titFilm = new PdfPCell(new Phrase(drrpdf["titre"].ToString()));
-                titFilm.Colspan = 3;
-                titFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
-                tableau.AddCell(titFilm);
 
-                PdfPCell salFilm = new PdfPCell(new Phrase(drrpdf["nosalle"].ToString()));
-                salFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
-                tableau.AddCell(salFilm);
+                // Ajout titre et logo en haut du document pdf
+                iTextSharp.text.Image image0 = iTextSharp.text.Image.GetInstance(Properties.Resources.logo, BaseColor.WHITE);
 
-                PdfPCell hourFilm = new PdfPCell(new Phrase(drrpdf["heureproj"].ToString()));
-                hourFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
-                tableau.AddCell(hourFilm);
+                image0.SetAbsolutePosition(1, 1);
+                image0.Alignment = iTextSharp.text.Image.ALIGN_LEFT;
+                image0.ScalePercent(30f);
 
-                PdfPCell infoFilm = new PdfPCell(new Phrase(drrpdf["infoproj"].ToString()));
-                infoFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
-                tableau.AddCell(infoFilm);
+                PdfPTable head = new PdfPTable(new Single[] { 30, 70 });
+                Paragraph title = new Paragraph();
+                title.Font = FontFactory.GetFont("Arial", 15);
+                title.Add(titre);
 
-                doc.Add(tableau);
+                head.DefaultCell.Border = 0;
+                head.DefaultCell.HorizontalAlignment = 1;
+                head.DefaultCell.VerticalAlignment = 1;
+
+                head.AddCell(image0);
+                head.AddCell(title);
+
+                doc.Add(head);
+
+                // Ajout tableaux pour chaque projection
+
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
+                cmd.CommandText = "select * from projection natural join film where dateproj ='" + dateTimePicker1.Value.Date.ToString("yyyy-MM-dd") + "' order by dateproj, heureproj, nosalle";
+                cmd.Connection = cnn;
+                drrpdf = cmd.ExecuteReader();
+
                 existenproj = drrpdf.Read();
+                while (existenproj == true)
+                {
+                    PdfPTable tableau = new PdfPTable(4);
+                    tableau.SetWidths(new float[] { 1, 2, 3, 2 });
+                    tableau.SpacingBefore = 40f;
+
+                    PdfPCell logFilm = new PdfPCell();
+                    logFilm.Image = iTextSharp.text.Image.GetInstance(System.Windows.Forms.Application.StartupPath + "\\affiches\\" + drrpdf["imgaffiche"].ToString());
+
+                    logFilm.Rowspan = 2;
+                    logFilm.HorizontalAlignment = Element.ALIGN_CENTER;
+                    tableau.AddCell(logFilm);
+
+                    PdfPCell titFilm = new PdfPCell(new Phrase(drrpdf["titre"].ToString()));
+                    titFilm.Colspan = 3;
+                    titFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
+                    tableau.AddCell(titFilm);
+
+                    PdfPCell salFilm = new PdfPCell(new Phrase("Salle " + drrpdf["nosalle"].ToString()));
+                    salFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
+                    tableau.AddCell(salFilm);
+
+                    PdfPCell hourFilm = new PdfPCell(new Phrase("Horaire : " + DateTime.Parse(drrpdf["heureproj"].ToString()).Hour + "h" + DateTime.Parse(drrpdf["heureproj"].ToString()).ToString("mm")));
+                    hourFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
+                    tableau.AddCell(hourFilm);
+
+                    PdfPCell infoFilm = new PdfPCell(new Phrase("Informations :\n" + drrpdf["infoproj"].ToString()));
+                    infoFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
+                    tableau.AddCell(infoFilm);
+
+                    doc.Add(tableau);
+                    existenproj = drrpdf.Read();
+                }
+
+                //Fermeture différents éléments + ouverture pdf
+                drrpdf.Close();
+                cnn.Close();
+
+                doc.Close();
+                System.Diagnostics.Process p = new System.Diagnostics.Process();
+                p.StartInfo = new System.Diagnostics.ProcessStartInfo(PDFName.ToString());
+                p.Start();
+                p.Dispose();
             }
-
-            //Fermeture différents éléments + ouverture pdf
-            drrpdf.Close();
-            cnn.Close();
-
-            doc.Close();
-            System.Diagnostics.Process p = new System.Diagnostics.Process();
-            p.StartInfo = new System.Diagnostics.ProcessStartInfo("cinéma.pdf");
-            p.Start();
-            p.Dispose();
         }
     }
 }

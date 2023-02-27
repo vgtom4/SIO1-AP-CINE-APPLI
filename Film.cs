@@ -70,7 +70,7 @@ namespace AP_CINE_APPLI
             //Initialisation de la connexion à la base de données
             OdbcConnection cnn = new OdbcConnection();
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+            cnn.ConnectionString = varglob.strconnect;
             cnn.Open();
 
             //affichage des genres dans lstGenre
@@ -133,7 +133,7 @@ namespace AP_CINE_APPLI
             OdbcConnection cnn = new OdbcConnection();
             OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
 
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+            cnn.ConnectionString = varglob.strconnect;
             cnn.Open();
 
             cmdfilm.CommandText = requestFilm;
@@ -283,7 +283,7 @@ namespace AP_CINE_APPLI
                     OdbcConnection cnn = new OdbcConnection();
                     OdbcCommand cmdfilm = new OdbcCommand();
 
-                    cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                    cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
                     cmdfilm.CommandText = "insert into film values (null, " +
@@ -346,7 +346,7 @@ namespace AP_CINE_APPLI
             {
                 OdbcConnection cnn = new OdbcConnection();
                 
-                cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+                cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
                 OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;
@@ -392,7 +392,7 @@ namespace AP_CINE_APPLI
 
             OdbcConnection cnn = new OdbcConnection(); OdbcCommand cmdfilm = new OdbcCommand();
             
-            cnn.ConnectionString = "Driver={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;Database=bdcinevieillard-lepers;uid=root;pwd=" + password.pwdDb + "";
+            cnn.ConnectionString = varglob.strconnect;
             cnn.Open();
 
             cmdfilm.CommandText = "select film.*, libgenre, libpublic from film natural join concerner natural join genre natural join public " +
