@@ -29,7 +29,6 @@ namespace AP_CINE_APPLI
         {
 
             lblMsg.Visible= false;
-            lblDonMan.Visible= false;
             cboFilm.FlatStyle = FlatStyle.Flat;
 
             btnAdd.FlatStyle = FlatStyle.Flat;
@@ -176,14 +175,13 @@ namespace AP_CINE_APPLI
                 if (!checkExistProjection(dateProj.Value.ToString("dd/MM/yyyy"), timeProj.Text, cboSalle.SelectedItem.ToString()))
                 {
                     lblMsg.Visible = true;
-                    lblDonMan.Visible = false;
                     OdbcConnection cnn = new OdbcConnection();
                     OdbcCommand cmd = new OdbcCommand();
 
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
-                    cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Text + "' , '" + txtInfo.Text.ToString() + "' , " + lstIdFilms[cboFilm.SelectedIndex] + " , '" + cboSalle.SelectedItem.ToString() + "')";
+                    cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Text + "' , '" + txtInfo.Text.ToString().Replace("\'", "\\'") + "' , " + lstIdFilms[cboFilm.SelectedIndex] + " , '" + cboSalle.SelectedItem.ToString() + "')";
                     cmd.Connection = cnn;
                     cmd.ExecuteReader();
                     cnn.Close();
@@ -199,7 +197,6 @@ namespace AP_CINE_APPLI
             else
             {
                 lblMsg.Visible = true;
-                lblDonMan.Visible = true;
 
                 string message = "Données invalides :\n";
                 message += dateProj.Value.Date >= DateTime.Now.Date ? "" : "Date de projection\n";

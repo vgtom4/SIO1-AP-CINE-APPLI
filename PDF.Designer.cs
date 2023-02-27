@@ -37,9 +37,12 @@
             // 
             // createPDF
             // 
-            createPDF.BackColor = System.Drawing.Color.Black;
-            createPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.24F, System.Drawing.FontStyle.Bold);
-            createPDF.Location = new System.Drawing.Point(216, 271);
+            createPDF.Anchor = System.Windows.Forms.AnchorStyles.None;
+            createPDF.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            createPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            createPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            createPDF.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            createPDF.Location = new System.Drawing.Point(333, 362);
             createPDF.Name = "createPDF";
             createPDF.Size = new System.Drawing.Size(327, 64);
             createPDF.TabIndex = 2;
@@ -49,30 +52,39 @@
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.24F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(213, 104);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.label1.Location = new System.Drawing.Point(97, 89);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(355, 16);
+            this.label1.Size = new System.Drawing.Size(823, 39);
             this.label1.TabIndex = 0;
             this.label1.Text = "Générer une fiche avec les projections de la date :";
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.CalendarTrailingForeColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.24F);
-            this.dateTimePicker1.Location = new System.Drawing.Point(248, 181);
+            this.dateTimePicker1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.dateTimePicker1.CalendarForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.dateTimePicker1.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.dateTimePicker1.CalendarTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.dateTimePicker1.CalendarTrailingForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Location = new System.Drawing.Point(286, 192);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(264, 21);
+            this.dateTimePicker1.Size = new System.Drawing.Size(407, 38);
             this.dateTimePicker1.TabIndex = 1;
             this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // lblMsg
             // 
+            this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblMsg.AutoSize = true;
-            this.lblMsg.Location = new System.Drawing.Point(245, 222);
+            this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMsg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.lblMsg.Location = new System.Drawing.Point(281, 244);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(44, 16);
+            this.lblMsg.Size = new System.Drawing.Size(64, 25);
             this.lblMsg.TabIndex = 3;
             this.lblMsg.Text = "label2";
             // 
@@ -80,14 +92,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(778, 499);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
+            this.ClientSize = new System.Drawing.Size(982, 653);
             this.Controls.Add(this.lblMsg);
             this.Controls.Add(createPDF);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.24F);
-            this.ForeColor = System.Drawing.Color.Gold;
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.Name = "PDF";
             this.Text = "PDF";
             this.Load += new System.EventHandler(this.PDF_Load);

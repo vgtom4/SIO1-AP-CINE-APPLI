@@ -175,6 +175,7 @@
             // timeFilm
             // 
             this.timeFilm.CustomFormat = "";
+            this.timeFilm.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.timeFilm.Location = new System.Drawing.Point(953, 48);
             this.timeFilm.Name = "timeFilm";
             this.timeFilm.Size = new System.Drawing.Size(99, 22);

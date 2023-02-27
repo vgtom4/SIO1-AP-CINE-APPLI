@@ -58,7 +58,7 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(222)))), ((int)(((byte)(29)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.grdGenre.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.grdGenre.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.grdGenre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.grdGenre.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.grdGenre.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.grdGenre.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -76,17 +76,20 @@
             this.Column1,
             this.Column2});
             this.grdGenre.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(222)))), ((int)(((byte)(29)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.grdGenre.DefaultCellStyle = dataGridViewCellStyle3;
             this.grdGenre.EnableHeadersVisualStyles = false;
             this.grdGenre.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
-            this.grdGenre.Location = new System.Drawing.Point(71, 55);
+            this.grdGenre.Location = new System.Drawing.Point(100, 76);
+            this.grdGenre.Margin = new System.Windows.Forms.Padding(0);
+            this.grdGenre.MaximumSize = new System.Drawing.Size(600, 800);
+            this.grdGenre.MinimumSize = new System.Drawing.Size(300, 500);
             this.grdGenre.MultiSelect = false;
             this.grdGenre.Name = "grdGenre";
             this.grdGenre.ReadOnly = true;
@@ -103,7 +106,7 @@
             this.grdGenre.RowTemplate.Height = 24;
             this.grdGenre.RowTemplate.ReadOnly = true;
             this.grdGenre.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdGenre.Size = new System.Drawing.Size(359, 537);
+            this.grdGenre.Size = new System.Drawing.Size(300, 500);
             this.grdGenre.TabIndex = 0;
             this.grdGenre.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdGenre_CellClick);
             // 
@@ -130,10 +133,13 @@
             this.txtGenre.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtGenre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.txtGenre.Location = new System.Drawing.Point(526, 127);
+            this.txtGenre.Location = new System.Drawing.Point(520, 140);
             this.txtGenre.Name = "txtGenre";
+            this.txtGenre.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtGenre.Size = new System.Drawing.Size(277, 31);
             this.txtGenre.TabIndex = 6;
+            this.txtGenre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtGenre.WordWrap = false;
             // 
             // lblMsg
             // 
@@ -141,7 +147,7 @@
             this.lblMsg.AutoSize = true;
             this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMsg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblMsg.Location = new System.Drawing.Point(521, 175);
+            this.lblMsg.Location = new System.Drawing.Point(521, 183);
             this.lblMsg.Name = "lblMsg";
             this.lblMsg.Size = new System.Drawing.Size(64, 25);
             this.lblMsg.TabIndex = 7;
@@ -154,7 +160,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(520, 92);
+            this.label1.Location = new System.Drawing.Point(520, 100);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(218, 32);
             this.label1.TabIndex = 8;
@@ -173,7 +179,7 @@
             this.btnAdd.IconChar = FontAwesome.Sharp.IconChar.Plus;
             this.btnAdd.IconColor = System.Drawing.Color.Black;
             this.btnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAdd.Location = new System.Drawing.Point(526, 296);
+            this.btnAdd.Location = new System.Drawing.Point(440, 374);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(50, 50);
             this.btnAdd.TabIndex = 9;
@@ -189,7 +195,7 @@
             this.btnDelete.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
             this.btnDelete.IconColor = System.Drawing.Color.Black;
             this.btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnDelete.Location = new System.Drawing.Point(526, 429);
+            this.btnDelete.Location = new System.Drawing.Point(440, 507);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(50, 50);
             this.btnDelete.TabIndex = 10;
@@ -205,7 +211,7 @@
             this.btnEdit.IconChar = FontAwesome.Sharp.IconChar.Pencil;
             this.btnEdit.IconColor = System.Drawing.Color.Black;
             this.btnEdit.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnEdit.Location = new System.Drawing.Point(526, 361);
+            this.btnEdit.Location = new System.Drawing.Point(440, 439);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(50, 50);
             this.btnEdit.TabIndex = 11;

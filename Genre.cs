@@ -73,6 +73,11 @@ namespace AP_CINE_APPLI
                 errorProviderGenre.SetError(txtGenre, "Veuillez remplir ce champ");
                 lblMsg.Text = "Libellé de genre invalide";
             }
+            if (txtGenre.Text.Length > 30)
+            {
+                errorProviderGenre.SetError(txtGenre, "Libellé trop long");
+                lblMsg.Text = "Libellé de genre invalide";
+            }
         }
 
         private bool checkExistGenre(string libgenre)
@@ -102,7 +107,7 @@ namespace AP_CINE_APPLI
         {
             checkData();
 
-            if (!string.IsNullOrEmpty(txtGenre.Text))
+            if (!string.IsNullOrEmpty(txtGenre.Text) && txtGenre.Text.Length <= 30)
             { 
                 if (!checkExistGenre(txtGenre.Text.ToString()))
                 {
@@ -112,7 +117,7 @@ namespace AP_CINE_APPLI
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
-                    cmd.CommandText = "insert into genre values (null, '" + txtGenre.Text.ToString() + "')";
+                    cmd.CommandText = "insert into genre values (null, '" + txtGenre.Text.ToString().Replace("\'", "\\'") + "')";
                     cmd.Connection = cnn;
                     cmd.ExecuteReader();
 
@@ -139,7 +144,7 @@ namespace AP_CINE_APPLI
                         cnn.Open();
 
                         OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
-                        cmdfilm.CommandText = "update genre set libgenre = '" + txtGenre.Text.ToString() + "' where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
+                        cmdfilm.CommandText = "update genre set libgenre = '" + txtGenre.Text.ToString().Replace("\'", "\\'") + "' where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
                         cmdfilm.Connection = cnn;
                         drrfilm = cmdfilm.ExecuteReader();
 
