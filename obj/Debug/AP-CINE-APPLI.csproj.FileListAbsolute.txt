@@ -34,3 +34,4 @@ C:\Users\leonl\OneDrive\Documents\BTS\Atel Pro PERON\obj\Debug\AP-CINE-APPLI.exe
 C:\Users\leonl\OneDrive\Documents\BTS\Atel Pro PERON\obj\Debug\AP-CINE-APPLI.pdb
 C:\Users\leonl\OneDrive\Documents\BTS\Atel Pro PERON\obj\Debug\AP_CINE_APPLI.home.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\bin\Debug\FontAwesome.Sharp.dll
+C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.accueil.resources

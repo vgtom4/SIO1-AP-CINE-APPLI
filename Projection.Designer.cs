@@ -46,9 +46,7 @@ namespace AP_CINE_APPLI
             this.cboSalle = new System.Windows.Forms.ComboBox();
             this.cboFilm = new System.Windows.Forms.ComboBox();
             this.timeProj = new System.Windows.Forms.DateTimePicker();
-            this.btnAdd = new System.Windows.Forms.Button();
             this.txtInfo = new System.Windows.Forms.TextBox();
-            this.btnDeleteProj = new System.Windows.Forms.Button();
             this.lblMsg = new System.Windows.Forms.Label();
             this.errorProviderSalle = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderFilm = new System.Windows.Forms.ErrorProvider(this.components);
@@ -59,6 +57,8 @@ namespace AP_CINE_APPLI
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnDelete = new FontAwesome.Sharp.IconButton();
+            this.btnAdd = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)(this.grdProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSalle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderFilm)).BeginInit();
@@ -200,7 +200,7 @@ namespace AP_CINE_APPLI
             this.cboSalle.FormattingEnabled = true;
             this.cboSalle.Location = new System.Drawing.Point(291, 54);
             this.cboSalle.Name = "cboSalle";
-            this.cboSalle.Size = new System.Drawing.Size(121, 39);
+            this.cboSalle.Size = new System.Drawing.Size(128, 39);
             this.cboSalle.TabIndex = 2;
             // 
             // cboFilm
@@ -211,7 +211,7 @@ namespace AP_CINE_APPLI
             this.cboFilm.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboFilm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cboFilm.FormattingEnabled = true;
-            this.cboFilm.Location = new System.Drawing.Point(514, 52);
+            this.cboFilm.Location = new System.Drawing.Point(537, 51);
             this.cboFilm.Name = "cboFilm";
             this.cboFilm.Size = new System.Drawing.Size(231, 39);
             this.cboFilm.TabIndex = 3;
@@ -231,20 +231,6 @@ namespace AP_CINE_APPLI
             this.timeProj.Size = new System.Drawing.Size(148, 38);
             this.timeProj.TabIndex = 4;
             // 
-            // btnAdd
-            // 
-            this.btnAdd.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnAdd.Location = new System.Drawing.Point(805, 56);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(128, 43);
-            this.btnAdd.TabIndex = 5;
-            this.btnAdd.Text = "Ajouter";
-            this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
             // txtInfo
             // 
             this.txtInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -254,29 +240,15 @@ namespace AP_CINE_APPLI
             this.txtInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.txtInfo.Location = new System.Drawing.Point(291, 154);
             this.txtInfo.Name = "txtInfo";
-            this.txtInfo.Size = new System.Drawing.Size(163, 31);
+            this.txtInfo.Size = new System.Drawing.Size(181, 31);
             this.txtInfo.TabIndex = 6;
-            // 
-            // btnDeleteProj
-            // 
-            this.btnDeleteProj.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnDeleteProj.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.btnDeleteProj.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteProj.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnDeleteProj.Location = new System.Drawing.Point(805, 124);
-            this.btnDeleteProj.Name = "btnDeleteProj";
-            this.btnDeleteProj.Size = new System.Drawing.Size(128, 43);
-            this.btnDeleteProj.TabIndex = 7;
-            this.btnDeleteProj.Text = "Supprimer";
-            this.btnDeleteProj.UseVisualStyleBackColor = false;
-            this.btnDeleteProj.Click += new System.EventHandler(this.btnDeleteProj_Click);
             // 
             // lblMsg
             // 
             this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblMsg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.lblMsg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblMsg.Location = new System.Drawing.Point(511, 131);
+            this.lblMsg.Location = new System.Drawing.Point(537, 131);
             this.lblMsg.Name = "lblMsg";
             this.lblMsg.Size = new System.Drawing.Size(234, 54);
             this.lblMsg.TabIndex = 8;
@@ -339,7 +311,7 @@ namespace AP_CINE_APPLI
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label5.Location = new System.Drawing.Point(511, 18);
+            this.label5.Location = new System.Drawing.Point(534, 17);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(68, 32);
             this.label5.TabIndex = 13;
@@ -357,21 +329,53 @@ namespace AP_CINE_APPLI
             this.label7.TabIndex = 15;
             this.label7.Text = "Salle";
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnDelete.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
+            this.btnDelete.IconColor = System.Drawing.Color.Black;
+            this.btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnDelete.Location = new System.Drawing.Point(847, 122);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(50, 50);
+            this.btnDelete.TabIndex = 17;
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnAdd.IconChar = FontAwesome.Sharp.IconChar.Plus;
+            this.btnAdd.IconColor = System.Drawing.Color.Black;
+            this.btnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnAdd.Location = new System.Drawing.Point(847, 57);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(50, 50);
+            this.btnAdd.TabIndex = 16;
+            this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
             // Projection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.ClientSize = new System.Drawing.Size(982, 653);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblMsg);
-            this.Controls.Add(this.btnDeleteProj);
             this.Controls.Add(this.txtInfo);
-            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.timeProj);
             this.Controls.Add(this.cboFilm);
             this.Controls.Add(this.cboSalle);
@@ -398,9 +402,7 @@ namespace AP_CINE_APPLI
         private System.Windows.Forms.ComboBox cboSalle;
         private System.Windows.Forms.ComboBox cboFilm;
         private System.Windows.Forms.DateTimePicker timeProj;
-        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TextBox txtInfo;
-        private System.Windows.Forms.Button btnDeleteProj;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -417,5 +419,7 @@ namespace AP_CINE_APPLI
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private FontAwesome.Sharp.IconButton btnDelete;
+        private FontAwesome.Sharp.IconButton btnAdd;
     }
 }

@@ -33,8 +33,8 @@ namespace AP_CINE_APPLI
             btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.Gold;
 
             txtInfo.BorderStyle = BorderStyle.None;
-            btnDeleteProj.FlatStyle = FlatStyle.Flat;
-            btnDeleteProj.FlatAppearance.BorderColor = System.Drawing.Color.Gold;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.FlatAppearance.BorderColor = System.Drawing.Color.Gold;
 
             timeProj.Format = DateTimePickerFormat.Custom;
             timeProj.CustomFormat = "HH:mm";
@@ -206,7 +206,7 @@ namespace AP_CINE_APPLI
         }
 
 
-        private void btnDeleteProj_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
             removeError();
             if (grdProjection.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la projection ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)

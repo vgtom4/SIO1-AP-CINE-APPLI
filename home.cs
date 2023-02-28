@@ -38,6 +38,9 @@ namespace AP_CINE_APPLI
         {
             this.IsMdiContainer = true;
             varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
+
+            ActivateButton(btnAccueil);
+            OpenChildForm(new accueil());
         }
 
         private void ActivateButton(object senderBtn)
@@ -112,11 +115,7 @@ namespace AP_CINE_APPLI
         private void btnAccueil_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            if (currentChildForm != null)
-            {
-                currentChildForm.Close();
-                currentChildForm = null;
-            }
+            OpenChildForm(new accueil());
         }
 
         //Déplacement de la fenêtre
