@@ -18,9 +18,6 @@ namespace AP_CINE_APPLI
         public Genre()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
-            this.Text = "Genre";
             lblMsg.Text = "";
         }
 

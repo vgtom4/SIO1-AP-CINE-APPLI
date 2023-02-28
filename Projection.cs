@@ -21,8 +21,6 @@ namespace AP_CINE_APPLI
         public Projection()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
         }
         
         private void Projection_Load(object sender, EventArgs e)

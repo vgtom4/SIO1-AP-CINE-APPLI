@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,8 +22,6 @@ namespace AP_CINE_APPLI
         public Film()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
         }
 
         private void Film_Load(object sender, EventArgs e)
@@ -185,7 +184,13 @@ namespace AP_CINE_APPLI
                 }
                 string genres = grdFilm[7, grdFilm.RowCount - 1].Value.ToString();
 
-                grdFilm[7, grdFilm.RowCount - 1].Value = genres.Remove(genres.Length - 2);
+                
+
+                if (grdFilm[7, grdFilm.RowCount - 1].Value.ToString() != "")
+                {
+                    grdFilm[7, grdFilm.RowCount - 1].Value = genres.Remove(genres.Length - 2);
+                }
+                    
                 drrgenre.Close();
 
                 existenfilm = drrfilm.Read();
@@ -272,6 +277,36 @@ namespace AP_CINE_APPLI
             return existenfilm;
         }
 
+        private bool filmHasProjection(string nofilm)
+        {
+            Boolean CanDelete = true;
+
+            OdbcConnection cnn = new OdbcConnection();
+
+            cnn.ConnectionString = varglob.strconnect;
+            cnn.Open();
+
+            OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr; Boolean existenProjection;
+            cmd.CommandText = "select count(nofilm) as nbproj from projection where nofilm =" + nofilm;
+            cmd.Connection = cnn;
+            drr = cmd.ExecuteReader();
+            existenProjection = drr.Read();
+
+            if (Convert.ToInt16(drr["nbproj"]) > 0)
+            {
+                CanDelete = false;
+                if (MessageBox.Show("Attention, le film que vous allez supprimer possède une projection.\nÊtes-vous sûr de vouloir le supprimer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    CanDelete = true;
+                }
+            }
+
+            drr.Close();
+            cnn.Close();
+
+            return CanDelete;
+        }
+
         private void btnAddFilm_Click(object sender, EventArgs e)
         {
             if (!checkExistFilm(txtTitle.Text))
@@ -281,11 +316,10 @@ namespace AP_CINE_APPLI
                 if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
                 {
                     OdbcConnection cnn = new OdbcConnection();
-                    OdbcCommand cmdfilm = new OdbcCommand();
-
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
+                    OdbcCommand cmdfilm = new OdbcCommand();
                     cmdfilm.CommandText = "insert into film values (null, " +
                                                                 "'" + txtTitle.Text.Replace("\'", "\\'") + "', " +
                                                                 "'" + txtDirector.Text.Replace("\'", "\\'") + "', " +
@@ -296,7 +330,7 @@ namespace AP_CINE_APPLI
                                                                 "'" + namePicture + "', " +
                                                                 "'" + idPublics[cboPublic.SelectedIndex] + "')";
                     cmdfilm.Connection = cnn;
-                    cmdfilm.ExecuteReader();
+                    cmdfilm.ExecuteNonQuery();
 
                     OdbcCommand cmdnofilm = new OdbcCommand(); OdbcDataReader drrnofilm; bool existennofilm;
                     cmdnofilm.CommandText = "SELECT nofilm FROM film ORDER BY nofilm DESC LIMIT 1";
@@ -318,7 +352,6 @@ namespace AP_CINE_APPLI
                     cnn.Close();
 
                     lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
-                    lblMsg.ForeColor = Color.Blue;
 
                     affichageFilm("select * from film natural join public");
                 }
@@ -334,47 +367,45 @@ namespace AP_CINE_APPLI
                     message += lstGenre.SelectedItems.Count != 0 ? "" : "Genre(s)\n";
 
                     lblMsg.Text = message;
-                    lblMsg.ForeColor = Color.Red;
                 }
             }
         }
 
         private void btnDeleteFilm_Click(object sender, EventArgs e)
         {
+
             removeError();
             if (grdFilm.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + grdFilm[1, grdFilm.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                OdbcConnection cnn = new OdbcConnection();
-                
-                cnn.ConnectionString = varglob.strconnect;
-                cnn.Open();
+                if (filmHasProjection(grdFilm[0, grdFilm.CurrentRow.Index].Value.ToString()))
+                {
+                    OdbcConnection cnn = new OdbcConnection();
 
-                OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;
+                    cnn.ConnectionString = varglob.strconnect;
+                    cnn.Open();
 
-                cmdconcerner.CommandText = "delete from concerner where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
-                cmdconcerner.Connection = cnn;
-                drrconcerner = cmdconcerner.ExecuteReader();
+                    OdbcCommand cmdprojection = new OdbcCommand();
 
-                drrconcerner.Close();
+                    cmdprojection.CommandText = "delete from projection where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
+                    cmdprojection.Connection = cnn;
+                    cmdprojection.ExecuteNonQuery();
 
+                    OdbcCommand cmdconcerner = new OdbcCommand();
+                    cmdconcerner.CommandText = "delete from concerner where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
+                    cmdconcerner.Connection = cnn;
+                    cmdconcerner.ExecuteNonQuery();
 
-                OdbcCommand cmdprojection = new OdbcCommand();
+                    OdbcCommand cmdfilm = new OdbcCommand();
+                    cmdfilm.CommandText = "delete from film where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
+                    cmdfilm.Connection = cnn;
+                    cmdfilm.ExecuteNonQuery();
 
-                cmdprojection.CommandText = "delete from projection where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
-                cmdprojection.Connection = cnn;
-                cmdprojection.ExecuteReader();
+                    cnn.Close();
 
+                    lblMsg.Text = "Le film \"" + grdFilm[1, grdFilm.CurrentRow.Index].Value + "\" a été supprimé";
 
-                OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
-                cmdfilm.CommandText = "delete from film where nofilm =" + grdFilm[0, grdFilm.CurrentRow.Index].Value + "";
-                cmdfilm.Connection = cnn;
-                drrfilm = cmdfilm.ExecuteReader();
-
-                drrfilm.Close();
-                lblMsg.Text = "Le film \"" + grdFilm[1, grdFilm.CurrentRow.Index].Value + "\" a été supprimé";
-                lblMsg.ForeColor = Color.Red;
-
-                affichageFilm("select * from film natural join public");
+                    affichageFilm("select * from film natural join public");
+                }
             }
 
         }
@@ -448,7 +479,6 @@ namespace AP_CINE_APPLI
                     File.Copy(filePath, destinationPath, true);
                 }
                 lblMsg.Text = "L'image a été enregistrée";
-                lblMsg.ForeColor = Color.Blue;
 
                 pictureBox1.Image = Image.FromFile(@Application.StartupPath + "\\affiches\\" + Path.GetFileName(namePicture));
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
