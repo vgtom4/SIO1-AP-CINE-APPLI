@@ -143,7 +143,6 @@ namespace AP_CINE_APPLI
                                         "AND heureproj <= '" + time + "'))) " +
                               "AND ADDTIME('" + time + "',(SELECT duree FROM film WHERE nofilm = " + nofilm + "))) AS filmBlocked";
             
-            MessageBox.Show(cmd.CommandText);
             cmd.Connection = cnn;
             drr = cmd.ExecuteReader();
             drr.Read();
