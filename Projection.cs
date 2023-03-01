@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iTextSharp.text.pdf.qrcode;
 
 namespace AP_CINE_APPLI
 {
@@ -25,8 +26,6 @@ namespace AP_CINE_APPLI
         
         private void Projection_Load(object sender, EventArgs e)
         {
-
-            lblMsg.Visible= false;
             cboFilm.FlatStyle = FlatStyle.Flat;
 
             btnAdd.FlatStyle = FlatStyle.Flat;
@@ -114,19 +113,60 @@ namespace AP_CINE_APPLI
             }
         }
 
-        private bool checkExistProjection(string date, string time, string salle)
+        private bool canCreateProjection(string date, string time, string salle, string nofilm)
         {
             lblMsg.Text = "";
             errorProviderInfo.SetError(lblMsg, "");
+
+            Boolean filmEnCours = false;
+
+            OdbcConnection cnn = new OdbcConnection();
+
+            cnn.ConnectionString = varglob.strconnect;
+            cnn.Open();
+
+            OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;
+            cmd.CommandText = "SELECT EXISTS(" +
+                              "SELECT noproj FROM projection " +
+                              "WHERE dateproj = '" + date + "' " +
+                              "AND nosalle = '" + salle + "' " +
+                              "AND CAST(heureproj as time) " +
+                              "BETWEEN TIMEDIFF(" +
+                                    "'" + time + "', " +
+                                    "(SELECT duree FROM film natural join projection " +
+                                    "WHERE dateproj = '" + date + "' " +
+                                    "AND nosalle = '" + salle + "' " +
+                                    "AND heureproj = (" +
+                                        "SELECT MAX(heureproj) FROM projection " +
+                                        "WHERE dateproj = '" + date + "' " +
+                                        "AND nosalle = '" + salle + "' " +
+                                        "AND heureproj <= '" + time + "'))) " +
+                              "AND ADDTIME('" + time + "',(SELECT duree FROM film WHERE nofilm = " + nofilm + "))) AS filmBlocked";
+            
+            MessageBox.Show(cmd.CommandText);
+            cmd.Connection = cnn;
+            drr = cmd.ExecuteReader();
+            drr.Read();
+
+            filmEnCours = Convert.ToBoolean(drr["filmBlocked"]);
+            drr.Close();
+            cnn.Close();
+
+            if (filmEnCours)
+            {
+                lblMsg.Text += "Impossible de créer la projection.\nUn film est en cours\nde diffusion à cette instant";
+                errorProviderInfo.SetError(lblMsg, "Projection déjà programmé");
+            }
+
             bool existenproj = false;
             int i = 0;
             while (!existenproj && i < grdProjection.Rows.Count)
             {
-                if (grdProjection[1, i].Value.ToString() == date && grdProjection[2, i].Value.ToString().Replace("h",":") == time && grdProjection[5, i].Value.ToString() == salle)
+                if (grdProjection[1, i].Value.ToString() == DateTime.Parse(date).ToString("d") && grdProjection[2, i].Value.ToString().Replace("h", ":") + ":00" == time && grdProjection[5, i].Value.ToString() == salle)
                 {
                     grdProjection.Rows[i].Selected = true;
                     existenproj = true;
-                    lblMsg.Text = "Une projection existe déjà";
+                    lblMsg.Text += "\nUne projection existe déjà à ce moment";
                     errorProviderInfo.SetError(lblMsg, "Projection déjà programmé");
                 }
                 else
@@ -134,7 +174,8 @@ namespace AP_CINE_APPLI
                     i++;
                 }
             }
-            return existenproj;
+
+            return !filmEnCours && !existenproj;
         }
 
         private void refresh()
@@ -170,16 +211,15 @@ namespace AP_CINE_APPLI
 
             if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > -1 && cboSalle.SelectedIndex > -1)
             {
-                if (!checkExistProjection(dateProj.Value.ToString("dd/MM/yyyy"), timeProj.Text, cboSalle.SelectedItem.ToString()))
+                if (canCreateProjection(dateProj.Value.ToString("yyyy-MM-dd"), timeProj.Value.ToString("T"), cboSalle.SelectedItem.ToString(), lstIdFilms[cboFilm.SelectedIndex].ToString()))
                 {
-                    lblMsg.Visible = true;
                     OdbcConnection cnn = new OdbcConnection();
                     OdbcCommand cmd = new OdbcCommand();
 
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
-                    cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Text + "' , '" + txtInfo.Text.ToString().Replace("\'", "\\'") + "' , " + lstIdFilms[cboFilm.SelectedIndex] + " , '" + cboSalle.SelectedItem.ToString() + "')";
+                    cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Value.ToString("T") + "' , '" + txtInfo.Text.ToString().Replace("\'", "\\'") + "' , " + lstIdFilms[cboFilm.SelectedIndex] + " , '" + cboSalle.SelectedItem.ToString() + "')";
                     cmd.Connection = cnn;
                     cmd.ExecuteReader();
                     cnn.Close();
@@ -194,8 +234,6 @@ namespace AP_CINE_APPLI
             }
             else
             {
-                lblMsg.Visible = true;
-
                 string message = "Données invalides :\n";
                 message += dateProj.Value.Date >= DateTime.Now.Date ? "" : "Date de projection\n";
                 message += cboFilm.SelectedIndex > -1 ? "" : "Film\n";

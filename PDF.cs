@@ -87,7 +87,7 @@ namespace AP_CINE_APPLI
                 {
                     PdfPTable tableau = new PdfPTable(4);
                     tableau.SetWidths(new float[] { 1, 2, 3, 2 });
-                    tableau.SpacingBefore = 40f;
+                    tableau.SpacingBefore = 10f;
 
                     PdfPCell logFilm = new PdfPCell();
                     logFilm.Image = iTextSharp.text.Image.GetInstance(System.Windows.Forms.Application.StartupPath + "\\affiches\\" + drrpdf["imgaffiche"].ToString());
@@ -112,6 +112,8 @@ namespace AP_CINE_APPLI
                     PdfPCell infoFilm = new PdfPCell(new Phrase("Informations :\n" + drrpdf["infoproj"].ToString()));
                     infoFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
                     tableau.AddCell(infoFilm);
+
+                    tableau.KeepTogether= true;
 
                     doc.Add(tableau);
                     existenproj = drrpdf.Read();
