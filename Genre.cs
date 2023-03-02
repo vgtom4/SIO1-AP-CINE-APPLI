@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Odbc;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,29 +30,36 @@ namespace AP_CINE_APPLI
             grdGenre.Columns[0].Width = 30;
             grdGenre.Columns[1].Width = 100;
 
-            OdbcConnection cnn = new OdbcConnection();
-            OdbcCommand cmd = new OdbcCommand();
-            OdbcDataReader drr;
-            Boolean existenreg;
-
             grdGenre.Rows.Clear();
 
-            cnn.ConnectionString = varglob.strconnect;
-            cnn.Open();
+            
+            try
+            {   
+                OdbcConnection cnn = new OdbcConnection();
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
 
-            cmd.CommandText = "select nogenre, libgenre from genre";
-            cmd.Connection = cnn;
-            drr = cmd.ExecuteReader();
-            existenreg = drr.Read();
-
-            while (existenreg == true)
-            {
-                grdGenre.Rows.Add(drr["nogenre"], drr["libgenre"]);
+                OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr; Boolean existenreg;
+                cmd.CommandText = "select nogenre, libgenre from genre";
+                cmd.Connection = cnn;
+                drr = cmd.ExecuteReader();
                 existenreg = drr.Read();
-            }
 
-            drr.Close();
-            cnn.Close();
+                while (existenreg == true)
+                {
+                    grdGenre.Rows.Add(drr["nogenre"], drr["libgenre"]);
+                    existenreg = drr.Read();
+                }
+                drr.Close();
+                cnn.Close();   
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")){writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n");}
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+            }
+            
 
             grdGenre.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             grdGenre.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -108,20 +116,28 @@ namespace AP_CINE_APPLI
             { 
                 if (!checkExistGenre(txtGenre.Text.ToString()))
                 {
-                    OdbcConnection cnn = new OdbcConnection();
-                    OdbcCommand cmd = new OdbcCommand();
+                    try 
+                    {   
+                        OdbcConnection cnn = new OdbcConnection();
+                        cnn.ConnectionString = varglob.strconnect;
+                        cnn.Open();
 
-                    cnn.ConnectionString = varglob.strconnect;
-                    cnn.Open();
+                        OdbcCommand cmd = new OdbcCommand();
+                        cmd.CommandText = "insert into genre values (null, '" + txtGenre.Text.ToString().Replace("\'", "\\'") + "')";
+                        cmd.Connection = cnn;
+                        cmd.ExecuteReader();
 
-                    cmd.CommandText = "insert into genre values (null, '" + txtGenre.Text.ToString().Replace("\'", "\\'") + "')";
-                    cmd.Connection = cnn;
-                    cmd.ExecuteReader();
+                        cnn.Close();
 
-                    cnn.Close();
-
-                    lblMsg.Text = "Le genre \"" + txtGenre.Text.ToString() + "\" a été ajouté";
-
+                        lblMsg.Text = "Le genre \"" + txtGenre.Text.ToString() + "\" a été ajouté";
+                    }
+                    catch (Exception ex)
+                    {
+                        // En cas d'erreur, création du fichier log
+                        using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                        MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                    }
+                    
                     Genre_Load(sender, e);
                 }
             }
@@ -135,20 +151,29 @@ namespace AP_CINE_APPLI
                 {
                     if (!checkExistGenre(txtGenre.Text.ToString()))
                     {
-                        OdbcConnection cnn = new OdbcConnection();
+                        try
+                        {
+                            OdbcConnection cnn = new OdbcConnection();
+                            cnn.ConnectionString = varglob.strconnect;
+                            cnn.Open();
 
-                        cnn.ConnectionString = varglob.strconnect;
-                        cnn.Open();
+                            OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
+                            cmdfilm.CommandText = "update genre set libgenre = '" + txtGenre.Text.ToString().Replace("\'", "\\'") + "' where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
+                            cmdfilm.Connection = cnn;
+                            drrfilm = cmdfilm.ExecuteReader();
 
-                        OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
-                        cmdfilm.CommandText = "update genre set libgenre = '" + txtGenre.Text.ToString().Replace("\'", "\\'") + "' where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
-                        cmdfilm.Connection = cnn;
-                        drrfilm = cmdfilm.ExecuteReader();
+                            drrfilm.Close();
+                            cnn.Close();
 
-                        drrfilm.Close();
-
-                        lblMsg.Text = "Le genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été modifié en \"" + txtGenre.Text.ToString() + "\"";
-
+                            lblMsg.Text = "Le genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été modifié en \"" + txtGenre.Text.ToString() + "\"";
+                        }
+                        catch (Exception ex)
+                        {
+                            // En cas d'erreur, création du fichier log
+                            using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                            MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                        }
+                        
                         Genre_Load(sender, e);
                     }
                 }
@@ -164,28 +189,35 @@ namespace AP_CINE_APPLI
             removeError();
             if (grdGenre.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le genre suivant :\n" + grdGenre[1, grdGenre.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                OdbcConnection cnn = new OdbcConnection();
+                try
+                {
+                    OdbcConnection cnn = new OdbcConnection();
+                    cnn.ConnectionString = varglob.strconnect;
+                    cnn.Open();
 
-                cnn.ConnectionString = varglob.strconnect;
-                cnn.Open();
+                    OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;
+                    cmdconcerner.CommandText = "delete from concerner where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
+                    cmdconcerner.Connection = cnn;
+                    drrconcerner = cmdconcerner.ExecuteReader();
+                    drrconcerner.Close();
 
-                OdbcCommand cmdconcerner = new OdbcCommand(); OdbcDataReader drrconcerner;
+                    OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
+                    cmdfilm.CommandText = "delete from genre where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
+                    cmdfilm.Connection = cnn;
+                    drrfilm = cmdfilm.ExecuteReader();
 
-                cmdconcerner.CommandText = "delete from concerner where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
-                cmdconcerner.Connection = cnn;
-                drrconcerner = cmdconcerner.ExecuteReader();
-
-                drrconcerner.Close();
-
-
-                OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
-                cmdfilm.CommandText = "delete from genre where nogenre =" + grdGenre[0, grdGenre.CurrentRow.Index].Value + "";
-                cmdfilm.Connection = cnn;
-                drrfilm = cmdfilm.ExecuteReader();
-
-                drrfilm.Close();
-                lblMsg.Text = "Le genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été supprimé";
-
+                    drrfilm.Close();
+                    cnn.Close();
+                    
+                    lblMsg.Text = "Le genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été supprimé";
+                }
+                catch (Exception ex)
+                {
+                    // En cas d'erreur, création du fichier log
+                    using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                    MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                }
+                
                 Genre_Load(sender, e);
             }
         }

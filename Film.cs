@@ -35,58 +35,66 @@ namespace AP_CINE_APPLI
             timeFilm.ShowUpDown = true;
             timeFilm.Value = DateTime.Parse("00:00:00");
 
-            //Initialisation de la connexion à la base de données
-            OdbcConnection cnn = new OdbcConnection();
-
-            cnn.ConnectionString = varglob.strconnect;
-            cnn.Open();
-
-            //affichage des genres dans lstGenre
-
-            OdbcCommand cmdlstgenre = new OdbcCommand(); OdbcDataReader drrlstgenre; Boolean existenlstgenre;
-            cmdlstgenre.CommandText = "select * from genre";
-            cmdlstgenre.Connection = cnn;
-            drrlstgenre = cmdlstgenre.ExecuteReader();
-            existenlstgenre = drrlstgenre.Read();
-
-            lstGenre.Items.Clear();
-            lstGenre.MultiColumn= true;
-            lstGenre.SelectionMode = SelectionMode.MultiSimple;
-
-            while (existenlstgenre == true)
+            try
             {
-                lstGenre.Items.Add(drrlstgenre["libgenre"]);
-                idGenres.Add(Convert.ToInt16(drrlstgenre["nogenre"]));
+                
+                //Initialisation de la connexion à la base de données
+                OdbcConnection cnn = new OdbcConnection();
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
 
+                //affichage des genres dans lstGenre
+
+                OdbcCommand cmdlstgenre = new OdbcCommand(); OdbcDataReader drrlstgenre; Boolean existenlstgenre;
+                cmdlstgenre.CommandText = "select * from genre";
+                cmdlstgenre.Connection = cnn;
+                drrlstgenre = cmdlstgenre.ExecuteReader();
                 existenlstgenre = drrlstgenre.Read();
-            }
-            drrlstgenre.Close();
 
-            // Remplissage du ComboBox pour les différents publics ciblés possibles (-12, -16...)
+                lstGenre.Items.Clear();
+                lstGenre.MultiColumn= true;
+                lstGenre.SelectionMode = SelectionMode.MultiSimple;
 
-            OdbcCommand cmdpublic = new OdbcCommand(); OdbcDataReader drrpublic; Boolean existenpublic;
-            cmdpublic.CommandText = "select * from public";
-            cmdpublic.Connection = cnn;
-            drrpublic = cmdpublic.ExecuteReader();
-            existenpublic = drrpublic.Read();
+                while (existenlstgenre == true)
+                {
+                    lstGenre.Items.Add(drrlstgenre["libgenre"]);
+                    idGenres.Add(Convert.ToInt16(drrlstgenre["nogenre"]));
 
-            cboPublic.Items.Clear();
+                    existenlstgenre = drrlstgenre.Read();
+                }
+                drrlstgenre.Close();
 
-            while (existenpublic == true)
-            {
-                cboPublic.Items.Add(drrpublic["libpublic"]);
-                idPublics.Add(Convert.ToInt16(drrpublic["nopublic"]));
+                // Remplissage du ComboBox pour les différents publics ciblés possibles (-12, -16...)
 
+                OdbcCommand cmdpublic = new OdbcCommand(); OdbcDataReader drrpublic; Boolean existenpublic;
+                cmdpublic.CommandText = "select * from public";
+                cmdpublic.Connection = cnn;
+                drrpublic = cmdpublic.ExecuteReader();
                 existenpublic = drrpublic.Read();
-            }
-            drrpublic.Close();
 
-            cnn.Close();
+                cboPublic.Items.Clear();
+
+                while (existenpublic == true)
+                {
+                    cboPublic.Items.Add(drrpublic["libpublic"]);
+                    idPublics.Add(Convert.ToInt16(drrpublic["nopublic"]));
+
+                    existenpublic = drrpublic.Read();
+                }
+                drrpublic.Close();
+
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+            }
 
 
             // Affichage des films en appelant la méthode affichageFilm avec la requête qui importe tous les films et publics
             refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
-
 
             pictureBox1.Image = Properties.Resources.noimg;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -95,31 +103,40 @@ namespace AP_CINE_APPLI
 
         public void refreshCboFilm(string requestFilm)
         {
-            OdbcConnection cnn = new OdbcConnection();
-            OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
-
-            cnn.ConnectionString = varglob.strconnect;
-            cnn.Open();
-
-            cmdfilm.CommandText = requestFilm;
-            cmdfilm.Connection = cnn;
-            drrfilm = cmdfilm.ExecuteReader();
-            existenfilm = drrfilm.Read();
             Boolean existe = true;
-            if (!existenfilm) { existe = false; }
-            idFilms.Clear();
-            cboTitre.Items.Clear();
-
-            while (existenfilm == true)
-
+            try
             {
-                idFilms.Add(Convert.ToInt32(drrfilm["nofilm"]));
-                cboTitre.Items.Add(drrfilm["titre"].ToString());
-                existenfilm = drrfilm.Read();
-            }
+                OdbcConnection cnn = new OdbcConnection();
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
 
-            drrfilm.Close();
-            cnn.Close();
+                OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
+                cmdfilm.CommandText = requestFilm;
+                cmdfilm.Connection = cnn;
+                drrfilm = cmdfilm.ExecuteReader();
+                existenfilm = drrfilm.Read();
+                
+                if (!existenfilm) { existe = false; }
+                idFilms.Clear();
+                cboTitre.Items.Clear();
+
+                while (existenfilm == true)
+
+                {
+                    idFilms.Add(Convert.ToInt32(drrfilm["nofilm"]));
+                    cboTitre.Items.Add(drrfilm["titre"].ToString());
+                    existenfilm = drrfilm.Read();
+                }
+
+                drrfilm.Close();
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+            }
 
             if (existe && cboTitre.SelectedIndex == -1)
             {
@@ -200,26 +217,36 @@ namespace AP_CINE_APPLI
             lblMsg.Text = "";
             errorProviderGenre.SetError(txtTitle, "");
 
-            OdbcConnection cnn = new OdbcConnection();
-            cnn.ConnectionString = varglob.strconnect;
-            cnn.Open();
+            Boolean existenfilm = true;
 
-            OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;  
-
-            cmd.CommandText = "select exists(select nofilm from film where titre ='" + titre + "') as filmExist";
-            cmd.Connection = cnn;
-            drr = cmd.ExecuteReader();
-            drr.Read();
-
-            Boolean existenfilm = Convert.ToBoolean(drr["filmExist"]);
-
-            drr.Close();
-            cnn.Close();
-
-            if (existenfilm)
+            try
             {
-                lblMsg.Text = "Ce film existe déjà";
-                errorProviderGenre.SetError(txtTitle, "Film déjà existant");
+                OdbcConnection cnn = new OdbcConnection();
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
+
+                OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;
+                cmd.CommandText = "select exists(select nofilm from film where titre ='" + titre + "') as filmExist";
+                cmd.Connection = cnn;
+                drr = cmd.ExecuteReader();
+                drr.Read();
+
+                existenfilm = Convert.ToBoolean(drr["filmExist"]);
+
+                drr.Close();
+                cnn.Close();
+
+                if (existenfilm)
+                {
+                    lblMsg.Text = "Ce film existe déjà";
+                    errorProviderGenre.SetError(txtTitle, "Film déjà existant");
+                }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
 
             return existenfilm;
@@ -227,30 +254,42 @@ namespace AP_CINE_APPLI
 
         private bool filmHasProjection(string nofilm)
         {
-            Boolean CanDelete = true;
+            Boolean CanDelete = false;
 
-            OdbcConnection cnn = new OdbcConnection();
-
-            cnn.ConnectionString = varglob.strconnect;
-            cnn.Open();
-
-            OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr; Boolean existenProjection;
-            cmd.CommandText = "select count(nofilm) as nbproj from projection where nofilm =" + nofilm;
-            cmd.Connection = cnn;
-            drr = cmd.ExecuteReader();
-            existenProjection = drr.Read();
-
-            if (Convert.ToInt16(drr["nbproj"]) > 0)
+            try
             {
-                CanDelete = false;
-                if (MessageBox.Show("Attention, le film que vous allez supprimer possède une projection.\nÊtes-vous sûr de vouloir le supprimer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                OdbcConnection cnn = new OdbcConnection();
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
+
+                OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr; Boolean existenProjection;
+                cmd.CommandText = "select count(nofilm) as nbproj from projection where nofilm =" + nofilm;
+                cmd.Connection = cnn;
+                drr = cmd.ExecuteReader();
+                existenProjection = drr.Read();
+
+                if (Convert.ToInt16(drr["nbproj"]) > 0)
+                {
+                    CanDelete = false;
+                    if (MessageBox.Show("Attention, le film que vous allez supprimer possède une projection.\nÊtes-vous sûr de vouloir le supprimer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        CanDelete = true;
+                    }
+                }
+                else
                 {
                     CanDelete = true;
                 }
-            }
 
-            drr.Close();
-            cnn.Close();
+                drr.Close();
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+            }
 
             return CanDelete;
         }
@@ -263,43 +302,52 @@ namespace AP_CINE_APPLI
 
                 if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
                 {
-                    OdbcConnection cnn = new OdbcConnection();
-                    cnn.ConnectionString = varglob.strconnect;
-                    cnn.Open();
-
-                    OdbcCommand cmdfilm = new OdbcCommand();
-                    cmdfilm.CommandText = "insert into film values (null, " +
-                                                                "'" + txtTitle.Text.Replace("\'", "\\'") + "', " +
-                                                                "'" + txtDirector.Text.Replace("\'", "\\'") + "', " +
-                                                                "'" + txtActor.Text.ToString().Replace("\'", "\\'") + "', " +
-                                                                "'" + timeFilm.Text + "', " +
-                                                                "'" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "', " +
-                                                                "'" + txtInfo.Text.ToString().Replace("\'", "\\'") + "', " +
-                                                                "'" + namePicture + "', " +
-                                                                "'" + idPublics[cboPublic.SelectedIndex] + "')";
-                    cmdfilm.Connection = cnn;
-                    cmdfilm.ExecuteNonQuery();
-
-                    OdbcCommand cmdnofilm = new OdbcCommand(); OdbcDataReader drrnofilm; bool existennofilm;
-                    cmdnofilm.CommandText = "SELECT nofilm FROM film ORDER BY nofilm DESC LIMIT 1";
-                    cmdnofilm.Connection = cnn;
-                    drrnofilm = cmdnofilm.ExecuteReader();
-                    existennofilm = drrnofilm.Read();
-
-                    OdbcCommand cmdconcerner = new OdbcCommand();
-                    for (int i = 0; i < lstGenre.Items.Count; i++)
+                    try
                     {
-                        if (lstGenre.GetSelected(i) == true)
-                        {
-                            cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + idGenres[i] + ")";
-                            cmdconcerner.Connection = cnn;
-                            cmdconcerner.ExecuteNonQuery();
-                        }
-                    }
-                    drrnofilm.Close();
-                    cnn.Close();
+                        OdbcConnection cnn = new OdbcConnection();
+                        cnn.ConnectionString = varglob.strconnect;
+                        cnn.Open();
 
-                    lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
+                        OdbcCommand cmdfilm = new OdbcCommand();
+                        cmdfilm.CommandText = "insert into film values (null, " +
+                                                                    "'" + txtTitle.Text.Replace("\'", "\\'") + "', " +
+                                                                    "'" + txtDirector.Text.Replace("\'", "\\'") + "', " +
+                                                                    "'" + txtActor.Text.ToString().Replace("\'", "\\'") + "', " +
+                                                                    "'" + timeFilm.Text + "', " +
+                                                                    "'" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "', " +
+                                                                    "'" + txtInfo.Text.ToString().Replace("\'", "\\'") + "', " +
+                                                                    "'" + namePicture + "', " +
+                                                                    "'" + idPublics[cboPublic.SelectedIndex] + "')";
+                        cmdfilm.Connection = cnn;
+                        cmdfilm.ExecuteNonQuery();
+
+                        OdbcCommand cmdnofilm = new OdbcCommand(); OdbcDataReader drrnofilm; bool existennofilm;
+                        cmdnofilm.CommandText = "SELECT nofilm FROM film ORDER BY nofilm DESC LIMIT 1";
+                        cmdnofilm.Connection = cnn;
+                        drrnofilm = cmdnofilm.ExecuteReader();
+                        existennofilm = drrnofilm.Read();
+
+                        OdbcCommand cmdconcerner = new OdbcCommand();
+                        for (int i = 0; i < lstGenre.Items.Count; i++)
+                        {
+                            if (lstGenre.GetSelected(i) == true)
+                            {
+                                cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + idGenres[i] + ")";
+                                cmdconcerner.Connection = cnn;
+                                cmdconcerner.ExecuteNonQuery();
+                            }
+                        }
+                        drrnofilm.Close();
+                        cnn.Close();
+
+                        lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
+                    }
+                    catch (Exception ex)
+                    {
+                        // En cas d'erreur, création du fichier log
+                        using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                        MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                    }
 
                     refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
                 }
@@ -321,36 +369,43 @@ namespace AP_CINE_APPLI
 
         private void btnDeleteFilm_Click(object sender, EventArgs e)
         {
-
             removeError();
+
             if (cboTitre.Items.Count > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + cboTitre.SelectedItem, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 if (filmHasProjection(idFilms[cboTitre.SelectedIndex].ToString()))
                 {
-                    OdbcConnection cnn = new OdbcConnection();
+                    try
+                    {
+                        OdbcConnection cnn = new OdbcConnection();
+                        cnn.ConnectionString = varglob.strconnect;
+                        cnn.Open();
 
-                    cnn.ConnectionString = varglob.strconnect;
-                    cnn.Open();
+                        OdbcCommand cmdprojection = new OdbcCommand();
+                        cmdprojection.CommandText = "delete from projection where nofilm =" + idFilms[cboTitre.SelectedIndex] + "";
+                        cmdprojection.Connection = cnn;
+                        cmdprojection.ExecuteNonQuery();
 
-                    OdbcCommand cmdprojection = new OdbcCommand();
+                        OdbcCommand cmdconcerner = new OdbcCommand();
+                        cmdconcerner.CommandText = "delete from concerner where nofilm =" + idFilms[cboTitre.SelectedIndex] + "";
+                        cmdconcerner.Connection = cnn;
+                        cmdconcerner.ExecuteNonQuery();
 
-                    cmdprojection.CommandText = "delete from projection where nofilm =" + idFilms[cboTitre.SelectedIndex] + "";
-                    cmdprojection.Connection = cnn;
-                    cmdprojection.ExecuteNonQuery();
+                        OdbcCommand cmdfilm = new OdbcCommand();
+                        cmdfilm.CommandText = "delete from film where nofilm =" + idFilms[cboTitre.SelectedIndex] + "";
+                        cmdfilm.Connection = cnn;
+                        cmdfilm.ExecuteNonQuery();
 
-                    OdbcCommand cmdconcerner = new OdbcCommand();
-                    cmdconcerner.CommandText = "delete from concerner where nofilm =" + idFilms[cboTitre.SelectedIndex] + "";
-                    cmdconcerner.Connection = cnn;
-                    cmdconcerner.ExecuteNonQuery();
+                        cnn.Close();
 
-                    OdbcCommand cmdfilm = new OdbcCommand();
-                    cmdfilm.CommandText = "delete from film where nofilm =" + idFilms[cboTitre.SelectedIndex] + "";
-                    cmdfilm.Connection = cnn;
-                    cmdfilm.ExecuteNonQuery();
-
-                    cnn.Close();
-
-                    lblMsg.Text = "Le film \"" + cboTitre.SelectedItem + "\" a été supprimé";
+                        lblMsg.Text = "Le film \"" + cboTitre.SelectedItem + "\" a été supprimé";
+                    }
+                    catch (Exception ex)
+                    {
+                        // En cas d'erreur, création du fichier log
+                        using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                        MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                    }
 
                     refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
 
@@ -369,65 +424,78 @@ namespace AP_CINE_APPLI
                 dureeFilm = timeFilm.Text.ToString();
             }
 
-            OdbcConnection cnn = new OdbcConnection(); OdbcCommand cmdfilm = new OdbcCommand();
-            
-            cnn.ConnectionString = varglob.strconnect;
-            cnn.Open();
-
-            cmdfilm.CommandText = "select distinct titre, nofilm from film natural join concerner natural join genre natural join public " +
-                                           "where titre like '%" + txtTitle.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                           "and realisateurs like '%" + txtDirector.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                           "and acteurs like '%" + txtActor.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                           "and duree like '%" + dureeFilm + "%' " +
-                                           "and synopsis like '%" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                           "and infofilm like '%" + txtInfo.Text.ToString().Replace("\'", "\\'") + "%' ";
-            if (cboPublic.SelectedIndex > -1)
+            try 
             {
-                cmdfilm.CommandText += "and nopublic = " + idPublics[cboPublic.SelectedIndex] + " ";
-            }
-
-            if (lstGenre.SelectedItems.Count > 0)
-            {
-                cmdfilm.CommandText += "and nogenre IN (";
-
-                for (int i = 0; i < lstGenre.Items.Count; i++)
+                OdbcCommand cmdfilm = new OdbcCommand();
+                cmdfilm.CommandText = "select distinct titre, nofilm from film natural join concerner natural join genre natural join public " +
+                                               "where titre like '%" + txtTitle.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                               "and realisateurs like '%" + txtDirector.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                               "and acteurs like '%" + txtActor.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                               "and duree like '%" + dureeFilm + "%' " +
+                                               "and synopsis like '%" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                               "and infofilm like '%" + txtInfo.Text.ToString().Replace("\'", "\\'") + "%' ";
+                if (cboPublic.SelectedIndex > -1)
                 {
-                    if (lstGenre.GetSelected(i) == true)
-                    {
-                        cmdfilm.CommandText += "" + idGenres[i] + ",";
-                    }
+                    cmdfilm.CommandText += "and nopublic = " + idPublics[cboPublic.SelectedIndex] + " ";
                 }
-                cmdfilm.CommandText = cmdfilm.CommandText.Remove(cmdfilm.CommandText.Length - 1);
-                cmdfilm.CommandText += ") ";
+
+                if (lstGenre.SelectedItems.Count > 0)
+                {
+                    cmdfilm.CommandText += "and nogenre IN (";
+
+                    for (int i = 0; i < lstGenre.Items.Count; i++)
+                    {
+                        if (lstGenre.GetSelected(i) == true)
+                        {
+                            cmdfilm.CommandText += "" + idGenres[i] + ",";
+                        }
+                    }
+                    cmdfilm.CommandText = cmdfilm.CommandText.Remove(cmdfilm.CommandText.Length - 1);
+                    cmdfilm.CommandText += ") ";
+                }
+
+                cmdfilm.CommandText += "order by titre";
+
+                refreshCboFilm(cmdfilm.CommandText);
+
             }
-
-            cmdfilm.CommandText += "order by titre";
-
-            refreshCboFilm(cmdfilm.CommandText);
-
-            cnn.Close();
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+            }
         }
 
         private void btnImportPicture_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Images (*.BMP;*.JPG;*.PNG;*.JPEG)|*.BMP;*.JPG;*.PNG;*.JPEG|" + "All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = @Application.StartupPath + "\\affiches\\";
-            openFileDialog.Title = "Sélectionner une image";
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                string filePath = openFileDialog.FileName;
-
-                string destinationPath = @Application.StartupPath + "\\affiches\\" + Path.GetFileName(filePath);
-                namePicture = Path.GetFileName(filePath);
-                if (String.Compare(filePath, destinationPath)!=0)
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Images (*.BMP;*.JPG;*.PNG;*.JPEG)|*.BMP;*.JPG;*.PNG;*.JPEG|" + "All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = @Application.StartupPath + "\\affiches\\";
+                openFileDialog.Title = "Sélectionner une image";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    File.Copy(filePath, destinationPath, true);
-                }
-                lblMsg.Text = "L'image a été enregistrée";
+                    string filePath = openFileDialog.FileName;
 
-                pictureBox1.Image = Image.FromFile(@Application.StartupPath + "\\affiches\\" + Path.GetFileName(namePicture));
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                    string destinationPath = @Application.StartupPath + "\\affiches\\" + Path.GetFileName(filePath);
+                    namePicture = Path.GetFileName(filePath);
+                    if (String.Compare(filePath, destinationPath)!=0)
+                    {
+                        File.Copy(filePath, destinationPath, true);
+                    }
+                    lblMsg.Text = "L'image a été enregistrée";
+
+                    pictureBox1.Image = Image.FromFile(@Application.StartupPath + "\\affiches\\" + Path.GetFileName(namePicture));
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
@@ -465,72 +533,78 @@ namespace AP_CINE_APPLI
 
         private void cboTitre_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OdbcConnection cnn = new OdbcConnection();
-            OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
-
-            cnn.ConnectionString = varglob.strconnect;
-            cnn.Open();
-
-            cmdfilm.CommandText = "select * from film natural join public where nofilm =" + idFilms[cboTitre.SelectedIndex];
-            cmdfilm.Connection = cnn;
-            drrfilm = cmdfilm.ExecuteReader();
-            drrfilm.Read();
-
-            string synopsis;
-            synopsis = drrfilm["synopsis"].ToString() + "...";
-            if (synopsis.Length > 300)
+            try
             {
-                synopsis = synopsis.Remove(synopsis.Length - 3).Substring(0, 150) + "...";
-            }
-            lblSynopsis.Text = "Synopsis :";
-            lblSynopsis.Text += "\n" + synopsis;
+                OdbcConnection cnn = new OdbcConnection();
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
 
-            lblDirector.Text = "Réalisateur(s) : " + drrfilm["realisateurs"].ToString();
-            lblActor.Text = "Acteur(s) : " + drrfilm["acteurs"].ToString();
+                OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm;
+                cmdfilm.CommandText = "select * from film natural join public where nofilm =" + idFilms[cboTitre.SelectedIndex];
+                cmdfilm.Connection = cnn;
+                drrfilm = cmdfilm.ExecuteReader();
+                drrfilm.Read();
 
-            DateTime duree = DateTime.Parse(drrfilm["duree"].ToString());
-            lblDuree.Text = "Durée : " + duree.ToString("HH") + "h " + duree.ToString("mm") + "min";
+                string synopsis;
+                synopsis = drrfilm["synopsis"].ToString() + "...";
+                if (synopsis.Length > 300)
+                {
+                    synopsis = synopsis.Remove(synopsis.Length - 3).Substring(0, 150) + "...";
+                }
+                lblSynopsis.Text = "Synopsis :";
+                lblSynopsis.Text += "\n" + synopsis;
 
-            lblPublic.Text = "Type de public : " + drrfilm["libpublic"].ToString();
+                lblDirector.Text = "Réalisateur(s) : " + drrfilm["realisateurs"].ToString();
+                lblActor.Text = "Acteur(s) : " + drrfilm["acteurs"].ToString();
 
-            string imgPath = Path.Combine(Application.StartupPath + "\\affiches\\" + drrfilm["imgaffiche"].ToString());
-            if (File.Exists(imgPath))
-            {
-                pbAffFilm.Image = Image.FromFile(imgPath);
-            }
-            else
-            {
-                pbAffFilm.Image = Properties.Resources.noimg;
-            }
-            pbAffFilm.SizeMode = PictureBoxSizeMode.Zoom;
+                DateTime duree = DateTime.Parse(drrfilm["duree"].ToString());
+                lblDuree.Text = "Durée : " + duree.ToString("HH") + "h " + duree.ToString("mm") + "min";
+
+                lblPublic.Text = "Type de public : " + drrfilm["libpublic"].ToString();
+
+                string imgPath = Path.Combine(Application.StartupPath + "\\affiches\\" + drrfilm["imgaffiche"].ToString());
+                if (File.Exists(imgPath))
+                {
+                    pbAffFilm.Image = Image.FromFile(imgPath);
+                }
+                else
+                {
+                    pbAffFilm.Image = Properties.Resources.noimg;
+                }
+                pbAffFilm.SizeMode = PictureBoxSizeMode.Zoom;
 
 
-            lblGenre.Text = "Genre(s) :";
-            //affichage des genres
-            OdbcCommand cmdgenre = new OdbcCommand(); OdbcDataReader drrgenre; Boolean existengenre;
-            cmdgenre.CommandText = "SELECT libgenre FROM genre natural join concerner where nofilm = " + drrfilm["nofilm"] + "";
+                lblGenre.Text = "Genre(s) :";
+                //affichage des genres
+                OdbcCommand cmdgenre = new OdbcCommand(); OdbcDataReader drrgenre; Boolean existengenre;
+                cmdgenre.CommandText = "SELECT libgenre FROM genre natural join concerner where nofilm = " + drrfilm["nofilm"] + "";
 
-            cmdgenre.Connection = cnn;
-            drrgenre = cmdgenre.ExecuteReader();
-            existengenre = drrgenre.Read();
-
-            while (existengenre == true)
-            {
-                lblGenre.Text += " " + drrgenre["libgenre"].ToString() + ",";
+                cmdgenre.Connection = cnn;
+                drrgenre = cmdgenre.ExecuteReader();
                 existengenre = drrgenre.Read();
-            }
-            string genres = lblGenre.Text.ToString();
 
-            if (lblGenre.Text.ToString() != "")
+                while (existengenre == true)
+                {
+                    lblGenre.Text += " " + drrgenre["libgenre"].ToString() + ",";
+                    existengenre = drrgenre.Read();
+                }
+                string genres = lblGenre.Text.ToString();
+
+                if (lblGenre.Text.ToString() != "")
+                {
+                    lblGenre.Text = genres.Remove(genres.Length - 1);
+                }
+
+                drrgenre.Close();
+                drrfilm.Close();
+                cnn.Close();
+            }
+            catch (Exception ex)
             {
-                lblGenre.Text = genres.Remove(genres.Length - 1);
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
-
-            drrgenre.Close();
-
-            drrfilm.Close();
-
-            cnn.Close();
         }
     }
 }
