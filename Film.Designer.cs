@@ -30,14 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.grdFilm = new System.Windows.Forms.DataGridView();
-            this.btnAddFilm = new System.Windows.Forms.Button();
-            this.btnDeleteFilm = new System.Windows.Forms.Button();
             this.lstGenre = new System.Windows.Forms.ListBox();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.txtDirector = new System.Windows.Forms.TextBox();
             this.cboPublic = new System.Windows.Forms.ComboBox();
-            this.btnResearch = new System.Windows.Forms.Button();
-            this.btnImportPicture = new System.Windows.Forms.Button();
             this.txtActor = new System.Windows.Forms.TextBox();
             this.timeFilm = new System.Windows.Forms.DateTimePicker();
             this.txtInfo = new System.Windows.Forms.TextBox();
@@ -52,7 +48,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtSynopsis = new System.Windows.Forms.RichTextBox();
-            this.btnClear = new System.Windows.Forms.Button();
             this.lblMsg = new System.Windows.Forms.Label();
             this.errorProviderTitle = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderActor = new System.Windows.Forms.ErrorProvider(this.components);
@@ -61,6 +56,20 @@
             this.errorProviderPublic = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderGenre = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderSynopsis = new System.Windows.Forms.ErrorProvider(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnImportPicture = new FontAwesome.Sharp.IconButton();
+            this.pbAffFilm = new System.Windows.Forms.PictureBox();
+            this.cboTitre = new System.Windows.Forms.ComboBox();
+            this.lblDirector = new System.Windows.Forms.Label();
+            this.lblDuree = new System.Windows.Forms.Label();
+            this.lblPublic = new System.Windows.Forms.Label();
+            this.btnDeleteFilm = new FontAwesome.Sharp.IconButton();
+            this.btnAddFilm = new FontAwesome.Sharp.IconButton();
+            this.btnClear = new FontAwesome.Sharp.IconButton();
+            this.btnResearch = new FontAwesome.Sharp.IconButton();
+            this.lblSynopsis = new System.Windows.Forms.Label();
+            this.lblActor = new System.Windows.Forms.Label();
+            this.lblGenre = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grdFilm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderTitle)).BeginInit();
@@ -70,200 +79,205 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderPublic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSynopsis)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAffFilm)).BeginInit();
             this.SuspendLayout();
             // 
             // grdFilm
             // 
             this.grdFilm.BackgroundColor = System.Drawing.Color.Wheat;
             this.grdFilm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdFilm.Location = new System.Drawing.Point(12, 206);
+            this.grdFilm.Location = new System.Drawing.Point(936, 249);
             this.grdFilm.Name = "grdFilm";
             this.grdFilm.RowHeadersVisible = false;
             this.grdFilm.RowHeadersWidth = 51;
             this.grdFilm.RowTemplate.Height = 24;
-            this.grdFilm.Size = new System.Drawing.Size(1280, 579);
+            this.grdFilm.Size = new System.Drawing.Size(50, 59);
             this.grdFilm.TabIndex = 0;
-            // 
-            // btnAddFilm
-            // 
-            this.btnAddFilm.BackColor = System.Drawing.Color.YellowGreen;
-            this.btnAddFilm.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddFilm.Location = new System.Drawing.Point(1326, 597);
-            this.btnAddFilm.Name = "btnAddFilm";
-            this.btnAddFilm.Size = new System.Drawing.Size(177, 83);
-            this.btnAddFilm.TabIndex = 1;
-            this.btnAddFilm.Text = "Ajouter un film";
-            this.btnAddFilm.UseVisualStyleBackColor = false;
-            this.btnAddFilm.Click += new System.EventHandler(this.btnAddFilm_Click);
-            // 
-            // btnDeleteFilm
-            // 
-            this.btnDeleteFilm.BackColor = System.Drawing.Color.Crimson;
-            this.btnDeleteFilm.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnDeleteFilm.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteFilm.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnDeleteFilm.Location = new System.Drawing.Point(1326, 702);
-            this.btnDeleteFilm.Name = "btnDeleteFilm";
-            this.btnDeleteFilm.Size = new System.Drawing.Size(177, 83);
-            this.btnDeleteFilm.TabIndex = 3;
-            this.btnDeleteFilm.Text = "Supprimer un film";
-            this.btnDeleteFilm.UseVisualStyleBackColor = false;
-            this.btnDeleteFilm.Click += new System.EventHandler(this.btnDeleteFilm_Click);
+            this.grdFilm.Visible = false;
             // 
             // lstGenre
             // 
+            this.lstGenre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstGenre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.lstGenre.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstGenre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.lstGenre.FormattingEnabled = true;
-            this.lstGenre.ItemHeight = 16;
-            this.lstGenre.Location = new System.Drawing.Point(1326, 206);
+            this.lstGenre.ItemHeight = 20;
+            this.lstGenre.Location = new System.Drawing.Point(626, 43);
             this.lstGenre.Name = "lstGenre";
-            this.lstGenre.Size = new System.Drawing.Size(177, 212);
+            this.lstGenre.Size = new System.Drawing.Size(211, 140);
             this.lstGenre.TabIndex = 4;
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(166, 48);
+            this.txtTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.txtTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTitle.Location = new System.Drawing.Point(18, 46);
             this.txtTitle.Multiline = true;
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(170, 79);
+            this.txtTitle.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtTitle.Size = new System.Drawing.Size(164, 68);
             this.txtTitle.TabIndex = 5;
             // 
             // txtDirector
             // 
-            this.txtDirector.Location = new System.Drawing.Point(501, 46);
+            this.txtDirector.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.txtDirector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.txtDirector.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDirector.Location = new System.Drawing.Point(18, 160);
+            this.txtDirector.Multiline = true;
             this.txtDirector.Name = "txtDirector";
-            this.txtDirector.Size = new System.Drawing.Size(164, 22);
+            this.txtDirector.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtDirector.Size = new System.Drawing.Size(164, 63);
             this.txtDirector.TabIndex = 6;
             // 
             // cboPublic
             // 
+            this.cboPublic.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.cboPublic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.cboPublic.Cursor = System.Windows.Forms.Cursors.Default;
+            this.cboPublic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboPublic.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboPublic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cboPublic.FormattingEnabled = true;
-            this.cboPublic.Location = new System.Drawing.Point(1183, 44);
+            this.cboPublic.Location = new System.Drawing.Point(211, 43);
             this.cboPublic.Name = "cboPublic";
-            this.cboPublic.Size = new System.Drawing.Size(320, 24);
+            this.cboPublic.Size = new System.Drawing.Size(377, 33);
             this.cboPublic.TabIndex = 7;
-            // 
-            // btnResearch
-            // 
-            this.btnResearch.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnResearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResearch.Location = new System.Drawing.Point(24, 76);
-            this.btnResearch.Name = "btnResearch";
-            this.btnResearch.Size = new System.Drawing.Size(116, 51);
-            this.btnResearch.TabIndex = 9;
-            this.btnResearch.Text = "Rechercher";
-            this.btnResearch.UseVisualStyleBackColor = false;
-            this.btnResearch.Click += new System.EventHandler(this.btnResearch_Click);
-            // 
-            // btnImportPicture
-            // 
-            this.btnImportPicture.Location = new System.Drawing.Point(199, 137);
-            this.btnImportPicture.Name = "btnImportPicture";
-            this.btnImportPicture.Size = new System.Drawing.Size(102, 45);
-            this.btnImportPicture.TabIndex = 10;
-            this.btnImportPicture.Text = "Importer une image";
-            this.btnImportPicture.UseVisualStyleBackColor = true;
-            this.btnImportPicture.Click += new System.EventHandler(this.btnImportPicture_Click);
             // 
             // txtActor
             // 
-            this.txtActor.Location = new System.Drawing.Point(501, 119);
+            this.txtActor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtActor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.txtActor.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtActor.Location = new System.Drawing.Point(18, 272);
             this.txtActor.Multiline = true;
             this.txtActor.Name = "txtActor";
+            this.txtActor.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtActor.Size = new System.Drawing.Size(164, 63);
             this.txtActor.TabIndex = 11;
             // 
             // timeFilm
             // 
+            this.timeFilm.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.timeFilm.CalendarForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.timeFilm.CustomFormat = "";
+            this.timeFilm.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.timeFilm.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.timeFilm.Location = new System.Drawing.Point(953, 48);
+            this.timeFilm.Location = new System.Drawing.Point(393, 130);
             this.timeFilm.Name = "timeFilm";
-            this.timeFilm.Size = new System.Drawing.Size(99, 22);
+            this.timeFilm.ShowUpDown = true;
+            this.timeFilm.Size = new System.Drawing.Size(135, 38);
             this.timeFilm.TabIndex = 12;
             // 
             // txtInfo
             // 
-            this.txtInfo.Location = new System.Drawing.Point(953, 119);
+            this.txtInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.txtInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtInfo.Location = new System.Drawing.Point(393, 222);
             this.txtInfo.Multiline = true;
             this.txtInfo.Name = "txtInfo";
-            this.txtInfo.Size = new System.Drawing.Size(204, 63);
+            this.txtInfo.Size = new System.Drawing.Size(177, 33);
             this.txtInfo.TabIndex = 13;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(163, 29);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 16);
+            this.label1.Size = new System.Drawing.Size(86, 32);
             this.label1.TabIndex = 14;
             this.label1.Text = "Titre :";
             // 
             // label2
             // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(498, 29);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(15, 125);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 16);
+            this.label2.Size = new System.Drawing.Size(174, 32);
             this.label2.TabIndex = 15;
             this.label2.Text = "Réalisateur :";
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(498, 100);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(15, 234);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 16);
+            this.label3.Size = new System.Drawing.Size(125, 32);
             this.label3.TabIndex = 16;
             this.label3.Text = "Acteurs :";
             // 
             // label4
             // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(950, 31);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(387, 95);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(50, 16);
+            this.label4.Size = new System.Drawing.Size(106, 32);
             this.label4.TabIndex = 17;
             this.label4.Text = "Durée :";
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(696, 27);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(620, 199);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 16);
+            this.label5.Size = new System.Drawing.Size(145, 32);
             this.label5.TabIndex = 18;
             this.label5.Text = "Synopsis :";
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(950, 100);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(387, 185);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(188, 16);
+            this.label6.Size = new System.Drawing.Size(185, 32);
             this.label6.TabIndex = 19;
-            this.label6.Text = "Informations supplémentaires :";
+            this.label6.Text = "Informations :";
             // 
             // label7
             // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1180, 27);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(205, 8);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 16);
+            this.label7.Size = new System.Drawing.Size(221, 32);
             this.label7.TabIndex = 20;
             this.label7.Text = "Type de public : ";
             // 
             // label8
             // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1326, 189);
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(620, 8);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 16);
+            this.label8.Size = new System.Drawing.Size(129, 32);
             this.label8.TabIndex = 21;
             this.label8.Text = "Genres : ";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(364, 46);
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.pictureBox1.Location = new System.Drawing.Point(234, 148);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(103, 136);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -272,39 +286,36 @@
             // 
             // label9
             // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(361, 29);
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(218, 115);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(98, 16);
+            this.label9.Size = new System.Drawing.Size(135, 22);
             this.label9.TabIndex = 23;
             this.label9.Text = "Aperçu affiche :";
             // 
             // txtSynopsis
             // 
-            this.txtSynopsis.Location = new System.Drawing.Point(699, 46);
+            this.txtSynopsis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSynopsis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.txtSynopsis.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSynopsis.EnableAutoDragDrop = true;
+            this.txtSynopsis.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSynopsis.Location = new System.Drawing.Point(626, 234);
             this.txtSynopsis.Name = "txtSynopsis";
-            this.txtSynopsis.Size = new System.Drawing.Size(221, 134);
+            this.txtSynopsis.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+            this.txtSynopsis.Size = new System.Drawing.Size(211, 101);
             this.txtSynopsis.TabIndex = 24;
             this.txtSynopsis.Text = "";
             // 
-            // btnClear
-            // 
-            this.btnClear.BackColor = System.Drawing.Color.LightCoral;
-            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(60, 133);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(40, 40);
-            this.btnClear.TabIndex = 25;
-            this.btnClear.Text = "X";
-            this.btnClear.UseVisualStyleBackColor = false;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
             // lblMsg
             // 
-            this.lblMsg.AutoSize = true;
-            this.lblMsg.Location = new System.Drawing.Point(1311, 433);
+            this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMsg.Location = new System.Drawing.Point(387, 272);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(47, 16);
+            this.lblMsg.Size = new System.Drawing.Size(211, 63);
             this.lblMsg.TabIndex = 26;
             this.lblMsg.Text = "lblMsg";
             // 
@@ -336,37 +347,233 @@
             // 
             this.errorProviderSynopsis.ContainerControl = this;
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.panel1.Controls.Add(this.btnImportPicture);
+            this.panel1.Controls.Add(this.lblMsg);
+            this.panel1.Controls.Add(this.txtSynopsis);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.lstGenre);
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.timeFilm);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.txtInfo);
+            this.panel1.Controls.Add(this.txtTitle);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.txtDirector);
+            this.panel1.Controls.Add(this.txtActor);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.cboPublic);
+            this.panel1.Location = new System.Drawing.Point(68, 320);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(862, 354);
+            this.panel1.TabIndex = 27;
+            // 
+            // btnImportPicture
+            // 
+            this.btnImportPicture.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnImportPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.btnImportPicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImportPicture.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnImportPicture.IconChar = FontAwesome.Sharp.IconChar.Upload;
+            this.btnImportPicture.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnImportPicture.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnImportPicture.IconSize = 40;
+            this.btnImportPicture.Location = new System.Drawing.Point(264, 290);
+            this.btnImportPicture.Name = "btnImportPicture";
+            this.btnImportPicture.Size = new System.Drawing.Size(45, 45);
+            this.btnImportPicture.TabIndex = 37;
+            this.btnImportPicture.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnImportPicture.UseVisualStyleBackColor = false;
+            this.btnImportPicture.Click += new System.EventHandler(this.btnImportPicture_Click);
+            // 
+            // pbAffFilm
+            // 
+            this.pbAffFilm.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbAffFilm.Location = new System.Drawing.Point(16, 24);
+            this.pbAffFilm.Name = "pbAffFilm";
+            this.pbAffFilm.Size = new System.Drawing.Size(150, 218);
+            this.pbAffFilm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbAffFilm.TabIndex = 27;
+            this.pbAffFilm.TabStop = false;
+            // 
+            // cboTitre
+            // 
+            this.cboTitre.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.cboTitre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.cboTitre.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.cboTitre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboTitre.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboTitre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cboTitre.FormattingEnabled = true;
+            this.cboTitre.Location = new System.Drawing.Point(231, 24);
+            this.cboTitre.Name = "cboTitre";
+            this.cboTitre.Size = new System.Drawing.Size(554, 39);
+            this.cboTitre.TabIndex = 27;
+            this.cboTitre.SelectedIndexChanged += new System.EventHandler(this.cboTitre_SelectedIndexChanged);
+            // 
+            // lblDirector
+            // 
+            this.lblDirector.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirector.Location = new System.Drawing.Point(226, 102);
+            this.lblDirector.Name = "lblDirector";
+            this.lblDirector.Size = new System.Drawing.Size(335, 51);
+            this.lblDirector.TabIndex = 27;
+            this.lblDirector.Text = "Réalisateur :";
+            // 
+            // lblDuree
+            // 
+            this.lblDuree.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblDuree.AutoSize = true;
+            this.lblDuree.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDuree.Location = new System.Drawing.Point(807, 38);
+            this.lblDuree.Name = "lblDuree";
+            this.lblDuree.Size = new System.Drawing.Size(76, 25);
+            this.lblDuree.TabIndex = 29;
+            this.lblDuree.Text = "Durée :";
+            // 
+            // lblPublic
+            // 
+            this.lblPublic.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblPublic.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPublic.Location = new System.Drawing.Point(575, 102);
+            this.lblPublic.Name = "lblPublic";
+            this.lblPublic.Size = new System.Drawing.Size(355, 51);
+            this.lblPublic.TabIndex = 31;
+            this.lblPublic.Text = "Type de public :";
+            // 
+            // btnDeleteFilm
+            // 
+            this.btnDeleteFilm.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnDeleteFilm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.btnDeleteFilm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteFilm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnDeleteFilm.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
+            this.btnDeleteFilm.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnDeleteFilm.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnDeleteFilm.Location = new System.Drawing.Point(936, 515);
+            this.btnDeleteFilm.Name = "btnDeleteFilm";
+            this.btnDeleteFilm.Size = new System.Drawing.Size(50, 50);
+            this.btnDeleteFilm.TabIndex = 34;
+            this.btnDeleteFilm.UseVisualStyleBackColor = false;
+            this.btnDeleteFilm.Click += new System.EventHandler(this.btnDeleteFilm_Click);
+            // 
+            // btnAddFilm
+            // 
+            this.btnAddFilm.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAddFilm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.btnAddFilm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddFilm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnAddFilm.IconChar = FontAwesome.Sharp.IconChar.Plus;
+            this.btnAddFilm.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnAddFilm.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnAddFilm.Location = new System.Drawing.Point(936, 450);
+            this.btnAddFilm.Name = "btnAddFilm";
+            this.btnAddFilm.Size = new System.Drawing.Size(50, 50);
+            this.btnAddFilm.TabIndex = 33;
+            this.btnAddFilm.UseVisualStyleBackColor = false;
+            this.btnAddFilm.Click += new System.EventHandler(this.btnAddFilm_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnClear.IconChar = FontAwesome.Sharp.IconChar.Backspace;
+            this.btnClear.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnClear.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnClear.Location = new System.Drawing.Point(12, 515);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(50, 50);
+            this.btnClear.TabIndex = 36;
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // btnResearch
+            // 
+            this.btnResearch.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnResearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.btnResearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnResearch.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlass;
+            this.btnResearch.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnResearch.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnResearch.Location = new System.Drawing.Point(12, 450);
+            this.btnResearch.Name = "btnResearch";
+            this.btnResearch.Size = new System.Drawing.Size(50, 50);
+            this.btnResearch.TabIndex = 35;
+            this.btnResearch.UseVisualStyleBackColor = false;
+            this.btnResearch.Click += new System.EventHandler(this.btnResearch_Click);
+            // 
+            // lblSynopsis
+            // 
+            this.lblSynopsis.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblSynopsis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
+            this.lblSynopsis.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSynopsis.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.lblSynopsis.Location = new System.Drawing.Point(226, 229);
+            this.lblSynopsis.Name = "lblSynopsis";
+            this.lblSynopsis.Size = new System.Drawing.Size(702, 79);
+            this.lblSynopsis.TabIndex = 37;
+            this.lblSynopsis.Text = "Synopsis :";
+            // 
+            // lblActor
+            // 
+            this.lblActor.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblActor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
+            this.lblActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblActor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.lblActor.Location = new System.Drawing.Point(226, 163);
+            this.lblActor.Name = "lblActor";
+            this.lblActor.Size = new System.Drawing.Size(336, 50);
+            this.lblActor.TabIndex = 38;
+            this.lblActor.Text = "Acteur(s) :";
+            // 
+            // lblGenre
+            // 
+            this.lblGenre.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblGenre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
+            this.lblGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGenre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.lblGenre.Location = new System.Drawing.Point(575, 163);
+            this.lblGenre.Name = "lblGenre";
+            this.lblGenre.Size = new System.Drawing.Size(355, 50);
+            this.lblGenre.TabIndex = 39;
+            this.lblGenre.Text = "Genre(s) :";
+            // 
             // Film
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.CadetBlue;
-            this.ClientSize = new System.Drawing.Size(1530, 797);
-            this.Controls.Add(this.lblMsg);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
+            this.ClientSize = new System.Drawing.Size(1000, 700);
+            this.Controls.Add(this.lblGenre);
+            this.Controls.Add(this.lblActor);
+            this.Controls.Add(this.lblSynopsis);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.txtSynopsis);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtInfo);
-            this.Controls.Add(this.timeFilm);
-            this.Controls.Add(this.txtActor);
-            this.Controls.Add(this.btnImportPicture);
             this.Controls.Add(this.btnResearch);
-            this.Controls.Add(this.cboPublic);
-            this.Controls.Add(this.txtDirector);
-            this.Controls.Add(this.txtTitle);
-            this.Controls.Add(this.lstGenre);
             this.Controls.Add(this.btnDeleteFilm);
             this.Controls.Add(this.btnAddFilm);
+            this.Controls.Add(this.lblPublic);
+            this.Controls.Add(this.lblDuree);
+            this.Controls.Add(this.lblDirector);
+            this.Controls.Add(this.pbAffFilm);
+            this.Controls.Add(this.cboTitre);
             this.Controls.Add(this.grdFilm);
+            this.Controls.Add(this.panel1);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Film";
             this.Text = "Gestion des films";
             this.Load += new System.EventHandler(this.Film_Load);
@@ -379,6 +586,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderPublic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSynopsis)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAffFilm)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -387,14 +597,10 @@
         #endregion
 
         private System.Windows.Forms.DataGridView grdFilm;
-        private System.Windows.Forms.Button btnAddFilm;
-        private System.Windows.Forms.Button btnDeleteFilm;
         private System.Windows.Forms.ListBox lstGenre;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.TextBox txtDirector;
         private System.Windows.Forms.ComboBox cboPublic;
-        private System.Windows.Forms.Button btnResearch;
-        private System.Windows.Forms.Button btnImportPicture;
         private System.Windows.Forms.TextBox txtActor;
         private System.Windows.Forms.DateTimePicker timeFilm;
         private System.Windows.Forms.TextBox txtInfo;
@@ -409,7 +615,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.RichTextBox txtSynopsis;
-        private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label lblMsg;
         private System.Windows.Forms.ErrorProvider errorProviderTitle;
         private System.Windows.Forms.ErrorProvider errorProviderActor;
@@ -418,5 +623,19 @@
         private System.Windows.Forms.ErrorProvider errorProviderPublic;
         private System.Windows.Forms.ErrorProvider errorProviderGenre;
         private System.Windows.Forms.ErrorProvider errorProviderSynopsis;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pbAffFilm;
+        private System.Windows.Forms.ComboBox cboTitre;
+        private System.Windows.Forms.Label lblPublic;
+        private System.Windows.Forms.Label lblDuree;
+        private System.Windows.Forms.Label lblDirector;
+        private FontAwesome.Sharp.IconButton btnClear;
+        private FontAwesome.Sharp.IconButton btnResearch;
+        private FontAwesome.Sharp.IconButton btnDeleteFilm;
+        private FontAwesome.Sharp.IconButton btnAddFilm;
+        private FontAwesome.Sharp.IconButton btnImportPicture;
+        private System.Windows.Forms.Label lblSynopsis;
+        private System.Windows.Forms.Label lblGenre;
+        private System.Windows.Forms.Label lblActor;
     }
 }
