@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.grdFilm = new System.Windows.Forms.DataGridView();
             this.lstGenre = new System.Windows.Forms.ListBox();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.txtDirector = new System.Windows.Forms.TextBox();
@@ -70,7 +69,6 @@
             this.lblSynopsis = new System.Windows.Forms.Label();
             this.lblActor = new System.Windows.Forms.Label();
             this.lblGenre = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.grdFilm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderActor)).BeginInit();
@@ -82,19 +80,6 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbAffFilm)).BeginInit();
             this.SuspendLayout();
-            // 
-            // grdFilm
-            // 
-            this.grdFilm.BackgroundColor = System.Drawing.Color.Wheat;
-            this.grdFilm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdFilm.Location = new System.Drawing.Point(936, 249);
-            this.grdFilm.Name = "grdFilm";
-            this.grdFilm.RowHeadersVisible = false;
-            this.grdFilm.RowHeadersWidth = 51;
-            this.grdFilm.RowTemplate.Height = 24;
-            this.grdFilm.Size = new System.Drawing.Size(50, 59);
-            this.grdFilm.TabIndex = 0;
-            this.grdFilm.Visible = false;
             // 
             // lstGenre
             // 
@@ -570,14 +555,12 @@
             this.Controls.Add(this.lblDirector);
             this.Controls.Add(this.pbAffFilm);
             this.Controls.Add(this.cboTitre);
-            this.Controls.Add(this.grdFilm);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Film";
             this.Text = "Gestion des films";
             this.Load += new System.EventHandler(this.Film_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.grdFilm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderTitle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderActor)).EndInit();
@@ -595,8 +578,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView grdFilm;
         private System.Windows.Forms.ListBox lstGenre;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.TextBox txtDirector;

@@ -29,22 +29,23 @@ namespace AP_CINE_APPLI
         {
             try
             {
+                //Initialisation des éléments cboTitre, lblMsg et timeFilm
                 cboTitre.Text = "Sélectionner un titre";
-                // Des différents éléments graphiques.
                 lblMsg.Text = "";
 
                 timeFilm.Format = DateTimePickerFormat.Time;
                 timeFilm.ShowUpDown = true;
                 timeFilm.Value = DateTime.Parse("00:00:00");
-                
-                //Initialisation de la connexion à la base de données
+
+                //Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
-                //affichage des genres dans lstGenre
-
+                // Affichage des genres dans lstGenre
+                // 
                 OdbcCommand cmdlstgenre = new OdbcCommand(); OdbcDataReader drrlstgenre; Boolean existenlstgenre;
+                // Recherche de tous les genres dans la base de données
                 cmdlstgenre.CommandText = "select * from genre";
                 cmdlstgenre.Connection = cnn;
                 drrlstgenre = cmdlstgenre.ExecuteReader();
@@ -95,7 +96,6 @@ namespace AP_CINE_APPLI
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
-
         }
 
         public void refreshCboFilm(string requestFilm)
