@@ -73,7 +73,6 @@
     <Compile Include="Film.Designer.cs">
       <DependentUpon>Film.cs</DependentUpon>
     </Compile>
-    <Compile Include="filmClass.cs" />
     <Compile Include="Genre.cs">
       <SubType>Form</SubType>
     </Compile>

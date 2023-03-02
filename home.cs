@@ -14,12 +14,13 @@ using Microsoft.VisualBasic;
 
 namespace AP_CINE_APPLI
 {
-    
+
     public partial class home : Form
     {
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
+
 
         public home()
         {
@@ -37,10 +38,44 @@ namespace AP_CINE_APPLI
         private void home_Load(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
-            varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
 
-            ActivateButton(btnAccueil);
-            OpenChildForm(new accueil());
+            Boolean goodPWD = false;
+            Boolean continu = true;
+            varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
+            while (!goodPWD && continu)
+            {
+                try
+                {
+                    OdbcConnection cnn = new OdbcConnection();
+                    cnn.ConnectionString = varglob.strconnect;
+                    cnn.Open();
+                    goodPWD = true;
+                    cnn.Close();
+                }
+                catch (Exception)
+                {
+                    if (MessageBox.Show("Erreur de mot de passe. Voulez-vous réessayer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
+
+                    }
+                    else
+                    {
+                        continu = false;
+
+
+                    }
+
+                }
+            }
+            if (!continu)
+                Application.Exit();
+            else
+            {
+                ActivateButton(btnAccueil);
+                OpenChildForm(new accueil());
+            }
+
         }
 
         private void ActivateButton(object senderBtn)
