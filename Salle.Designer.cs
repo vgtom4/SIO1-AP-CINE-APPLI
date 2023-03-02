@@ -259,6 +259,7 @@
             this.txtNum.TabIndex = 15;
             this.txtNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtNum.WordWrap = false;
+            this.txtNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNum_KeyPress);
             // 
             // Salle
             // 

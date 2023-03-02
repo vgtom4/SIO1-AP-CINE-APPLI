@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -248,6 +249,25 @@ namespace AP_CINE_APPLI
         {
             txtNum.Text = grdSalle[0, grdSalle.CurrentCell.RowIndex].Value.ToString();
             numCapac.Text = grdSalle[1, grdSalle.CurrentCell.RowIndex].Value.ToString();
+        }
+
+        private void txtNum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Vérifie si la touche enfoncée est une lettre de l'alphabet
+            if (char.IsLetter(e.KeyChar))
+            {
+                // Si la lettre est en minuscule, la bascule en majuscule
+                if (char.IsLower(e.KeyChar))
+                {
+                    e.KeyChar = char.ToUpper(e.KeyChar);
+                }
+            }
+            // Autorise la touche Entrée, la touche de suppression (backspace) et la touche de tabulation
+            else if (e.KeyChar != (char)Keys.Enter && e.KeyChar != (char)Keys.Back && e.KeyChar != (char)Keys.Tab)
+            {
+                // Empêche toutes les autres touches non autorisées
+                e.Handled = true;
+            }
         }
     }
 }

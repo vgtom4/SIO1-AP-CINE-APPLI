@@ -462,7 +462,7 @@ namespace AP_CINE_APPLI
 
             string synopsis;
             synopsis = drrfilm["synopsis"].ToString() + "...";
-            if (synopsis.Length > 150)
+            if (synopsis.Length > 300)
             {
                 synopsis = synopsis.Remove(synopsis.Length - 3).Substring(0, 150) + "...";
             }
