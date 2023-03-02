@@ -103,32 +103,41 @@ namespace AP_CINE_APPLI
 
         private void checkData()
         {
-            removeError();
-            if (cboFilm.SelectedIndex == -1)
+            try
             {
-                errorProviderFilm.SetError(cboFilm, "Veuillez remplir ce champ");
-            }
+                removeError();
+                if (cboFilm.SelectedIndex == -1)
+                {
+                    errorProviderFilm.SetError(cboFilm, "Veuillez remplir ce champ");
+                }
 
-            if (cboSalle.SelectedIndex == -1)
-            {
-                errorProviderSalle.SetError(cboSalle, "Veuillez remplir ce champ");
-            }
+                if (cboSalle.SelectedIndex == -1)
+                {
+                    errorProviderSalle.SetError(cboSalle, "Veuillez remplir ce champ");
+                }
 
-            if (dateProj.Value.Date < DateTime.Now.Date)
+                if (dateProj.Value.Date < DateTime.Now.Date)
+                {
+                    errorProviderDate.SetError(dateProj, "Veuillez remplir ce champ");
+                }
+            }
+            catch (Exception ex)
             {
-                errorProviderDate.SetError(dateProj, "Veuillez remplir ce champ");
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
         private bool canCreateProjection(string date, string time, string salle, string nofilm)
-        {
-            lblMsg.Text = "";
-            errorProviderInfo.SetError(lblMsg, "");
-
-            Boolean filmEnCours = true;
-
+        {   
             try
             {
+                lblMsg.Text = "";
+                errorProviderInfo.SetError(lblMsg, "");
+
+                Boolean filmEnCours = true;
+
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -164,32 +173,33 @@ namespace AP_CINE_APPLI
                     lblMsg.Text += "Impossible de créer la projection.\nUn film est en cours\nde diffusion à cette instant";
                     errorProviderInfo.SetError(lblMsg, "Projection déjà programmé");
                 }
+
+                bool existenproj = false;
+                int i = 0;
+                while (!existenproj && i < grdProjection.Rows.Count)
+                {
+                    if (grdProjection[1, i].Value.ToString() == DateTime.Parse(date).ToString("d") && grdProjection[2, i].Value.ToString().Replace("h", ":") + ":00" == time && grdProjection[5, i].Value.ToString() == salle)
+                    {
+                        grdProjection.Rows[i].Selected = true;
+                        existenproj = true;
+                        lblMsg.Text += "\nUne projection existe déjà à ce moment";
+                        errorProviderInfo.SetError(lblMsg, "Projection déjà programmé");
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
+                return !filmEnCours && !existenproj;
             }
             catch (Exception ex)
             {
                 // En cas d'erreur, création du fichier log
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                return false;
             }
-
-            bool existenproj = false;
-            int i = 0;
-            while (!existenproj && i < grdProjection.Rows.Count)
-            {
-                if (grdProjection[1, i].Value.ToString() == DateTime.Parse(date).ToString("d") && grdProjection[2, i].Value.ToString().Replace("h", ":") + ":00" == time && grdProjection[5, i].Value.ToString() == salle)
-                {
-                    grdProjection.Rows[i].Selected = true;
-                    existenproj = true;
-                    lblMsg.Text += "\nUne projection existe déjà à ce moment";
-                    errorProviderInfo.SetError(lblMsg, "Projection déjà programmé");
-                }
-                else
-                {
-                    i++;
-                }
-            }
-
-            return !filmEnCours && !existenproj;
         }
 
         private void refresh()
@@ -228,15 +238,15 @@ namespace AP_CINE_APPLI
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            
-            checkData();
-
-            if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > -1 && cboSalle.SelectedIndex > -1)
+            try
             {
-                if (canCreateProjection(dateProj.Value.ToString("yyyy-MM-dd"), timeProj.Value.ToString("T"), cboSalle.SelectedItem.ToString(), lstIdFilms[cboFilm.SelectedIndex].ToString()))
+                checkData();
+
+                if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > -1 && cboSalle.SelectedIndex > -1)
                 {
-                    try
+                    if (canCreateProjection(dateProj.Value.ToString("yyyy-MM-dd"), timeProj.Value.ToString("T"), cboSalle.SelectedItem.ToString(), lstIdFilms[cboFilm.SelectedIndex].ToString()))
                     {
+                    
                         OdbcConnection cnn = new OdbcConnection();
                         cnn.ConnectionString = varglob.strconnect;
                         cnn.Open();
@@ -253,54 +263,55 @@ namespace AP_CINE_APPLI
                                         "\nHoraire : " + timeProj.Value.ToString("t"));
                         lblMsg.Text = message;
                     }
-                    catch (Exception ex)
-                    {
-                        // En cas d'erreur, création du fichier log
-                        using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                        MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                    }
 
                     refresh();
                 }
-            }
-            else
-            {
-                string message = "Données invalides :\n";
-                message += dateProj.Value.Date >= DateTime.Now.Date ? "" : "Date de projection\n";
-                message += cboFilm.SelectedIndex > -1 ? "" : "Film\n";
-                message += cboSalle.SelectedIndex > -1 ? "" : "Salle";
+                else
+                {
+                    string message = "Données invalides :\n";
+                    message += dateProj.Value.Date >= DateTime.Now.Date ? "" : "Date de projection\n";
+                    message += cboFilm.SelectedIndex > -1 ? "" : "Film\n";
+                    message += cboSalle.SelectedIndex > -1 ? "" : "Salle";
 
-                lblMsg.Text = message;
+                    lblMsg.Text = message;
+                }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            removeError();
-            if (grdProjection.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la projection ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            try
             {
-                try
+                removeError();
+                if (grdProjection.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la projection ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    OdbcConnection cnn = new OdbcConnection();
-                    cnn.ConnectionString = varglob.strconnect;
-                    cnn.Open();
                 
-                    OdbcCommand cmd = new OdbcCommand();
-                    cmd.CommandText = "delete from projection where noproj =" + grdProjection[0, grdProjection.CurrentRow.Index].Value + ";";
-                    cmd.Connection = cnn;
-                    cmd.ExecuteReader();
-                    cnn.Close();
-                    lblMsg.Text = "Projection supprimée";
-                }
-                catch (Exception ex)
-                {
-                    // En cas d'erreur, création du fichier log
-                    using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                    MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                }
+                OdbcConnection cnn = new OdbcConnection();
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
+                
+                OdbcCommand cmd = new OdbcCommand();
+                cmd.CommandText = "delete from projection where noproj =" + grdProjection[0, grdProjection.CurrentRow.Index].Value + ";";
+                cmd.Connection = cnn;
+                cmd.ExecuteReader();
+                cnn.Close();
+                lblMsg.Text = "Projection supprimée";
 
                 refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
     }

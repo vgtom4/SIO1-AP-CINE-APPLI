@@ -27,16 +27,15 @@ namespace AP_CINE_APPLI
 
         private void Film_Load(object sender, EventArgs e)
         {
-            cboTitre.Text = "Sélectionner un titre";
-            // Des différents éléments graphiques.
-            lblMsg.Text = "";
-
-            timeFilm.Format = DateTimePickerFormat.Time;
-            timeFilm.ShowUpDown = true;
-            timeFilm.Value = DateTime.Parse("00:00:00");
-
             try
             {
+                cboTitre.Text = "Sélectionner un titre";
+                // Des différents éléments graphiques.
+                lblMsg.Text = "";
+
+                timeFilm.Format = DateTimePickerFormat.Time;
+                timeFilm.ShowUpDown = true;
+                timeFilm.Value = DateTime.Parse("00:00:00");
                 
                 //Initialisation de la connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
@@ -82,8 +81,13 @@ namespace AP_CINE_APPLI
                     existenpublic = drrpublic.Read();
                 }
                 drrpublic.Close();
-
                 cnn.Close();
+
+                // Affichage des films en appelant la méthode affichageFilm avec la requête qui importe tous les films et publics
+                refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
+
+                pictureBox1.Image = Properties.Resources.noimg;
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
             catch (Exception ex)
             {
@@ -92,20 +96,14 @@ namespace AP_CINE_APPLI
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
 
-
-            // Affichage des films en appelant la méthode affichageFilm avec la requête qui importe tous les films et publics
-            refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
-
-            pictureBox1.Image = Properties.Resources.noimg;
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            
         }
 
         public void refreshCboFilm(string requestFilm)
         {
-            Boolean existe = true;
             try
             {
+                Boolean existe = true;
+            
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -130,33 +128,33 @@ namespace AP_CINE_APPLI
 
                 drrfilm.Close();
                 cnn.Close();
+
+                if (existe && cboTitre.SelectedIndex == -1)
+                {
+                    cboTitre.SelectedIndex = 0;
+                }
+
+                if (existe)
+                {
+                    cboTitre_SelectedIndexChanged(this, EventArgs.Empty);
+                }
+                else
+                {
+                    cboTitre.Text = "Aucun film ne correspond à la recherche";
+                    lblSynopsis.Text = "Synopsis :";
+                    lblDirector.Text = "Réalisateur(s) : ";
+                    lblActor.Text = "Acteur(s) : ";
+                    lblDuree.Text = "Durée : ";
+                    lblPublic.Text = "Type de public : ";
+                    pbAffFilm.Image = null;
+                    lblGenre.Text = "Genre(s) :";
+                }
             }
             catch (Exception ex)
             {
                 // En cas d'erreur, création du fichier log
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-            }
-
-            if (existe && cboTitre.SelectedIndex == -1)
-            {
-                cboTitre.SelectedIndex = 0;
-            }
-
-            if (existe)
-            {
-                cboTitre_SelectedIndexChanged(this, EventArgs.Empty);
-            }
-            else
-            {
-                cboTitre.Text = "Aucun film ne correspond à la recherche";
-                lblSynopsis.Text = "Synopsis :";
-                lblDirector.Text = "Réalisateur(s) : ";
-                lblActor.Text = "Acteur(s) : ";
-                lblDuree.Text = "Durée : ";
-                lblPublic.Text = "Type de public : ";
-                pbAffFilm.Image = null;
-                lblGenre.Text = "Genre(s) :";
             }
         }
 
@@ -174,53 +172,61 @@ namespace AP_CINE_APPLI
 
         private void checkData()
         {
-            removeError();
-
-            if (string.IsNullOrEmpty(txtTitle.Text))
+            try
             {
-                errorProviderTitle.SetError(txtTitle, "Veuillez remplir ce champ");
+                removeError();
+
+                if (string.IsNullOrEmpty(txtTitle.Text))
+                {
+                    errorProviderTitle.SetError(txtTitle, "Veuillez remplir ce champ");
+                }
+
+                if (string.IsNullOrEmpty(txtDirector.Text))
+                {
+                    errorProviderDirector.SetError(txtDirector, "Veuillez remplir ce champ");
+                }
+
+                if (string.IsNullOrEmpty(txtActor.Text))
+                {
+                    errorProviderActor.SetError(txtActor, "Veuillez remplir ce champ");
+                }
+
+                if (string.IsNullOrEmpty(txtSynopsis.Text))
+                {
+                    errorProviderSynopsis.SetError(txtSynopsis, "Veuillez remplir ce champ");
+                }
+
+                if (timeFilm.Value.ToString("T") == "00:00:00")
+                {
+                    errorProviderDuree.SetError(timeFilm, "Veuillez remplir ce champ");
+                }
+
+                if (cboPublic.SelectedIndex < 0)
+                {
+                    errorProviderPublic.SetError(cboPublic, "Veuillez remplir ce champ");
+                }
+
+                if (lstGenre.SelectedItems.Count == 0)
+                {
+                    errorProviderGenre.SetError(lstGenre, "Veuillez remplir ce champ");
+                }
             }
-
-            if (string.IsNullOrEmpty(txtDirector.Text))
+            catch (Exception ex)
             {
-                errorProviderDirector.SetError(txtDirector, "Veuillez remplir ce champ");
-            }
-
-            if (string.IsNullOrEmpty(txtActor.Text))
-            {
-                errorProviderActor.SetError(txtActor, "Veuillez remplir ce champ");
-            }
-
-            if (string.IsNullOrEmpty(txtSynopsis.Text))
-            {
-                errorProviderSynopsis.SetError(txtSynopsis, "Veuillez remplir ce champ");
-            }
-
-            if (timeFilm.Value.ToString("T") == "00:00:00")
-            {
-                errorProviderDuree.SetError(timeFilm, "Veuillez remplir ce champ");
-            }
-
-            if (cboPublic.SelectedIndex < 0)
-            {
-                errorProviderPublic.SetError(cboPublic, "Veuillez remplir ce champ");
-            }
-
-            if (lstGenre.SelectedItems.Count == 0)
-            {
-                errorProviderGenre.SetError(lstGenre, "Veuillez remplir ce champ");
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
         private bool checkExistFilm(string titre)
-        {
-            lblMsg.Text = "";
-            errorProviderGenre.SetError(txtTitle, "");
-
-            Boolean existenfilm = true;
-
-            try
+        {   try
             {
+                lblMsg.Text = "";
+                errorProviderGenre.SetError(txtTitle, "");
+
+                Boolean existenfilm = true;
+
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -241,23 +247,24 @@ namespace AP_CINE_APPLI
                     lblMsg.Text = "Ce film existe déjà";
                     errorProviderGenre.SetError(txtTitle, "Film déjà existant");
                 }
+            
+                return existenfilm;
             }
             catch (Exception ex)
             {
                 // En cas d'erreur, création du fichier log
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                return true;
             }
-
-            return existenfilm;
         }
 
         private bool filmHasProjection(string nofilm)
         {
-            Boolean CanDelete = false;
-
             try
             {
+                Boolean CanDelete = false;
+
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -283,27 +290,28 @@ namespace AP_CINE_APPLI
 
                 drr.Close();
                 cnn.Close();
+                
+                return CanDelete;
             }
             catch (Exception ex)
             {
                 // En cas d'erreur, création du fichier log
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                return false;
             }
-
-            return CanDelete;
         }
 
         private void btnAddFilm_Click(object sender, EventArgs e)
-        {
-            if (!checkExistFilm(txtTitle.Text))
+        {   try
             {
-                checkData();
-
-                if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
+                if (!checkExistFilm(txtTitle.Text))
                 {
-                    try
+                    checkData();
+
+                    if (lstGenre.SelectedItems.Count > 0 && timeFilm.Text.ToString() != "00:00:00" && txtTitle.Text != "" && txtDirector.Text.ToString() != "" && txtActor.Text.ToString() != "" && txtSynopsis.Text.ToString() != "" && cboPublic.SelectedIndex > -1)
                     {
+                    
                         OdbcConnection cnn = new OdbcConnection();
                         cnn.ConnectionString = varglob.strconnect;
                         cnn.Open();
@@ -341,42 +349,43 @@ namespace AP_CINE_APPLI
                         cnn.Close();
 
                         lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
+
+                        refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        // En cas d'erreur, création du fichier log
-                        using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                        MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                        string message = "Données manquantes :\n";
+                        message += txtTitle.Text != "" ? "" : "Titre\n";
+                        message += txtDirector.Text.ToString() != "" ? "" : "Réalisateur(s)\n";
+                        message += txtActor.Text.ToString() != "" ? "" : "Acteur(s)\n";
+                        message += txtSynopsis.Text.ToString() != "" ? "" : "Synopsis\n";
+                        message += timeFilm.Text.ToString() != "00:00:00" ? "" : "Durée\n";
+                        message += cboPublic.SelectedIndex > 0 ? "" : "Type de public\n";
+                        message += lstGenre.SelectedItems.Count != 0 ? "" : "Genre(s)\n";
+
+                        lblMsg.Text = message;
                     }
-
-                    refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
                 }
-                else
-                {
-                    string message = "Données manquantes :\n";
-                    message += txtTitle.Text != "" ? "" : "Titre\n";
-                    message += txtDirector.Text.ToString() != "" ? "" : "Réalisateur(s)\n";
-                    message += txtActor.Text.ToString() != "" ? "" : "Acteur(s)\n";
-                    message += txtSynopsis.Text.ToString() != "" ? "" : "Synopsis\n";
-                    message += timeFilm.Text.ToString() != "00:00:00" ? "" : "Durée\n";
-                    message += cboPublic.SelectedIndex > 0 ? "" : "Type de public\n";
-                    message += lstGenre.SelectedItems.Count != 0 ? "" : "Genre(s)\n";
-
-                    lblMsg.Text = message;
-                }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
         private void btnDeleteFilm_Click(object sender, EventArgs e)
-        {
-            removeError();
-
-            if (cboTitre.Items.Count > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + cboTitre.SelectedItem, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+        {   
+            try
             {
-                if (filmHasProjection(idFilms[cboTitre.SelectedIndex].ToString()))
+                removeError();
+
+                if (cboTitre.Items.Count > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + cboTitre.SelectedItem, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    try
+                    if (filmHasProjection(idFilms[cboTitre.SelectedIndex].ToString()))
                     {
+                    
                         OdbcConnection cnn = new OdbcConnection();
                         cnn.ConnectionString = varglob.strconnect;
                         cnn.Open();
@@ -399,41 +408,40 @@ namespace AP_CINE_APPLI
                         cnn.Close();
 
                         lblMsg.Text = "Le film \"" + cboTitre.SelectedItem + "\" a été supprimé";
-                    }
-                    catch (Exception ex)
-                    {
-                        // En cas d'erreur, création du fichier log
-                        using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                        MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                    }
 
-                    refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
-
+                        refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
 
         }
 
         private void btnResearch_Click(object sender, EventArgs e)
-        {
-            removeError();
-
-            string dureeFilm = "";
-            if (timeFilm.Text.ToString() != "00:00:00")
-            {
-                dureeFilm = timeFilm.Text.ToString();
-            }
-
+        {   
             try 
             {
+                removeError();
+
+                string dureeFilm = "";
+                if (timeFilm.Text.ToString() != "00:00:00")
+                {
+                    dureeFilm = timeFilm.Text.ToString();
+                }
+
                 OdbcCommand cmdfilm = new OdbcCommand();
                 cmdfilm.CommandText = "select distinct titre, nofilm from film natural join concerner natural join genre natural join public " +
-                                               "where titre like '%" + txtTitle.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                               "and realisateurs like '%" + txtDirector.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                               "and acteurs like '%" + txtActor.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                               "and duree like '%" + dureeFilm + "%' " +
-                                               "and synopsis like '%" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "%' " +
-                                               "and infofilm like '%" + txtInfo.Text.ToString().Replace("\'", "\\'") + "%' ";
+                                                "where titre like '%" + txtTitle.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                                "and realisateurs like '%" + txtDirector.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                                "and acteurs like '%" + txtActor.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                                "and duree like '%" + dureeFilm + "%' " +
+                                                "and synopsis like '%" + txtSynopsis.Text.ToString().Replace("\'", "\\'") + "%' " +
+                                                "and infofilm like '%" + txtInfo.Text.ToString().Replace("\'", "\\'") + "%' ";
                 if (cboPublic.SelectedIndex > -1)
                 {
                     cmdfilm.CommandText += "and nopublic = " + idPublics[cboPublic.SelectedIndex] + " ";
@@ -453,11 +461,9 @@ namespace AP_CINE_APPLI
                     cmdfilm.CommandText = cmdfilm.CommandText.Remove(cmdfilm.CommandText.Length - 1);
                     cmdfilm.CommandText += ") ";
                 }
-
                 cmdfilm.CommandText += "order by titre";
 
                 refreshCboFilm(cmdfilm.CommandText);
-
             }
             catch (Exception ex)
             {
@@ -465,6 +471,7 @@ namespace AP_CINE_APPLI
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
+
         }
 
         private void btnImportPicture_Click(object sender, EventArgs e)
@@ -501,34 +508,43 @@ namespace AP_CINE_APPLI
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            removeError();
-            if (txtTitle.Text == "test")
+            try
             {
-                txtTitle.Text = "test";
-                txtDirector.Text = "test";
-                txtActor.Text = "test";
-                timeFilm.Text = "01:00:00";
-                txtSynopsis.Text = "test";
-                txtInfo.Text = "test";
-                namePicture = "noimg.png";
-                cboPublic.SelectedIndex = 1;
-                lstGenre.SelectedIndex = 0;
-                lstGenre.SelectedIndex = 3;
+                removeError();
+                if (txtTitle.Text == "test")
+                {
+                    txtTitle.Text = "test";
+                    txtDirector.Text = "test";
+                    txtActor.Text = "test";
+                    timeFilm.Text = "01:00:00";
+                    txtSynopsis.Text = "test";
+                    txtInfo.Text = "test";
+                    namePicture = "noimg.png";
+                    cboPublic.SelectedIndex = 1;
+                    lstGenre.SelectedIndex = 0;
+                    lstGenre.SelectedIndex = 3;
+                }
+                else
+                {
+                    txtTitle.Text = "";
+                    txtDirector.Text = "";
+                    txtActor.Text = "";
+                    timeFilm.Text = "00:00:00";
+                    txtSynopsis.Text = "";
+                    txtInfo.Text = "";
+                    namePicture = null;
+                    cboPublic.SelectedIndex = -1;
+                    lstGenre.SelectedIndex = -1;
+                    refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
+                }
+                lblMsg.Text = "";
             }
-            else
+            catch (Exception ex)
             {
-                txtTitle.Text = "";
-                txtDirector.Text = "";
-                txtActor.Text = "";
-                timeFilm.Text = "00:00:00";
-                txtSynopsis.Text = "";
-                txtInfo.Text = "";
-                namePicture = null;
-                cboPublic.SelectedIndex = -1;
-                lstGenre.SelectedIndex = -1;
-                refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
-            lblMsg.Text = "";
         }
 
         private void cboTitre_SelectedIndexChanged(object sender, EventArgs e)

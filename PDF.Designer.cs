@@ -53,14 +53,14 @@
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(97, 89);
+            this.label1.Location = new System.Drawing.Point(12, 89);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(823, 39);
+            this.label1.Size = new System.Drawing.Size(958, 38);
             this.label1.TabIndex = 0;
             this.label1.Text = "Générer une fiche avec les projections de la date :";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dateTimePicker1
             // 
@@ -79,14 +79,14 @@
             // lblMsg
             // 
             this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblMsg.AutoSize = true;
             this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMsg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblMsg.Location = new System.Drawing.Point(281, 244);
+            this.lblMsg.Location = new System.Drawing.Point(19, 244);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(64, 25);
+            this.lblMsg.Size = new System.Drawing.Size(951, 25);
             this.lblMsg.TabIndex = 3;
             this.lblMsg.Text = "label2";
+            this.lblMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PDF
             // 
@@ -104,7 +104,6 @@
             this.Text = "PDF";
             this.Load += new System.EventHandler(this.PDF_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

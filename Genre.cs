@@ -24,17 +24,16 @@ namespace AP_CINE_APPLI
 
         private void Genre_Load(object sender, EventArgs e)
         {
-            grdGenre.AllowUserToAddRows = false;
-            grdGenre.ReadOnly = true;
-
-            grdGenre.Columns[0].Width = 30;
-            grdGenre.Columns[1].Width = 100;
-
-            grdGenre.Rows.Clear();
-
-            
             try
-            {   
+            {
+                grdGenre.AllowUserToAddRows = false;
+                grdGenre.ReadOnly = true;
+
+                grdGenre.Columns[0].Width = 30;
+                grdGenre.Columns[1].Width = 100;
+
+                grdGenre.Rows.Clear();
+
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -51,7 +50,10 @@ namespace AP_CINE_APPLI
                     existenreg = drr.Read();
                 }
                 drr.Close();
-                cnn.Close();   
+                cnn.Close();
+
+                grdGenre.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                grdGenre.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             catch (Exception ex)
             {
@@ -59,10 +61,6 @@ namespace AP_CINE_APPLI
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")){writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n");}
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
-            
-
-            grdGenre.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            grdGenre.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void removeError()
@@ -72,52 +70,74 @@ namespace AP_CINE_APPLI
 
         private void checkData()
         {
-            removeError();
-            if (string.IsNullOrEmpty(txtGenre.Text))
+            try
             {
-                errorProviderGenre.SetError(txtGenre, "Veuillez remplir ce champ");
-                lblMsg.Text = "Libellé de genre invalide";
+                removeError();
+                if (string.IsNullOrEmpty(txtGenre.Text))
+                {
+                    errorProviderGenre.SetError(txtGenre, "Veuillez remplir ce champ");
+                    lblMsg.Text = "Libellé de genre invalide";
+                }
+                if (txtGenre.Text.Length > 30)
+                {
+                    errorProviderGenre.SetError(txtGenre, "Libellé trop long");
+                    lblMsg.Text = "Libellé de genre invalide";
+                }
+            
+            grdGenre.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            grdGenre.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
-            if (txtGenre.Text.Length > 30)
+            catch (Exception ex)
             {
-                errorProviderGenre.SetError(txtGenre, "Libellé trop long");
-                lblMsg.Text = "Libellé de genre invalide";
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
         private bool checkExistGenre(string libgenre)
         {
-            lblMsg.Text = "";
-            errorProviderGenre.SetError(txtGenre, "");
-            bool existengenre = false;
-            int i = 0;
-            while (!existengenre && i < grdGenre.Rows.Count)
+            try
             {
-                if (grdGenre[1, i].Value.ToString() == libgenre)
+                lblMsg.Text = "";
+                errorProviderGenre.SetError(txtGenre, "");
+                bool existengenre = false;
+                int i = 0;
+                while (!existengenre && i < grdGenre.Rows.Count)
                 {
-                    existengenre = true;
-                    lblMsg.Text = "Ce genre existe déjà";
-                    errorProviderGenre.SetError(txtGenre, "Genre déjà existant");
+                    if (grdGenre[1, i].Value.ToString() == libgenre)
+                    {
+                        existengenre = true;
+                        lblMsg.Text = "Ce genre existe déjà";
+                        errorProviderGenre.SetError(txtGenre, "Genre déjà existant");
+                    }
+                    else
+                    {
+                        i++;
+                    }
                 }
-                else
-                {
-                    i++;
-                }
+            
+                return existengenre;
             }
-            return existengenre;
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                return true;
+            }
         }
-
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            checkData();
+            try
+            {
+                checkData();
 
-            if (!string.IsNullOrEmpty(txtGenre.Text) && txtGenre.Text.Length <= 30)
-            { 
-                if (!checkExistGenre(txtGenre.Text.ToString()))
-                {
-                    try 
-                    {   
+                if (!string.IsNullOrEmpty(txtGenre.Text) && txtGenre.Text.Length <= 30)
+                { 
+                    if (!checkExistGenre(txtGenre.Text.ToString()))
+                    {  
                         OdbcConnection cnn = new OdbcConnection();
                         cnn.ConnectionString = varglob.strconnect;
                         cnn.Open();
@@ -130,28 +150,28 @@ namespace AP_CINE_APPLI
                         cnn.Close();
 
                         lblMsg.Text = "Le genre \"" + txtGenre.Text.ToString() + "\" a été ajouté";
-                    }
-                    catch (Exception ex)
-                    {
-                        // En cas d'erreur, création du fichier log
-                        using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                        MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                    }
                     
-                    Genre_Load(sender, e);
+                        Genre_Load(sender, e);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (grdGenre.RowCount >= 0)
+            try
             {
-                if (txtGenre.Text.ToString() != "")
+                if (grdGenre.RowCount >= 0)
                 {
-                    if (!checkExistGenre(txtGenre.Text.ToString()))
+                    if (txtGenre.Text.ToString() != "")
                     {
-                        try
+                        if (!checkExistGenre(txtGenre.Text.ToString()))
                         {
                             OdbcConnection cnn = new OdbcConnection();
                             cnn.ConnectionString = varglob.strconnect;
@@ -166,30 +186,30 @@ namespace AP_CINE_APPLI
                             cnn.Close();
 
                             lblMsg.Text = "Le genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été modifié en \"" + txtGenre.Text.ToString() + "\"";
-                        }
-                        catch (Exception ex)
-                        {
-                            // En cas d'erreur, création du fichier log
-                            using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                            MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                        }
                         
-                        Genre_Load(sender, e);
+                            Genre_Load(sender, e);
+                        }
+                    }
+                    else
+                    {
+                        lblMsg.Text = "Libellé de genre invalide";
                     }
                 }
-                else
-                {
-                    lblMsg.Text = "Libellé de genre invalide";
-                }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            removeError();
-            if (grdGenre.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le genre suivant :\n" + grdGenre[1, grdGenre.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            try
             {
-                try
+                removeError();
+                if (grdGenre.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le genre suivant :\n" + grdGenre[1, grdGenre.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     OdbcConnection cnn = new OdbcConnection();
                     cnn.ConnectionString = varglob.strconnect;
@@ -210,15 +230,15 @@ namespace AP_CINE_APPLI
                     cnn.Close();
                     
                     lblMsg.Text = "Le genre \"" + grdGenre[1, grdGenre.CurrentRow.Index].Value + "\" a été supprimé";
-                }
-                catch (Exception ex)
-                {
-                    // En cas d'erreur, création du fichier log
-                    using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                    MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                }
                 
-                Genre_Load(sender, e);
+                    Genre_Load(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 

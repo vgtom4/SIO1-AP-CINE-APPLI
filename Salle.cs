@@ -26,10 +26,10 @@ namespace AP_CINE_APPLI
 
         private void Salle_Load(object sender, EventArgs e)
         {
-            grdSalle.Rows.Clear();
-
             try
             {   
+                grdSalle.Rows.Clear();
+
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -47,6 +47,8 @@ namespace AP_CINE_APPLI
                 }
                 drr.Close();
                 cnn.Close();
+            
+                grdSalle.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
             catch (Exception ex)
             {
@@ -54,8 +56,6 @@ namespace AP_CINE_APPLI
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
-            
-            grdSalle.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void removeError()
@@ -66,48 +66,67 @@ namespace AP_CINE_APPLI
 
         private void checkData()
         {
-            removeError();
-
-            if (string.IsNullOrEmpty(txtNum.Text))
+            try
             {
-                errorProviderNumSalle.SetError(txtNum, "Veuillez remplir ce champ");
+                removeError();
+
+                if (string.IsNullOrEmpty(txtNum.Text))
+                {
+                    errorProviderNumSalle.SetError(txtNum, "Veuillez remplir ce champ");
+                }
+
+                if (numCapac.Value == 0)
+                {
+                    errorProviderCapac.SetError(numCapac, "Veuillez remplir ce champ");
+                }
             }
-
-            if (numCapac.Value == 0)
+            catch (Exception ex)
             {
-                errorProviderCapac.SetError(numCapac, "Veuillez remplir ce champ");
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 
         private bool checkExistSalle(string numsalle)
         {
-            lblMsg.Text = "";
-            errorProviderNumSalle.SetError(txtNum, "");
-
-            bool existensalle = false;
-            int i = 0;
-            while (!existensalle && i < grdSalle.Rows.Count)
+            try
             {
-                if (grdSalle[0, i].Value.ToString() == numsalle)
+                lblMsg.Text = "";
+                errorProviderNumSalle.SetError(txtNum, "");
+
+                bool existensalle = false;
+                int i = 0;
+                while (!existensalle && i < grdSalle.Rows.Count)
                 {
-                    existensalle = true;
-                    lblMsg.Text = "Ce numéro de salle existe déjà";
-                    errorProviderNumSalle.SetError(txtNum, "Numéro de salle déjà existant");
+                    if (grdSalle[0, i].Value.ToString() == numsalle)
+                    {
+                        existensalle = true;
+                        lblMsg.Text = "Ce numéro de salle existe déjà";
+                        errorProviderNumSalle.SetError(txtNum, "Numéro de salle déjà existant");
+                    }
+                    else
+                    {
+                        i++;
+                    }
                 }
-                else
-                {
-                    i++;
-                }
+                return existensalle;
             }
-            return existensalle;
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                return true;
+            }
         }
 
         private bool salleHasProjection(string mode, string nosalle)
         {
-            Boolean CanDelete = false;
-
             try
             {
+                Boolean CanDelete = true;
+
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -128,29 +147,32 @@ namespace AP_CINE_APPLI
                 }
                 drr.Close();
                 cnn.Close();
+                
+                return CanDelete;
             }
             catch (Exception ex)
             {
                 // En cas d'erreur, création du fichier log
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                return false;
             }
  
-            return CanDelete;
+            
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            checkData();
+            try
+            { 
+                checkData();
 
-            if (!string.IsNullOrEmpty(txtNum.Text) && numCapac.Value > 0)
-            {
-                
-                if (!checkExistSalle(txtNum.Text.ToString()))
+                if (!string.IsNullOrEmpty(txtNum.Text) && numCapac.Value > 0)
                 {
-                    
-                    try
-                    {   OdbcConnection cnn = new OdbcConnection();
+                
+                    if (!checkExistSalle(txtNum.Text.ToString()))
+                    {
+                        OdbcConnection cnn = new OdbcConnection();
                         cnn.ConnectionString = varglob.strconnect;
                         cnn.Open();
 
@@ -164,40 +186,39 @@ namespace AP_CINE_APPLI
                         
                         Salle_Load(sender, e);
                     }
-                    catch (Exception ex)
-                    {
-                        // En cas d'erreur, création du fichier log
-                        using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                        MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                    }
+                }
+                else
+                {
+                    lblMsg.Text = "/!\\ Donnée(s) manquante(s) /!\\";
                 }
             }
-            else
+            catch (Exception ex)
             {
-                lblMsg.Text = "/!\\ Donnée(s) manquante(s) /!\\";
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
-
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            checkData();
-            lblMsg.Text = "";
-
-            if (!string.IsNullOrEmpty(txtNum.Text) && numCapac.Value > 0)
+            try
             {
-                string message = "";
+                checkData();
+                lblMsg.Text = "";
 
-                bool unlikeNumSalle = txtNum.Text.ToString() != grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString();
-                bool unlikeCapac = numCapac.Value.ToString() != grdSalle[1, grdSalle.CurrentRow.Index].Value.ToString();
-
-                if (!unlikeNumSalle)
+                if (!string.IsNullOrEmpty(txtNum.Text) && numCapac.Value > 0)
                 {
-                    errorProviderNumSalle.SetError(txtNum, "");
-                }
+                    string message = "";
 
-                try 
-                {
+                    bool unlikeNumSalle = txtNum.Text.ToString() != grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString();
+                    bool unlikeCapac = numCapac.Value.ToString() != grdSalle[1, grdSalle.CurrentRow.Index].Value.ToString();
+
+                    if (!unlikeNumSalle)
+                    {
+                        errorProviderNumSalle.SetError(txtNum, "");
+                    }
+
                     OdbcConnection cnn = new OdbcConnection();
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
@@ -238,24 +259,23 @@ namespace AP_CINE_APPLI
                         Salle_Load(sender, e);
                     }
                 }
-                catch (Exception ex)
-                {
-                    // En cas d'erreur, création du fichier log
-                    using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                    MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                }
-
             }
-            
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            removeError();
-            if (grdSalle.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes && salleHasProjection("delete", grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString()))
+            try
             {
-                try
+                removeError();
+                if (grdSalle.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes && salleHasProjection("delete", grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString()))
                 {
+                
                     OdbcConnection cnn = new OdbcConnection();
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
@@ -276,12 +296,12 @@ namespace AP_CINE_APPLI
 
                     Salle_Load(sender, e);
                 }
-                catch (Exception ex)
-                {
-                    // En cas d'erreur, création du fichier log
-                    using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
-                    MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
-                }
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, création du fichier log
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
         }
 

@@ -154,8 +154,6 @@
   <ItemGroup>
     <None Include="bin\Debug\affiches\image.png" />
     <Content Include="logo.ico" />
-    <Content Include="logo2.ico" />
-    <Content Include="logo3.ico" />
     <None Include="ressources\logo2.ico" />
     <None Include="ressources\logo3.ico" />
     <None Include="ressources\logo.ico" />
