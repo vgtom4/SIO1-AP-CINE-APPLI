@@ -85,7 +85,7 @@ namespace AP_CINE_APPLI
 
 
             // Affichage des films en appelant la méthode affichageFilm avec la requête qui importe tous les films et publics
-            refreshCboFilm("select nofilm, titre from film natural join public");
+            refreshCboFilm("select nofilm, titre from film natural join public order by titre");
 
 
             pictureBox1.Image = Properties.Resources.noimg;
@@ -285,7 +285,7 @@ namespace AP_CINE_APPLI
 
                     lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
 
-                    refreshCboFilm("select nofilm, titre from film natural join public");
+                    refreshCboFilm("select nofilm, titre from film natural join public order by titre");
                 }
                 else
                 {
@@ -336,7 +336,7 @@ namespace AP_CINE_APPLI
 
                     lblMsg.Text = "Le film \"" + cboTitre.SelectedItem + "\" a été supprimé";
 
-                    refreshCboFilm("select nofilm, titre from film natural join public");
+                    refreshCboFilm("select nofilm, titre from film natural join public order by titre");
 
                 }
             }
@@ -385,7 +385,7 @@ namespace AP_CINE_APPLI
                 cmdfilm.CommandText += ") ";
             }
 
-            cmdfilm.CommandText += "group by nofilm";
+            cmdfilm.CommandText += "order by titre";
 
             refreshCboFilm(cmdfilm.CommandText);
 
