@@ -28,7 +28,7 @@ namespace AP_CINE_APPLI
         private void Film_Load(object sender, EventArgs e)
         {
             cboTitre.Text = "Sélectionner un titre";
-            // Initialisation du DataGridView et des différents éléments graphiques.
+            // Des différents éléments graphiques.
             lblMsg.Text = "";
 
             timeFilm.Format = DateTimePickerFormat.Time;
@@ -85,7 +85,7 @@ namespace AP_CINE_APPLI
 
 
             // Affichage des films en appelant la méthode affichageFilm avec la requête qui importe tous les films et publics
-            refreshCboFilm("select nofilm, titre from film natural join public order by titre");
+            refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
 
 
             pictureBox1.Image = Properties.Resources.noimg;
@@ -111,6 +111,7 @@ namespace AP_CINE_APPLI
             cboTitre.Items.Clear();
 
             while (existenfilm == true)
+
             {
                 idFilms.Add(Convert.ToInt32(drrfilm["nofilm"]));
                 cboTitre.Items.Add(drrfilm["titre"].ToString());
@@ -132,6 +133,13 @@ namespace AP_CINE_APPLI
             else
             {
                 cboTitre.Text = "Aucun film ne correspond à la recherche";
+                lblSynopsis.Text = "Synopsis :";
+                lblDirector.Text = "Réalisateur(s) : ";
+                lblActor.Text = "Acteur(s) : ";
+                lblDuree.Text = "Durée : ";
+                lblPublic.Text = "Type de public : ";
+                pbAffFilm.Image = null;
+                lblGenre.Text = "Genre(s) :";
             }
         }
 
@@ -293,7 +301,7 @@ namespace AP_CINE_APPLI
 
                     lblMsg.Text = "Le film \"" + txtTitle.Text + "\" a été ajouté";
 
-                    refreshCboFilm("select nofilm, titre from film natural join public order by titre");
+                    refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
                 }
                 else
                 {
@@ -344,7 +352,7 @@ namespace AP_CINE_APPLI
 
                     lblMsg.Text = "Le film \"" + cboTitre.SelectedItem + "\" a été supprimé";
 
-                    refreshCboFilm("select nofilm, titre from film natural join public order by titre");
+                    refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
 
                 }
             }
@@ -366,7 +374,7 @@ namespace AP_CINE_APPLI
             cnn.ConnectionString = varglob.strconnect;
             cnn.Open();
 
-            cmdfilm.CommandText = "select titre, nofilm from film natural join concerner natural join genre natural join public " +
+            cmdfilm.CommandText = "select distinct titre, nofilm from film natural join concerner natural join genre natural join public " +
                                            "where titre like '%" + txtTitle.Text.ToString().Replace("\'", "\\'") + "%' " +
                                            "and realisateurs like '%" + txtDirector.Text.ToString().Replace("\'", "\\'") + "%' " +
                                            "and acteurs like '%" + txtActor.Text.ToString().Replace("\'", "\\'") + "%' " +
@@ -450,7 +458,7 @@ namespace AP_CINE_APPLI
                 namePicture = null;
                 cboPublic.SelectedIndex = -1;
                 lstGenre.SelectedIndex = -1;
-                refreshCboFilm("select nofilm, titre from film natural join public");
+                refreshCboFilm("select distinct nofilm, titre from film natural join public order by titre");
             }
             lblMsg.Text = "";
         }
@@ -484,9 +492,6 @@ namespace AP_CINE_APPLI
             lblDuree.Text = "Durée : " + duree.ToString("HH") + "h " + duree.ToString("mm") + "min";
 
             lblPublic.Text = "Type de public : " + drrfilm["libpublic"].ToString();
-
-
-
 
             string imgPath = Path.Combine(Application.StartupPath + "\\affiches\\" + drrfilm["imgaffiche"].ToString());
             if (File.Exists(imgPath))
