@@ -105,7 +105,8 @@ namespace AP_CINE_APPLI
             cmdfilm.Connection = cnn;
             drrfilm = cmdfilm.ExecuteReader();
             existenfilm = drrfilm.Read();
-
+            Boolean existe = true;
+            if (!existenfilm) { existe = false; }
             idFilms.Clear();
             cboTitre.Items.Clear();
 
@@ -119,12 +120,19 @@ namespace AP_CINE_APPLI
             drrfilm.Close();
             cnn.Close();
 
-            if (cboTitre.SelectedIndex == -1)
+            if (existe && cboTitre.SelectedIndex == -1)
             {
                 cboTitre.SelectedIndex = 0;
             }
 
-            cboTitre_SelectedIndexChanged(this, EventArgs.Empty);
+            if (existe)
+            {
+                cboTitre_SelectedIndexChanged(this, EventArgs.Empty);
+            }
+            else
+            {
+                cboTitre.Text = "Aucun film ne correspond à la recherche";
+            }
         }
 
         private void removeError()

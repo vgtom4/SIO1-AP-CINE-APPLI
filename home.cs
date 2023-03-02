@@ -57,15 +57,11 @@ namespace AP_CINE_APPLI
                     if (MessageBox.Show("Erreur de mot de passe. Voulez-vous réessayer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
                         varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
-
                     }
                     else
                     {
                         continu = false;
-
-
                     }
-
                 }
             }
             if (!continu)
