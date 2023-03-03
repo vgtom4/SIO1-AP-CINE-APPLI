@@ -91,13 +91,12 @@ namespace AP_CINE_APPLI
 
         }
 
-        /// <summary> Permet de changer la couleur du bouton cliqué </summary>
+        /// <summary> Permet de changer la couleur du bouton cliqué. </summary>
         /// <param name="senderBtn">Bouton cliqué</param>
         private void ActivateButton(object senderBtn)
         {
             if (senderBtn != null)
             {
-                // Appel de la 
                 DisableButton();
                 currentBtn = (IconButton)senderBtn;
                 currentBtn.BackColor = Color.FromArgb(253, 195, 0);
@@ -106,9 +105,7 @@ namespace AP_CINE_APPLI
             }
         }
 
-        /// <summary>
-        ///  Permet de changer la couleur de tous les boutons
-        /// </summary>
+        /// <summary> Permet de restaurer la couleur initial de tous les boutons. </summary>
         private void DisableButton()
         {
             if (currentBtn != null)
@@ -119,16 +116,25 @@ namespace AP_CINE_APPLI
             }
         }
 
+        /// <summary> Permet d'afficher un formulaire enfant dans la zone de travail "panelDesktop". </summary>
+        /// <param name="childForm">Nouveau formulaire à afficher</param>
         private void OpenChildForm(Form childForm)
         {
+            // Vérifie si le formulaire actuel est différent du formulaire à ouvrir
             if (currentChildForm == null || currentChildForm.GetType() != childForm.GetType())
             {
+                // Ferme le formulaire actuel s'il existe
                 currentChildForm?.Close();
 
+                // Crée une nouvelle instance du formulaire à ouvrir
                 currentChildForm = (Form)Activator.CreateInstance(childForm.GetType());
+
+                // Configure les propriétés du formulaire
                 currentChildForm.TopLevel = false;
                 currentChildForm.FormBorderStyle = FormBorderStyle.None;
                 currentChildForm.Dock = DockStyle.Fill;
+
+                // Ajoute le formulaire à la zone de travail "panelDesktop"
                 panelDesktop.Controls.Clear();
                 panelDesktop.Controls.Add(currentChildForm);
                 currentChildForm.BringToFront();
@@ -136,60 +142,69 @@ namespace AP_CINE_APPLI
             }
         }
 
+        // Lorsque le bouton est cliqué, celui-ci change d'apparence et ouvre le formulaire "FormGenre"
         private void btnGenre_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
             OpenChildForm(new FormGenre());
         }
 
+        // Lorsque le bouton est cliqué, celui-ci change d'apparence et ouvre le formulaire "FormSalle"
         private void btnSalle_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
             OpenChildForm(new FormSalle());
         }
 
+        // Lorsque le bouton est cliqué, celui-ci change d'apparence et ouvre le formulaire "FormFilm"
         private void btnFilm_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
             OpenChildForm(new FormFilm());
         }
 
+        // Lorsque le bouton est cliqué, celui-ci change d'apparence et ouvre le formulaire "FormProjection"
         private void btnProjection_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
             OpenChildForm(new FormProjection());
         }
 
+        // Lorsque le bouton est cliqué, celui-ci change d'apparence et ouvre le formulaire "FormPDF"
         private void btnPDF_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
             OpenChildForm(new FormPDF());
         }
 
+        // Lorsque le bouton est cliqué, celui-ci change d'apparence et ouvre le formulaire "FormAccueil"
         private void btnAccueil_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
             OpenChildForm(new FormAccueil());
         }
 
-        //Déplacement de la fenêtre
+        // Déplacement de la fenêtre
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
 
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
+        // Permet de déplacer la fenêtre avec la souris
         private void panelTitleBar_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
+        // Permet de fermer l'application
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        // Permet d'agrandir l'application sur toute l'écran
         private void btnMax_Click(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Normal)
@@ -200,6 +215,7 @@ namespace AP_CINE_APPLI
                 WindowState = FormWindowState.Normal;
         }
 
+        // Permet de minimiser l'application dans la barre de tâche
         private void btnMin_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
