@@ -1,6 +1,6 @@
 ﻿namespace AP_CINE_APPLI
 {
-    partial class Genre
+    partial class FormGenre
     {
         /// <summary>
         /// Required designer variable.

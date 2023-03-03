@@ -15,15 +15,16 @@ using Microsoft.VisualBasic;
 namespace AP_CINE_APPLI
 {
 
-    public partial class home : Form
+    public partial class FormHome : Form
     {
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
 
 
-        public home()
+        public FormHome()
         {
+            // Initialisation des éléments
             InitializeComponent();
             leftBorderBtn = new Panel();
             leftBorderBtn.Size = new Size(149, 222);
@@ -41,35 +42,48 @@ namespace AP_CINE_APPLI
 
             Boolean goodPWD = false;
             Boolean continu = true;
+
+            // Demande du mot de passe de la base de données
             varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
+
+            // La boucle permet de vérifier si le mot de passe saisi au-dessus est le bon.
             while (!goodPWD && continu)
             {
+                //Tentative de connexion à la base de données
                 try
                 {
+                    //Connexion à la base de données
                     OdbcConnection cnn = new OdbcConnection();
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
                     goodPWD = true;
                     cnn.Close();
                 }
+                //Si la tentation échoue (mot de passe invalide), le code qui suit s'exécute
                 catch (Exception)
                 {
+                    // Demande à l'utilisateur si il souhaite continuer sa tentative de connexion à la base de données.
+                    // Si oui, le mot de passe est redemandé
                     if (MessageBox.Show("Erreur de mot de passe. Voulez-vous réessayer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
                         varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
                     }
+                    // Sinon, la boucle s'arrête après avoir mis continu à false
                     else
                     {
                         continu = false;
                     }
                 }
             }
+
+            // Arrête de l'application si l'utilisateur n'a pas voulu continué la tentative de connexion
             if (!continu)
                 Application.Exit();
+            // Sinon, le programme continu et sélectionne le bouton "accueil" dans le menu puis ouvre le formulaire "accueil"
             else
             {
                 ActivateButton(btnAccueil);
-                OpenChildForm(new accueil());
+                OpenChildForm(new FormAccueil());
             }
 
         }
@@ -116,37 +130,37 @@ namespace AP_CINE_APPLI
         private void btnGenre_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            OpenChildForm(new Genre());
+            OpenChildForm(new FormGenre());
         }
 
         private void btnSalle_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            OpenChildForm(new Salle());
+            OpenChildForm(new FormSalle());
         }
 
         private void btnFilm_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            OpenChildForm(new Film());
+            OpenChildForm(new FormFilm());
         }
 
         private void btnProjection_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            OpenChildForm(new Projection());
+            OpenChildForm(new FormProjection());
         }
 
         private void btnPDF_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            OpenChildForm(new PDF());
+            OpenChildForm(new FormPDF());
         }
 
         private void btnAccueil_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            OpenChildForm(new accueil());
+            OpenChildForm(new FormAccueil());
         }
 
         //Déplacement de la fenêtre

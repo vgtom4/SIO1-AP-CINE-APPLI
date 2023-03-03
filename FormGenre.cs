@@ -14,9 +14,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AP_CINE_APPLI
 {
-    public partial class Genre : Form
+    public partial class FormGenre : Form
     {
-        public Genre()
+        public FormGenre()
         {
             InitializeComponent();
             lblMsg.Text = "";

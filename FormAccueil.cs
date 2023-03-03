@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AP_CINE_APPLI
 {
-    public partial class accueil : Form
+    public partial class FormAccueil : Form
     {
-        public accueil()
+        public FormAccueil()
         {
             InitializeComponent();
             lblClock.Text = DateTime.Now.ToLongTimeString();

@@ -17,10 +17,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace AP_CINE_APPLI
 {
-    public partial class PDF : Form
+    public partial class FormPDF : Form
     {
 
-        public PDF()
+        public FormPDF()
         {
             InitializeComponent();
         }

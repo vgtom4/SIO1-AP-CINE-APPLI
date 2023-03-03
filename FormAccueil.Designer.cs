@@ -1,6 +1,6 @@
 ﻿namespace AP_CINE_APPLI
 {
-    partial class accueil
+    partial class FormAccueil
     {
         /// <summary>
         /// Required designer variable.

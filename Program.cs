@@ -18,7 +18,7 @@ namespace AP_CINE_APPLI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new home());
+            Application.Run(new FormHome());
         }
     }
 }

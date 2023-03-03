@@ -1,6 +1,6 @@
 ﻿namespace AP_CINE_APPLI
 {
-    partial class PDF
+    partial class FormPDF
     {
         /// <summary>
         /// Required designer variable.

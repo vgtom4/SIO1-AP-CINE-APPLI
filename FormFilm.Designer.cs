@@ -1,6 +1,6 @@
 ﻿namespace AP_CINE_APPLI
 {
-    partial class Film
+    partial class FormFilm
     {
         /// <summary>
         /// Required designer variable.
@@ -395,7 +395,7 @@
             // 
             this.cboTitre.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cboTitre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.cboTitre.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.cboTitre.Cursor = System.Windows.Forms.Cursors.Default;
             this.cboTitre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboTitre.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboTitre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -405,6 +405,8 @@
             this.cboTitre.Size = new System.Drawing.Size(554, 39);
             this.cboTitre.TabIndex = 27;
             this.cboTitre.SelectedIndexChanged += new System.EventHandler(this.cboTitre_SelectedIndexChanged);
+            this.cboTitre.TextChanged += new System.EventHandler(this.cboTitre_TextChanged);
+            this.cboTitre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cboTitre_KeyPress);
             // 
             // lblDirector
             // 
@@ -537,7 +539,7 @@
             this.lblGenre.TabIndex = 39;
             this.lblGenre.Text = "Genre(s) :";
             // 
-            // Film
+            // FormFilm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -558,7 +560,7 @@
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Film";
+            this.Name = "FormFilm";
             this.Text = "Gestion des films";
             this.Load += new System.EventHandler(this.Film_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

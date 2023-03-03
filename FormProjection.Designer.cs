@@ -2,7 +2,7 @@
 
 namespace AP_CINE_APPLI
 {
-    partial class Projection
+    partial class FormProjection
     {
         /// <summary>
         /// Required designer variable.

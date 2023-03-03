@@ -15,11 +15,11 @@ using iTextSharp.text.pdf.qrcode;
 
 namespace AP_CINE_APPLI
 {
-    public partial class Projection : Form
+    public partial class FormProjection : Form
     {
         List<int> lstIdFilms = new List<int>();
 
-        public Projection()
+        public FormProjection()
         {
             InitializeComponent();
         }

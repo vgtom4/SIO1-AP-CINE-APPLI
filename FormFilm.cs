@@ -13,14 +13,14 @@ using System.Windows.Forms;
 
 namespace AP_CINE_APPLI
 {
-    public partial class Film : Form
+    public partial class FormFilm : Form
     {
         string namePicture = null;
         List<int> idPublics = new List<int>();
         List<int> idGenres = new List<int>();
         List<int> idFilms = new List<int>();
 
-        public Film()
+        public FormFilm()
         {
             InitializeComponent();
         }
@@ -31,6 +31,7 @@ namespace AP_CINE_APPLI
             {
                 //Initialisation des éléments cboTitre, lblMsg et timeFilm
                 cboTitre.Text = "Sélectionner un titre";
+                cboTitre.DropDownHeight = 500;
                 lblMsg.Text = "";
 
                 timeFilm.Format = DateTimePickerFormat.Time;
@@ -136,10 +137,12 @@ namespace AP_CINE_APPLI
 
                 if (existe)
                 {
+                    cboTitre.Enabled = true;
                     cboTitre_SelectedIndexChanged(this, EventArgs.Empty);
                 }
                 else
                 {
+                    cboTitre.Enabled = false;
                     cboTitre.Text = "Aucun film ne correspond à la recherche";
                     lblSynopsis.Text = "Synopsis :";
                     lblDirector.Text = "Réalisateur(s) : ";
@@ -219,7 +222,7 @@ namespace AP_CINE_APPLI
             }
         }
 
-        private bool checkExistFilm(string titre)
+        private bool CheckExistFilm(string titre)
         {   try
             {
                 lblMsg.Text = "";
@@ -259,7 +262,7 @@ namespace AP_CINE_APPLI
             }
         }
 
-        private bool filmHasProjection(string nofilm)
+        private bool FilmHasProjection(string nofilm)
         {
             try
             {
@@ -305,7 +308,7 @@ namespace AP_CINE_APPLI
         private void btnAddFilm_Click(object sender, EventArgs e)
         {   try
             {
-                if (!checkExistFilm(txtTitle.Text))
+                if (!CheckExistFilm(txtTitle.Text))
                 {
                     checkData();
 
@@ -383,7 +386,7 @@ namespace AP_CINE_APPLI
 
                 if (cboTitre.Items.Count > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + cboTitre.SelectedItem, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    if (filmHasProjection(idFilms[cboTitre.SelectedIndex].ToString()))
+                    if (FilmHasProjection(idFilms[cboTitre.SelectedIndex].ToString()))
                     {
                     
                         OdbcConnection cnn = new OdbcConnection();
@@ -621,6 +624,23 @@ namespace AP_CINE_APPLI
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
+        }
+
+        private void cboTitre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (cboTitre.SelectedIndex == -1 || cboTitre.Items.Count == 0)
+            {
+                if (e.KeyChar == (char)Keys.Enter)
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void cboTitre_TextChanged(object sender, EventArgs e)
+        {
+            cboTitre.DroppedDown = true;
+            Cursor = Cursors.Default;
         }
     }
 }

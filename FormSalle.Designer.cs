@@ -1,6 +1,6 @@
 ﻿namespace AP_CINE_APPLI
 {
-    partial class Salle
+    partial class FormSalle
     {
         /// <summary>
         /// Required designer variable.
