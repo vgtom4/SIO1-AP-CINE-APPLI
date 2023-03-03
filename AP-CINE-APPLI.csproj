@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\affiches\image.png" />
+    <Content Include="bdd\bdcinevieillard-lepers.sql" />
     <Content Include="logo.ico" />
     <None Include="ressources\logo2.ico" />
     <None Include="ressources\logo3.ico" />
