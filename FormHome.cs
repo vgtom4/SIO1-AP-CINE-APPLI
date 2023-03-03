@@ -21,6 +21,7 @@ namespace AP_CINE_APPLI
         private Panel leftBorderBtn;
         private Form currentChildForm;
 
+        Color originalBackColor, originalForeColor;
 
         public FormHome()
         {
@@ -76,22 +77,27 @@ namespace AP_CINE_APPLI
                 }
             }
 
-            // Arrête de l'application si l'utilisateur n'a pas voulu continué la tentative de connexion
+            // Si l'utilisateur n'a pas voulu continuer la tentative de connexion, arrête de l'application
             if (!continu)
                 Application.Exit();
-            // Sinon, le programme continu et sélectionne le bouton "accueil" dans le menu puis ouvre le formulaire "accueil"
+            // Sinon, le programme continu et sélectionne le bouton "accueil" dans le menu puis ouvre le formulaire "FormAccueil"
             else
             {
+                originalBackColor = btnAccueil.BackColor;
+                originalForeColor = btnAccueil.ForeColor;
                 ActivateButton(btnAccueil);
                 OpenChildForm(new FormAccueil());
             }
 
         }
 
+        /// <summary> Permet de changer la couleur du bouton cliqué </summary>
+        /// <param name="senderBtn">Bouton cliqué</param>
         private void ActivateButton(object senderBtn)
         {
             if (senderBtn != null)
             {
+                // Appel de la 
                 DisableButton();
                 currentBtn = (IconButton)senderBtn;
                 currentBtn.BackColor = Color.FromArgb(253, 195, 0);
@@ -100,13 +106,16 @@ namespace AP_CINE_APPLI
             }
         }
 
+        /// <summary>
+        ///  Permet de changer la couleur de tous les boutons
+        /// </summary>
         private void DisableButton()
         {
             if (currentBtn != null)
             {
-                currentBtn.BackColor = Color.FromArgb(32, 32, 32);
-                currentBtn.ForeColor = Color.FromArgb(253, 195, 0);
-                currentBtn.IconColor = Color.FromArgb(253, 195, 0);
+                currentBtn.BackColor = originalBackColor;
+                currentBtn.ForeColor = originalForeColor;
+                currentBtn.IconColor = originalForeColor;
             }
         }
 

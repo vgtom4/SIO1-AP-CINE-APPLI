@@ -16,6 +16,7 @@ namespace AP_CINE_APPLI
     public partial class FormFilm : Form
     {
         string namePicture = null;
+        Boolean lancement = true;
         List<int> idPublics = new List<int>();
         List<int> idGenres = new List<int>();
         List<int> idFilms = new List<int>();
@@ -90,6 +91,8 @@ namespace AP_CINE_APPLI
 
                 pictureBox1.Image = Properties.Resources.noimg;
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
+                lancement = false;
             }
             catch (Exception ex)
             {
@@ -639,8 +642,11 @@ namespace AP_CINE_APPLI
 
         private void cboTitre_TextChanged(object sender, EventArgs e)
         {
-            cboTitre.DroppedDown = true;
-            Cursor = Cursors.Default;
+            if (!lancement)
+            {
+                cboTitre.DroppedDown = true;
+                Cursor = Cursors.Default;
+            }
         }
     }
 }
