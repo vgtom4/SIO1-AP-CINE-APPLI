@@ -30,16 +30,20 @@ namespace AP_CINE_APPLI
             {   
                 grdSalle.Rows.Clear();
 
+                //Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
+                #region Affichage des salles dans "grdSalle"
+                // Recherche de toutes les salles dans la base de données.
                 OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr; Boolean existenreg;
                 cmd.CommandText = "select * from salle";
                 cmd.Connection = cnn;
                 drr = cmd.ExecuteReader();
                 existenreg = drr.Read();
 
+                // Boucle permettant de remplir les lignes de "grdSalle" avec le numéro de salle "nosalle" et sa capacité "nbplaces".
                 while (existenreg == true)
                 {
                     grdSalle.Rows.Add(drr["nosalle"], drr["nbplaces"]);
@@ -47,7 +51,9 @@ namespace AP_CINE_APPLI
                 }
                 drr.Close();
                 cnn.Close();
-            
+                #endregion
+
+                // Mise en forme de "grdSalle"
                 grdSalle.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
             catch (Exception ex)
@@ -58,37 +64,56 @@ namespace AP_CINE_APPLI
             }
         }
 
-        private void removeError()
+        /// <summary>
+        /// Permet de supprimer les erreurs causées par des entrées invalides et de vider "lblMsg"
+        /// </summary>
+        private void RemoveError()
         {
+            lblMsg.Text = "";
             errorProviderNumSalle.SetError(txtNum, "");
             errorProviderCapac.SetError(numCapac, "");
         }
 
-        private void checkData()
+        /// <summary>
+        /// Permet de vérifier si toutes les entrées sont valides.
+        /// </summary>
+        /// <returns>true si toutes les entrées sont valides; sinon false</returns>
+        private bool CheckData()
         {
             try
             {
-                removeError();
+                RemoveError();
 
+                // Indique si les données sont valides
+                Boolean dataAreValid = true;
+
+                // Vérifie si txtNum est null ou vide
                 if (string.IsNullOrEmpty(txtNum.Text))
                 {
                     errorProviderNumSalle.SetError(txtNum, "Veuillez remplir ce champ");
+                    lblMsg.Text += "Libellé manquant";
+                    dataAreValid = false;
                 }
 
+                // Vérifie si numCapac est égale à zéro
                 if (numCapac.Value == 0)
                 {
                     errorProviderCapac.SetError(numCapac, "Veuillez remplir ce champ");
+                    lblMsg.Text += "Capacité invalide";
+                    dataAreValid = false;
                 }
+                return dataAreValid;
             }
             catch (Exception ex)
             {
                 // En cas d'erreur, création du fichier log
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                return false;
             }
         }
 
-        private bool checkExistSalle(string numsalle)
+        private bool CheckExistSalle(string numsalle)
         {
             try
             {
@@ -127,6 +152,7 @@ namespace AP_CINE_APPLI
             {
                 Boolean CanDelete = true;
 
+                //Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -164,18 +190,20 @@ namespace AP_CINE_APPLI
         private void btnAdd_Click(object sender, EventArgs e)
         {
             try
-            { 
-                checkData();
-
-                if (!string.IsNullOrEmpty(txtNum.Text) && numCapac.Value > 0)
+            {
+                RemoveError();
+                // Vérifie si les entrées sont valides
+                if (CheckData())
                 {
-                
-                    if (!checkExistSalle(txtNum.Text.ToString()))
+                    // Vérifie si la salle existe déjà
+                    if (!CheckExistSalle(txtNum.Text))
                     {
+                        // Connexion à la base de données
                         OdbcConnection cnn = new OdbcConnection();
                         cnn.ConnectionString = varglob.strconnect;
                         cnn.Open();
 
+                        // Insertion 
                         OdbcCommand cmd = new OdbcCommand();
                         cmd.CommandText = "insert into salle values ('" + txtNum.Text + "', '" + numCapac.Value + "')";
                         cmd.Connection = cnn;
@@ -204,10 +232,9 @@ namespace AP_CINE_APPLI
         {
             try
             {
-                checkData();
-                lblMsg.Text = "";
+                RemoveError();
 
-                if (!string.IsNullOrEmpty(txtNum.Text) && numCapac.Value > 0)
+                if (CheckData())
                 {
                     string message = "";
 
@@ -219,11 +246,12 @@ namespace AP_CINE_APPLI
                         errorProviderNumSalle.SetError(txtNum, "");
                     }
 
+                    //Connexion à la base de données
                     OdbcConnection cnn = new OdbcConnection();
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
-                    if (unlikeNumSalle && !checkExistSalle(txtNum.Text))
+                    if (unlikeNumSalle && !CheckExistSalle(txtNum.Text))
                     {
                         if (salleHasProjection("edit", grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString()))
                         {
@@ -252,7 +280,7 @@ namespace AP_CINE_APPLI
 
                     cnn.Close();
 
-                    if ((unlikeNumSalle && !checkExistSalle(txtNum.Text)) || unlikeCapac)
+                    if ((unlikeNumSalle && !CheckExistSalle(txtNum.Text)) || unlikeCapac)
                     {
                         lblMsg.Text = "Salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString() + " :" + message;
 
@@ -272,10 +300,10 @@ namespace AP_CINE_APPLI
         {
             try
             {
-                removeError();
+                RemoveError();
                 if (grdSalle.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes && salleHasProjection("delete", grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString()))
                 {
-                
+                    //Connexion à la base de données
                     OdbcConnection cnn = new OdbcConnection();
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
