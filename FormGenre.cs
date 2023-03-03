@@ -36,10 +36,11 @@ namespace AP_CINE_APPLI
 
                 grdGenre.Rows.Clear();
 
-                // Connexion à la base de données.
+                #region Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
+                #endregion
 
                 #region Affichage des genres dans "grdGenre".
                 // Recherche de tous les genres dans la base de données.
@@ -152,10 +153,11 @@ namespace AP_CINE_APPLI
                 { 
                     if (!checkExistGenre(txtGenre.Text.ToString()))
                     {
-                        // Connexion à la base de données
+                        #region Connexion à la base de données
                         OdbcConnection cnn = new OdbcConnection();
                         cnn.ConnectionString = varglob.strconnect;
                         cnn.Open();
+                        #endregion
 
                         // Insertion d'un genre dans la base de données à partir d'un libellé
                         OdbcCommand cmd = new OdbcCommand();
@@ -194,10 +196,11 @@ namespace AP_CINE_APPLI
                         // Vérifie si le libellé de genre saisi dans "txtGenre" n'existe pas dans "grdGenre"
                         if (!checkExistGenre(txtGenre.Text.ToString()))
                         {
-                            // Connexion à la base de données
+                            #region Connexion à la base de données
                             OdbcConnection cnn = new OdbcConnection();
                             cnn.ConnectionString = varglob.strconnect;
                             cnn.Open();
+                            #endregion
 
                             // Assignation du nouveau libellé de genre
                             OdbcCommand cmdfilm = new OdbcCommand();
@@ -234,10 +237,11 @@ namespace AP_CINE_APPLI
                 removeError();
                 if (grdGenre.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le genre suivant :\n" + grdGenre[1, grdGenre.CurrentRow.Index].Value, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    // Connexion à la base de données
+                    #region Connexion à la base de données
                     OdbcConnection cnn = new OdbcConnection();
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
+                    #endregion
 
                     // Suppression, dans la table concerner, de toute correspondance avec le genre sélectionné dans "grdGenre" de la base de données
                     OdbcCommand cmdconcerner = new OdbcCommand();
