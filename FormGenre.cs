@@ -19,21 +19,14 @@ namespace AP_CINE_APPLI
         public FormGenre()
         {
             InitializeComponent();
-            lblMsg.Text = "";
         }
 
         private void Genre_Load(object sender, EventArgs e)
         {
-            // Permet de ne pas faire crash le programme si le code qui suit produit une erreur.
+            // Permet de ne pas faire crash le programme si le code qui suit produit une erreur
             try
             {
-                // Initialisation du datagridview "grdGenre".
-                grdGenre.AllowUserToAddRows = false;
-                grdGenre.ReadOnly = true;
-
-                grdGenre.Columns[0].Width = 30;
-                grdGenre.Columns[1].Width = 100;
-
+                // Initialisation du datagridview "grdGenre"
                 grdGenre.Rows.Clear();
 
                 //Connexion à la base de données
@@ -42,14 +35,14 @@ namespace AP_CINE_APPLI
                 cnn.Open();
 
                 #region Affichage des genres dans "grdGenre".
-                // Recherche de tous les genres dans la base de données.
+                // Recherche de tous les genres dans la base de données
                 OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr; Boolean existenreg;
                 cmd.CommandText = "select nogenre, libgenre from genre";
                 cmd.Connection = cnn;
                 drr = cmd.ExecuteReader();
                 existenreg = drr.Read();
 
-                // Boucle permettant de remplir les lignes de "grdGenre" avec le numéro de genre "nogenre" et son libellé "libgenre".
+                // Boucle permettant de remplir les lignes de "grdGenre" avec le numéro de genre "nogenre" et son libellé "libgenre"
                 while (existenreg == true)
                 {
                     grdGenre.Rows.Add(drr["nogenre"], drr["libgenre"]);
@@ -58,10 +51,6 @@ namespace AP_CINE_APPLI
                 drr.Close();
                 cnn.Close();
                 #endregion
-
-                // Redimension des cases de "grdGenre".
-                grdGenre.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-                grdGenre.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             // Si la partie après le "try" produit une erreur, le code suivant s'exécute.
             catch (Exception ex)
@@ -98,14 +87,15 @@ namespace AP_CINE_APPLI
                 if (string.IsNullOrEmpty(txtGenre.Text))
                 {
                     errorProviderGenre.SetError(txtGenre, "Veuillez remplir ce champ");
-                    lblMsg.Text += "Libellé de genre invalide";
+                    lblMsg.Text = "Libellé invalide";
                     dataAreValid = false;
                 }
+
                 // Vérifie si txtGenre contient plus de 30 caractères
                 else if (txtGenre.Text.Length > 30)
                 {
                     errorProviderGenre.SetError(txtGenre, "Libellé trop long");
-                    lblMsg.Text += "Libellé de genre invalide";
+                    lblMsg.Text = "Libellé invalide";
                     dataAreValid = false;
                 }
                 return dataAreValid;
@@ -120,9 +110,9 @@ namespace AP_CINE_APPLI
         }
 
         /// <summary> 
-        /// Permet de vérifier si un libellé de genre existe déjà dans le datagridview grdGenre.
+        /// Permet de vérifier si un libellé de genre existe déjà dans le datagridview "grdGenre".
         /// </summary>
-        /// <returns> true si le paramètre libgenre existe dans grdGenre; sinon false.</returns>
+        /// <returns> true si le paramètre libgenre existe dans "grdGenre"; sinon false.</returns>
         private bool CheckExistGenre(string libgenre)
         {
             try
@@ -141,7 +131,8 @@ namespace AP_CINE_APPLI
                         lblMsg.Text = "Ce genre existe déjà";
                         errorProviderGenre.SetError(txtGenre, "Genre déjà existant");
                     }
-                    else i++;
+                    else 
+                        i++;
                 }
                 return existengenre;
             }
@@ -154,7 +145,7 @@ namespace AP_CINE_APPLI
             }
         }
 
-        // Permet d'ajouter un genre dans la base de donnée
+        // Permet d'ajouter un genre dans la base de données
         private void btnAdd_Click(object sender, EventArgs e)
         {
             try

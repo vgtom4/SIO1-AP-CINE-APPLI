@@ -34,8 +34,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grdGenre = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtGenre = new System.Windows.Forms.TextBox();
             this.lblMsg = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,6 +41,8 @@
             this.btnAdd = new FontAwesome.Sharp.IconButton();
             this.btnDelete = new FontAwesome.Sharp.IconButton();
             this.btnEdit = new FontAwesome.Sharp.IconButton();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdGenre)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderGenre)).BeginInit();
             this.SuspendLayout();
@@ -110,22 +110,6 @@
             this.grdGenre.TabIndex = 0;
             this.grdGenre.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdGenre_CellClick);
             // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "N°";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 125;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Libellé";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 125;
-            // 
             // txtGenre
             // 
             this.txtGenre.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -144,14 +128,12 @@
             // lblMsg
             // 
             this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblMsg.AutoSize = true;
             this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMsg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblMsg.Location = new System.Drawing.Point(521, 183);
+            this.lblMsg.Location = new System.Drawing.Point(520, 183);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(64, 25);
+            this.lblMsg.Size = new System.Drawing.Size(394, 141);
             this.lblMsg.TabIndex = 7;
-            this.lblMsg.Text = "label1";
             // 
             // label1
             // 
@@ -218,7 +200,23 @@
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
-            // Genre
+            // Column1
+            // 
+            this.Column1.HeaderText = "N°";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 60;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "Libellé";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // FormGenre
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -234,7 +232,7 @@
             this.Controls.Add(this.grdGenre);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Genre";
+            this.Name = "FormGenre";
             this.ShowIcon = false;
             this.Text = "Genre";
             this.Load += new System.EventHandler(this.Genre_Load);
@@ -252,10 +250,10 @@
         private System.Windows.Forms.Label lblMsg;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ErrorProvider errorProviderGenre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private FontAwesome.Sharp.IconButton btnAdd;
         private FontAwesome.Sharp.IconButton btnEdit;
         private FontAwesome.Sharp.IconButton btnDelete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

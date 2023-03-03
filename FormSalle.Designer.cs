@@ -65,6 +65,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.grdSalle.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.grdSalle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.grdSalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grdSalle.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.grdSalle.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.grdSalle.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -125,7 +126,6 @@
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
-            this.Column1.Width = 125;
             // 
             // Column2
             // 
@@ -133,7 +133,6 @@
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            this.Column2.Width = 125;
             // 
             // numCapac
             // 
@@ -180,14 +179,12 @@
             // lblMsg
             // 
             this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblMsg.AutoSize = true;
             this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMsg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.lblMsg.Location = new System.Drawing.Point(521, 300);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(64, 25);
+            this.lblMsg.Size = new System.Drawing.Size(362, 124);
             this.lblMsg.TabIndex = 9;
-            this.lblMsg.Text = "label3";
             // 
             // errorProviderNumSalle
             // 
@@ -261,7 +258,7 @@
             this.txtNum.WordWrap = false;
             this.txtNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNum_KeyPress);
             // 
-            // Salle
+            // FormSalle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -276,7 +273,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numCapac);
             this.Controls.Add(this.grdSalle);
-            this.Name = "Salle";
+            this.Name = "FormSalle";
             this.Text = "Gestion des salles";
             this.Load += new System.EventHandler(this.Salle_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdSalle)).EndInit();
