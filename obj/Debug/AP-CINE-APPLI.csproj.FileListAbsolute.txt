@@ -35,3 +35,22 @@ C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-AP
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormPDF.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormProjection.resources
 C:\Users\tomvi\OneDrive\Documents\SLAM1\AP\projet ciné pathé mâcon\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormSalle.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\bin\Debug\AP-CINE-APPLI.exe.config
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\bin\Debug\AP-CINE-APPLI.exe
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\bin\Debug\AP-CINE-APPLI.pdb
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\bin\Debug\FontAwesome.Sharp.dll
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.AssemblyReference.cache
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.SuggestedBindingRedirects.cache
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormAccueil.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormFilm.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormGenre.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormHome.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormPDF.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormProjection.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.Properties.Resources.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP_CINE_APPLI.FormSalle.resources
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.GenerateResource.cache
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.CoreCompileInputs.cache
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.csproj.CopyComplete
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.exe
+D:\Sauvegarde ancien PC\Développement\BTS\SLAM\AP\AP-CINE-APPLI\obj\Debug\AP-CINE-APPLI.pdb

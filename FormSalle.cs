@@ -29,7 +29,7 @@ namespace AP_CINE_APPLI
                 // Initialisation du datagridview "grdSalle"
                 grdSalle.Rows.Clear();
 
-                //Connexion à la base de données
+                // Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
@@ -110,31 +110,41 @@ namespace AP_CINE_APPLI
         }
 
         /// <summary> 
-        /// Permet de vérifier si un libellé de salle existe déjà dans le datagridview "grdSalle".
+        /// Permet de vérifier si un libellé de salle existe déjà dans la base de données.
         /// </summary>
-        /// <returns> true si le paramètre numsalle existe dans "grdSalle"; sinon false.</returns>
+        /// <returns> true si la salle existe; sinon false.</returns>
         private bool CheckExistSalle(string numsalle)
         {
             try
             {
                 RemoveError();
 
-                bool existensalle = false;
-                int i = 0;
+                // Connexion à la base de données
+                OdbcConnection cnn = new OdbcConnection();
+                cnn.ConnectionString = varglob.strconnect;
+                cnn.Open();
 
-                // Recherche de "numsalle" dans "grdSalle"
-                while (!existensalle && i < grdSalle.Rows.Count)
+                // Recherche pour vérifier dans la base de données si "numsalle" existe déjà
+                // Retourne : 1 si c'est le cas; sinon 0
+                OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;
+                cmd.CommandText = "select exists(select nosalle from salle where nosalle ='" + numsalle + "') as salleExist";
+                cmd.Connection = cnn;
+                drr = cmd.ExecuteReader();
+                drr.Read();
+
+                // Conversion de la réponse de la requête précédente en boolean (1 = true / 0 = false)
+                Boolean salleExist = Convert.ToBoolean(drr["salleExist"]);
+
+                drr.Close();
+                cnn.Close();
+
+                // Affiche un message si il existe déjà la salle "numsalle"
+                if (salleExist)
                 {
-                    if (grdSalle[0, i].Value.ToString() == numsalle)
-                    {
-                        existensalle = true;
-                        lblMsg.Text = "Ce numéro de salle existe déjà";
-                        errorProviderNumSalle.SetError(txtNum, "Numéro de salle déjà existant");
-                    }
-                    else
-                        i++;
+                    lblMsg.Text = "Ce numéro de salle existe déjà";
+                    errorProviderNumSalle.SetError(txtNum, "Numéro de salle déjà existant");
                 }
-                return existensalle;
+                return salleExist;
             }
             catch (Exception ex)
             {
@@ -149,7 +159,7 @@ namespace AP_CINE_APPLI
         /// Permet de vérifier si une salle est liée à une projection.
         /// </summary>
         /// <returns>true si la salle "nosalle" est liée à une projection; sinon false</returns>
-        private bool SalleHasProjection(string nosalle)
+        private bool SalleHasProjection(string nosalle, ref string msgError)
         {
             try
             {
@@ -158,10 +168,10 @@ namespace AP_CINE_APPLI
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
-                // Vérifie dans la base de données si il existe une liaison entre la salle "nosalle" et les projections
+                // Vérifie dans la base de données s'il existe une liaison entre la salle "nosalle" et les projections
                 // Retourne : 1 si c'est le cas; sinon 0
                 OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;
-                cmd.CommandText = "select exists(select nosalle as nbproj from projection where nosalle ='" + nosalle + "') as salleLinkToProjection";
+                cmd.CommandText = "select exists(select nosalle from projection where nosalle ='" + nosalle + "') as salleLinkToProjection";
                 cmd.Connection = cnn;
                 drr = cmd.ExecuteReader();
                 drr.Read();
@@ -177,8 +187,9 @@ namespace AP_CINE_APPLI
             catch (Exception ex)
             {
                 // En cas d'erreur, création du fichier log
-                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
+                using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - error originating from SalleHasProjection - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                msgError = ex.Message;
                 return false;
             }
         }
@@ -192,14 +203,22 @@ namespace AP_CINE_APPLI
             try
             {
                 Boolean CanDelete = true;
+                string msgError = "";
 
-                // Si une salle est liée à une projection, une confirmation de suppression est demandée à l'utilisateur
-                if (SalleHasProjection(nosalle))
+                // Si la salle est liée à une projection, une confirmation de suppression est demandée à l'utilisateur
+                if (SalleHasProjection(nosalle, ref msgError))
                 {
                     CanDelete = false;
-                    if (MessageBox.Show("Attention, la salle que vous allez supprimer possède une projection.\nÊtes-vous sûr de vouloir la supprimer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    if (MessageBox.Show("Attention, la salle que vous allez supprimer possède une projection.\nÊtes-vous sûr de vouloir la supprimer ?\n(Cela supprimera toutes les projections dans cette salle)", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
                         CanDelete = true;
+                    }
+                }
+                else
+                {
+                    if (msgError != "")
+                    {
+                        return false;
                     }
                 }
                 return CanDelete;
@@ -219,7 +238,7 @@ namespace AP_CINE_APPLI
             try
             {
                 RemoveError();
-                // Vérifie si les entrées sont valides et si la salle existe déjà
+                // Vérifie si les entrées sont valides et si la salle n'existe pas déjà
                 if (CheckData() && !CheckExistSalle(txtNum.Text))
                 {
                     // Connexion à la base de données
@@ -227,7 +246,7 @@ namespace AP_CINE_APPLI
                     cnn.ConnectionString = varglob.strconnect;
                     cnn.Open();
 
-                    // Insertion d'une salle dans la base de données à partir d'un numéro de salle et d'une capacité
+                    // Insertion d'une salle dans la base de données à partir des saisies de l'utilisateur
                     OdbcCommand cmd = new OdbcCommand();
                     cmd.CommandText = "insert into salle values ('" + txtNum.Text + "', '" + numCapac.Value + "')";
                     cmd.Connection = cnn;
@@ -279,9 +298,10 @@ namespace AP_CINE_APPLI
                     // Vérifie si le nouveau numéro de salle est à la fois différent de l'ancien et si il n'existe pas dans "grdSalle"
                     if (unlikeNumSalle && !CheckExistSalle(txtNum.Text))
                     {
+                        string msgError = "";
                         // Vérifie si la salle sélectionnée est liée à une projection
                         // Si ce n'est pas le cas, son numéro est modifié dans la base de données; sinon l'utilisateur est informé qu'il ne peut pas le modifier
-                        if (!SalleHasProjection(grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString()))
+                        if (!SalleHasProjection(grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString(), ref msgError))
                         {
                             // Modification, du numéro de la salle sélectionnée dans "grdSalle", par "txtNum", dans la base de données
                             OdbcCommand cmdSalleNum = new OdbcCommand();
@@ -328,7 +348,7 @@ namespace AP_CINE_APPLI
             }
         }
 
-        // Permet de supprimer la salle sélectionné dans "grdSalle" de la base de données
+        // Permet de supprimer la salle sélectionnée dans "grdSalle" de la base de données
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
@@ -357,7 +377,7 @@ namespace AP_CINE_APPLI
 
                     cnn.Close();
 
-                    // Message de confirmation de suppression de la salle
+                    // Message de confirmation de la suppression de la salle
                     lblMsg.Text = "La salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " a été supprimée";
 
                     // Actualisation de "grdSalle"
