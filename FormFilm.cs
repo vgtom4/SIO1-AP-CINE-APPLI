@@ -135,11 +135,12 @@ namespace AP_CINE_APPLI
 
                 if (existe && cboTitre.SelectedIndex == -1)
                 {
-                    cboTitre.SelectedIndex = 0;
+                    
                 }
 
                 if (existe)
                 {
+                    cboTitre.SelectedIndex = 0;
                     cboTitre.Enabled = true;
                     cboTitre_SelectedIndexChanged(this, EventArgs.Empty);
                 }
@@ -147,13 +148,7 @@ namespace AP_CINE_APPLI
                 {
                     cboTitre.Enabled = false;
                     cboTitre.Text = "Aucun film ne correspond à la recherche";
-                    lblSynopsis.Text = "Synopsis :";
-                    lblDirector.Text = "Réalisateur(s) : ";
-                    lblActor.Text = "Acteur(s) : ";
-                    lblDuree.Text = "Durée : ";
-                    lblPublic.Text = "Type de public : ";
-                    pbAffFilm.Image = null;
-                    lblGenre.Text = "Genre(s) :";
+                    ResetInfoFilm();
                 }
             }
             catch (Exception ex)
@@ -162,6 +157,17 @@ namespace AP_CINE_APPLI
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
             }
+        }
+
+        private void ResetInfoFilm()
+        {
+            lblSynopsis.Text = "Synopsis :";
+            lblDirector.Text = "Réalisateur(s) : ";
+            lblActor.Text = "Acteur(s) : ";
+            lblDuree.Text = "Durée : ";
+            lblPublic.Text = "Type de public : ";
+            pbAffFilm.Image = null;
+            lblGenre.Text = "Genre(s) :";
         }
 
         private void removeError()
@@ -642,11 +648,7 @@ namespace AP_CINE_APPLI
 
         private void cboTitre_TextChanged(object sender, EventArgs e)
         {
-            if (!lancement)
-            {
-                cboTitre.DroppedDown = true;
                 Cursor = Cursors.Default;
-            }
         }
     }
 }
