@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using iTextSharp.text.pdf.qrcode;
+using System.Globalization;
 
 namespace AP_CINE_APPLI
 {
@@ -226,7 +227,7 @@ namespace AP_CINE_APPLI
                 while (!existProj && i < grdProjection.Rows.Count)
                 {
                     // Si la projection existe déjà, la ligne de celle-ci est surlignée dans "grdProjection"
-                    if (grdProjection[1, i].Value.ToString() == DateTime.Parse(date).ToString("d") && grdProjection[2, i].Value.ToString().Replace("h", ":") + ":00" == time && cboFilm.SelectedItem.ToString() == grdProjection[4, i].Value.ToString() && grdProjection[5, i].Value.ToString() == salle)
+                    if (grdProjection[1, i].Value.ToString() == DateTime.Parse(date).ToString("d") && grdProjection[2, i].Value.ToString().Replace("h", ":").Remove(5) + ":00" == time && cboFilm.SelectedItem.ToString() == grdProjection[4, i].Value.ToString() && grdProjection[5, i].Value.ToString() == salle)
                     {
                         grdProjection.Rows[i].Selected = true;
                         existProj = true;
@@ -271,11 +272,16 @@ namespace AP_CINE_APPLI
                 // Insertion des informations des projections dans "grdProjection"
                 while (existenproj == true)
                 {
-                    grdProjection.Rows.Add(drrproj["noproj"], DateTime.Parse(drrproj["dateproj"].ToString()).ToString("d"), DateTime.Parse(drrproj["heureproj"].ToString()).ToString("HH") + "h" + DateTime.Parse(drrproj["heureproj"].ToString()).ToString("mm"), drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
+                    // Pour l'affiche des horaires de projections sous la forme "heure_de_début - heure_de_fin"
+                    DateTime debutProj = DateTime.ParseExact(DateTime.Parse(drrproj["heureproj"].ToString()).ToString("t"), "HH:mm", CultureInfo.InvariantCulture);
+                    DateTime dureeFilm = DateTime.ParseExact(DateTime.Parse(drrproj["duree"].ToString()).ToString("t"), "HH:mm", CultureInfo.InvariantCulture);
+                    DateTime finProj = DateTime.MinValue.Add(debutProj.TimeOfDay.Add(dureeFilm.TimeOfDay));
+                    String horaireProj = debutProj.ToString("t").Replace(":", "h") + " - " + finProj.ToString("t").Replace(":", "h");
 
+                    grdProjection.Rows.Add(drrproj["noproj"], DateTime.Parse(drrproj["dateproj"].ToString()).ToString("d"), horaireProj, drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
                     existenproj = drrproj.Read();
                 }
-
+                
                 drrproj.Close();
                 cnn.Close();
             }

@@ -14,6 +14,7 @@ using System.Data.Odbc;
 using System.Data.Common;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
+using System.Globalization;
 
 namespace AP_CINE_APPLI
 {
@@ -113,10 +114,15 @@ namespace AP_CINE_APPLI
                         salFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
                         tableau.AddCell(salFilm);
 
+                        
+                        // Pour l'affiche des horaires de projections sous la forme "heure_de_début - heure_de_fin"
+                        DateTime debutProj = DateTime.ParseExact(DateTime.Parse(drrpdf["heureproj"].ToString()).ToString("t"), "HH:mm", CultureInfo.InvariantCulture);
+                        DateTime dureeFilm = DateTime.ParseExact(DateTime.Parse(drrpdf["duree"].ToString()).ToString("t"), "HH:mm", CultureInfo.InvariantCulture);
+                        DateTime finProj = DateTime.MinValue.Add(debutProj.TimeOfDay.Add(dureeFilm.TimeOfDay));
+                        String horaireProj = debutProj.ToString("t").Replace(":", "h") + " - " + finProj.ToString("t").Replace(":", "h");
+                        
                         // Insertion de l'heure de projection dans le tableau
-                        PdfPCell hourFilm = new PdfPCell(new Phrase("Horaire : " + 
-                            DateTime.Parse(drrpdf["heureproj"].ToString()).Hour + "h" + 
-                            DateTime.Parse(drrpdf["heureproj"].ToString()).ToString("mm")));
+                        PdfPCell hourFilm = new PdfPCell(new Phrase("Horaire :\n" + horaireProj));
                         hourFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
                         tableau.AddCell(hourFilm);
 
