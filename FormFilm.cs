@@ -42,6 +42,8 @@ namespace AP_CINE_APPLI
                 pictureBox1.Image = Properties.Resources.noimg;
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
+                lblMsg.Text = "";
+
                 //Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;

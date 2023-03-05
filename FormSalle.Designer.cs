@@ -64,7 +64,7 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(222)))), ((int)(((byte)(29)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.grdSalle.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.grdSalle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.grdSalle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.grdSalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grdSalle.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.grdSalle.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -93,10 +93,8 @@
             this.grdSalle.DefaultCellStyle = dataGridViewCellStyle3;
             this.grdSalle.EnableHeadersVisualStyles = false;
             this.grdSalle.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
-            this.grdSalle.Location = new System.Drawing.Point(100, 76);
+            this.grdSalle.Location = new System.Drawing.Point(75, 62);
             this.grdSalle.Margin = new System.Windows.Forms.Padding(0);
-            this.grdSalle.MaximumSize = new System.Drawing.Size(600, 800);
-            this.grdSalle.MinimumSize = new System.Drawing.Size(300, 500);
             this.grdSalle.MultiSelect = false;
             this.grdSalle.Name = "grdSalle";
             this.grdSalle.ReadOnly = true;
@@ -116,7 +114,7 @@
             this.grdSalle.RowTemplate.Height = 24;
             this.grdSalle.RowTemplate.ReadOnly = true;
             this.grdSalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdSalle.Size = new System.Drawing.Size(300, 500);
+            this.grdSalle.Size = new System.Drawing.Size(270, 406);
             this.grdSalle.TabIndex = 0;
             this.grdSalle.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdSalle_CellClick);
             // 
@@ -140,14 +138,15 @@
             this.numCapac.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.numCapac.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numCapac.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numCapac.Location = new System.Drawing.Point(520, 244);
+            this.numCapac.Location = new System.Drawing.Point(390, 198);
+            this.numCapac.Margin = new System.Windows.Forms.Padding(2);
             this.numCapac.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             this.numCapac.Name = "numCapac";
-            this.numCapac.Size = new System.Drawing.Size(248, 34);
+            this.numCapac.Size = new System.Drawing.Size(186, 28);
             this.numCapac.TabIndex = 6;
             this.numCapac.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numCapac.ThousandsSeparator = true;
@@ -158,9 +157,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(520, 100);
+            this.label1.Location = new System.Drawing.Point(390, 81);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(235, 32);
+            this.label1.Size = new System.Drawing.Size(183, 26);
             this.label1.TabIndex = 7;
             this.label1.Text = "Numéro de salle :";
             // 
@@ -170,9 +170,10 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label2.Location = new System.Drawing.Point(520, 204);
+            this.label2.Location = new System.Drawing.Point(390, 166);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(248, 32);
+            this.label2.Size = new System.Drawing.Size(191, 26);
             this.label2.TabIndex = 8;
             this.label2.Text = "Capacité de salle :";
             // 
@@ -181,9 +182,10 @@
             this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMsg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblMsg.Location = new System.Drawing.Point(521, 300);
+            this.lblMsg.Location = new System.Drawing.Point(390, 244);
+            this.lblMsg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(362, 124);
+            this.lblMsg.Size = new System.Drawing.Size(276, 47);
             this.lblMsg.TabIndex = 9;
             // 
             // errorProviderNumSalle
@@ -203,9 +205,10 @@
             this.btnEdit.IconChar = FontAwesome.Sharp.IconChar.Pencil;
             this.btnEdit.IconColor = System.Drawing.Color.Black;
             this.btnEdit.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnEdit.Location = new System.Drawing.Point(440, 439);
+            this.btnEdit.Location = new System.Drawing.Point(390, 357);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(2);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(50, 50);
+            this.btnEdit.Size = new System.Drawing.Size(38, 41);
             this.btnEdit.TabIndex = 14;
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
@@ -219,9 +222,10 @@
             this.btnDelete.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
             this.btnDelete.IconColor = System.Drawing.Color.Black;
             this.btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnDelete.Location = new System.Drawing.Point(440, 507);
+            this.btnDelete.Location = new System.Drawing.Point(390, 412);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(50, 50);
+            this.btnDelete.Size = new System.Drawing.Size(38, 41);
             this.btnDelete.TabIndex = 13;
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -235,9 +239,10 @@
             this.btnAdd.IconChar = FontAwesome.Sharp.IconChar.Plus;
             this.btnAdd.IconColor = System.Drawing.Color.Black;
             this.btnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAdd.Location = new System.Drawing.Point(440, 374);
+            this.btnAdd.Location = new System.Drawing.Point(390, 304);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(50, 50);
+            this.btnAdd.Size = new System.Drawing.Size(38, 41);
             this.btnAdd.TabIndex = 12;
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -249,10 +254,11 @@
             this.txtNum.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNum.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.txtNum.Location = new System.Drawing.Point(520, 140);
+            this.txtNum.Location = new System.Drawing.Point(390, 114);
+            this.txtNum.Margin = new System.Windows.Forms.Padding(2);
             this.txtNum.MaxLength = 1;
             this.txtNum.Name = "txtNum";
-            this.txtNum.Size = new System.Drawing.Size(248, 31);
+            this.txtNum.Size = new System.Drawing.Size(186, 25);
             this.txtNum.TabIndex = 15;
             this.txtNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtNum.WordWrap = false;
@@ -260,10 +266,10 @@
             // 
             // FormSalle
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
-            this.ClientSize = new System.Drawing.Size(982, 653);
+            this.ClientSize = new System.Drawing.Size(736, 531);
             this.Controls.Add(this.txtNum);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnDelete);
@@ -273,6 +279,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numCapac);
             this.Controls.Add(this.grdSalle);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormSalle";
             this.Text = "Gestion des salles";
             this.Load += new System.EventHandler(this.Salle_Load);

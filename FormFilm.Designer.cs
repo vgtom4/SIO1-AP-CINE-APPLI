@@ -91,7 +91,7 @@
             this.lstGenre.FormattingEnabled = true;
             this.lstGenre.ItemHeight = 17;
             this.lstGenre.Location = new System.Drawing.Point(470, 35);
-            this.lstGenre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lstGenre.Margin = new System.Windows.Forms.Padding(2);
             this.lstGenre.Name = "lstGenre";
             this.lstGenre.Size = new System.Drawing.Size(158, 102);
             this.lstGenre.TabIndex = 4;
@@ -102,7 +102,7 @@
             this.txtTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTitle.Location = new System.Drawing.Point(14, 37);
-            this.txtTitle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtTitle.Margin = new System.Windows.Forms.Padding(2);
             this.txtTitle.Multiline = true;
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -116,7 +116,7 @@
             this.txtDirector.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDirector.Location = new System.Drawing.Point(14, 130);
-            this.txtDirector.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtDirector.Margin = new System.Windows.Forms.Padding(2);
             this.txtDirector.Multiline = true;
             this.txtDirector.Name = "txtDirector";
             this.txtDirector.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -134,7 +134,7 @@
             this.cboPublic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cboPublic.FormattingEnabled = true;
             this.cboPublic.Location = new System.Drawing.Point(158, 35);
-            this.cboPublic.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboPublic.Margin = new System.Windows.Forms.Padding(2);
             this.cboPublic.Name = "cboPublic";
             this.cboPublic.Size = new System.Drawing.Size(284, 28);
             this.cboPublic.TabIndex = 7;
@@ -146,7 +146,7 @@
             this.txtActor.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtActor.Location = new System.Drawing.Point(14, 221);
-            this.txtActor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtActor.Margin = new System.Windows.Forms.Padding(2);
             this.txtActor.Multiline = true;
             this.txtActor.Name = "txtActor";
             this.txtActor.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -161,10 +161,10 @@
             this.timeFilm.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.timeFilm.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.timeFilm.Location = new System.Drawing.Point(295, 106);
-            this.timeFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.timeFilm.Margin = new System.Windows.Forms.Padding(2);
             this.timeFilm.Name = "timeFilm";
             this.timeFilm.ShowUpDown = true;
-            this.timeFilm.Size = new System.Drawing.Size(102, 32);
+            this.timeFilm.Size = new System.Drawing.Size(133, 32);
             this.timeFilm.TabIndex = 12;
             // 
             // txtInfo
@@ -174,7 +174,7 @@
             this.txtInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtInfo.Location = new System.Drawing.Point(295, 180);
-            this.txtInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtInfo.Margin = new System.Windows.Forms.Padding(2);
             this.txtInfo.Multiline = true;
             this.txtInfo.Name = "txtInfo";
             this.txtInfo.Size = new System.Drawing.Size(133, 27);
@@ -279,7 +279,7 @@
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.pictureBox1.Location = new System.Drawing.Point(176, 120);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(77, 110);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -306,7 +306,7 @@
             this.txtSynopsis.EnableAutoDragDrop = true;
             this.txtSynopsis.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSynopsis.Location = new System.Drawing.Point(470, 190);
-            this.txtSynopsis.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSynopsis.Margin = new System.Windows.Forms.Padding(2);
             this.txtSynopsis.Name = "txtSynopsis";
             this.txtSynopsis.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
             this.txtSynopsis.Size = new System.Drawing.Size(158, 82);
@@ -354,7 +354,7 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -379,7 +379,7 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.cboPublic);
             this.panel1.Location = new System.Drawing.Point(51, 260);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(646, 288);
             this.panel1.TabIndex = 27;
@@ -395,7 +395,7 @@
             this.btnImportPicture.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnImportPicture.IconSize = 40;
             this.btnImportPicture.Location = new System.Drawing.Point(198, 236);
-            this.btnImportPicture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnImportPicture.Margin = new System.Windows.Forms.Padding(2);
             this.btnImportPicture.Name = "btnImportPicture";
             this.btnImportPicture.Size = new System.Drawing.Size(34, 37);
             this.btnImportPicture.TabIndex = 37;
@@ -405,9 +405,9 @@
             // 
             // pbAffFilm
             // 
-            this.pbAffFilm.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbAffFilm.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pbAffFilm.Location = new System.Drawing.Point(12, 20);
-            this.pbAffFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pbAffFilm.Margin = new System.Windows.Forms.Padding(2);
             this.pbAffFilm.Name = "pbAffFilm";
             this.pbAffFilm.Size = new System.Drawing.Size(112, 177);
             this.pbAffFilm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -416,7 +416,7 @@
             // 
             // cboTitre
             // 
-            this.cboTitre.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.cboTitre.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cboTitre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.cboTitre.Cursor = System.Windows.Forms.Cursors.Default;
             this.cboTitre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -424,7 +424,7 @@
             this.cboTitre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cboTitre.FormattingEnabled = true;
             this.cboTitre.Location = new System.Drawing.Point(173, 20);
-            this.cboTitre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboTitre.Margin = new System.Windows.Forms.Padding(2);
             this.cboTitre.Name = "cboTitre";
             this.cboTitre.Size = new System.Drawing.Size(416, 34);
             this.cboTitre.TabIndex = 27;
@@ -434,7 +434,7 @@
             // 
             // lblDirector
             // 
-            this.lblDirector.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblDirector.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDirector.Location = new System.Drawing.Point(170, 83);
             this.lblDirector.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -445,7 +445,7 @@
             // 
             // lblDuree
             // 
-            this.lblDuree.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblDuree.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDuree.AutoSize = true;
             this.lblDuree.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDuree.Location = new System.Drawing.Point(605, 31);
@@ -457,7 +457,7 @@
             // 
             // lblPublic
             // 
-            this.lblPublic.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblPublic.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblPublic.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPublic.Location = new System.Drawing.Point(431, 83);
             this.lblPublic.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -468,7 +468,7 @@
             // 
             // btnDeleteFilm
             // 
-            this.btnDeleteFilm.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnDeleteFilm.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnDeleteFilm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.btnDeleteFilm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteFilm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -476,7 +476,7 @@
             this.btnDeleteFilm.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnDeleteFilm.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnDeleteFilm.Location = new System.Drawing.Point(702, 418);
-            this.btnDeleteFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDeleteFilm.Margin = new System.Windows.Forms.Padding(2);
             this.btnDeleteFilm.Name = "btnDeleteFilm";
             this.btnDeleteFilm.Size = new System.Drawing.Size(38, 41);
             this.btnDeleteFilm.TabIndex = 34;
@@ -485,7 +485,7 @@
             // 
             // btnAddFilm
             // 
-            this.btnAddFilm.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAddFilm.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnAddFilm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.btnAddFilm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddFilm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -493,7 +493,7 @@
             this.btnAddFilm.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnAddFilm.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnAddFilm.Location = new System.Drawing.Point(702, 366);
-            this.btnAddFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAddFilm.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddFilm.Name = "btnAddFilm";
             this.btnAddFilm.Size = new System.Drawing.Size(38, 41);
             this.btnAddFilm.TabIndex = 33;
@@ -502,7 +502,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnClear.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -510,7 +510,7 @@
             this.btnClear.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnClear.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnClear.Location = new System.Drawing.Point(9, 418);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(38, 41);
             this.btnClear.TabIndex = 36;
@@ -519,7 +519,7 @@
             // 
             // btnResearch
             // 
-            this.btnResearch.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnResearch.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnResearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.btnResearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -527,7 +527,7 @@
             this.btnResearch.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnResearch.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnResearch.Location = new System.Drawing.Point(9, 366);
-            this.btnResearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnResearch.Margin = new System.Windows.Forms.Padding(2);
             this.btnResearch.Name = "btnResearch";
             this.btnResearch.Size = new System.Drawing.Size(38, 41);
             this.btnResearch.TabIndex = 35;
@@ -536,7 +536,7 @@
             // 
             // lblSynopsis
             // 
-            this.lblSynopsis.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblSynopsis.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblSynopsis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.lblSynopsis.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSynopsis.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
@@ -549,7 +549,7 @@
             // 
             // lblActor
             // 
-            this.lblActor.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblActor.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblActor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.lblActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
@@ -562,7 +562,7 @@
             // 
             // lblGenre
             // 
-            this.lblGenre.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblGenre.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblGenre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.lblGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGenre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
@@ -594,7 +594,7 @@
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormFilm";
             this.Text = "Gestion des films";
             this.Load += new System.EventHandler(this.Film_Load);
