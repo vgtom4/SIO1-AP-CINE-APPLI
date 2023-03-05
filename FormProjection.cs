@@ -28,6 +28,7 @@ namespace AP_CINE_APPLI
         {
             try
             {
+                //Initialisations des éléments
                 cboFilm.FlatStyle = FlatStyle.Flat;
 
                 btnAdd.FlatStyle = FlatStyle.Flat;
@@ -44,11 +45,13 @@ namespace AP_CINE_APPLI
                 timeProj.Text = "00:00";
                 dateProj.Value = DateTime.Now;
 
-                // Initialisation de la connexion à la base de données en passant par ODBC
+                //Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
+                #region Insertion des titres de film dans "cboFilm" et de leur ID dans la liste "lstIdFilms"
+                // Recherche des titres et de leur ID dans la base de données
                 OdbcCommand cmdfilm = new OdbcCommand(); OdbcDataReader drrfilm; Boolean existenfilm;
                 cmdfilm.CommandText = "select titre, nofilm from film";
                 cmdfilm.Connection = cnn;
@@ -57,16 +60,18 @@ namespace AP_CINE_APPLI
 
                 cboFilm.Items.Clear();
 
+                // Remplissage du ComboBox "cboFilm" avec les titres de film "titre" et de la liste "lstIdFilms" avec leur ID
                 while (existenfilm == true)
                 {
                     lstIdFilms.Add(Convert.ToInt32(drrfilm["nofilm"]));
                     cboFilm.Items.Add(drrfilm["titre"]);
-
                     existenfilm = drrfilm.Read();
                 }
                 drrfilm.Close();
+                #endregion
 
-
+                #region Insertion des numéros de salle dans "cboSalle"
+                // Recherche des numéros de salle dans la base de données
                 OdbcCommand cmdsalle = new OdbcCommand(); OdbcDataReader drrsalle; Boolean existensalle;
                 cmdsalle.CommandText = "select * from salle";
                 cmdsalle.Connection = cnn;
@@ -75,15 +80,18 @@ namespace AP_CINE_APPLI
 
                 cboSalle.Items.Clear();
 
+                // Remplissage du ComboBox "cboSalle" avec les numéros de salle "nosalle"
                 while (existensalle == true)
                 {
                     cboSalle.Items.Add(drrsalle["nosalle"]);
-
                     existensalle = drrsalle.Read();
                 }
                 drrsalle.Close();
+                #endregion
+                
                 cnn.Close();
 
+                // Affichage des projections dans "grdProjection"
                 refresh();
             }
             catch (Exception ex)
@@ -94,42 +102,59 @@ namespace AP_CINE_APPLI
             }
         }
 
-        private void removeError()
+        /// <summary>
+        /// Permet de supprimer les erreurs causées par des entrées invalides et de vider "lblMsg".
+        /// </summary>
+        private void RemoveError()
         {
             errorProviderDate.SetError(dateProj, "");
             errorProviderFilm.SetError(cboFilm, "");
             errorProviderSalle.SetError(cboSalle, "");
+            lblMsg.Text = "";
         }
 
-        private void checkData()
+        /// <summary>
+        /// Permet de vérifier si toutes les entrées sont valides.
+        /// </summary>
+        /// <returns>true si toutes les entrées sont valides; sinon false</returns>
+        private bool CheckData()
         {
             try
             {
-                removeError();
+                RemoveError();
+
+                // Initialisation de la variable boolean qui permet d'indique si les données sont valides
+                Boolean dataAreValid = true;
+
                 if (cboFilm.SelectedIndex == -1)
                 {
                     errorProviderFilm.SetError(cboFilm, "Veuillez remplir ce champ");
+                    dataAreValid = false;
                 }
 
                 if (cboSalle.SelectedIndex == -1)
                 {
                     errorProviderSalle.SetError(cboSalle, "Veuillez remplir ce champ");
+                    dataAreValid = false;
                 }
 
                 if (dateProj.Value.Date < DateTime.Now.Date)
                 {
                     errorProviderDate.SetError(dateProj, "Veuillez remplir ce champ");
+                    dataAreValid = false;
                 }
+                return dataAreValid;
             }
             catch (Exception ex)
             {
                 // En cas d'erreur, création du fichier log
                 using (StreamWriter writer = File.AppendText(@Application.StartupPath + "\\ErrorLogs\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt")) { writer.WriteLine(DateTime.Now.ToString() + " - " + ex.Message + "\n"); }
                 MessageBox.Show("Une erreur est survenu. Erreur enregistrée dans le dossier ErrorLog.");
+                return false;
             }
         }
 
-        private bool canCreateProjection(string date, string time, string salle, string nofilm)
+        private bool CanCreateProjection(string date, string time, string salle, string nofilm)
         {   
             try
             {
@@ -240,11 +265,11 @@ namespace AP_CINE_APPLI
         {
             try
             {
-                checkData();
+                CheckData();
 
                 if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > -1 && cboSalle.SelectedIndex > -1)
                 {
-                    if (canCreateProjection(dateProj.Value.ToString("yyyy-MM-dd"), timeProj.Value.ToString("T"), cboSalle.SelectedItem.ToString(), lstIdFilms[cboFilm.SelectedIndex].ToString()))
+                    if (CanCreateProjection(dateProj.Value.ToString("yyyy-MM-dd"), timeProj.Value.ToString("T"), cboSalle.SelectedItem.ToString(), lstIdFilms[cboFilm.SelectedIndex].ToString()))
                     {
                     
                         OdbcConnection cnn = new OdbcConnection();
@@ -289,7 +314,7 @@ namespace AP_CINE_APPLI
         {
             try
             {
-                removeError();
+                RemoveError();
                 if (grdProjection.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la projection ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                 

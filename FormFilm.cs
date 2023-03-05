@@ -32,7 +32,7 @@ namespace AP_CINE_APPLI
         {
             try
             {
-                //Initialisations
+                //Initialisations des éléments
                 cboTitre.DropDownHeight = 500;
 
                 timeFilm.Format = DateTimePickerFormat.Time;
@@ -211,7 +211,7 @@ namespace AP_CINE_APPLI
                 if (string.IsNullOrEmpty(txtTitle.Text))
                 {
                     errorProviderTitle.SetError(txtTitle, "Veuillez remplir ce champ");
-                    dataAreValid = false;
+                     
                 }
 
                 // Vérifie si "txtDirector" est null ou vide
