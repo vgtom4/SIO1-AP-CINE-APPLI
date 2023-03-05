@@ -110,7 +110,7 @@ namespace AP_CINE_APPLI
             errorProviderDate.SetError(dateProj, "");
             errorProviderFilm.SetError(cboFilm, "");
             errorProviderSalle.SetError(cboSalle, "");
-            errorProviderInfo.SetError(cboSalle, "");
+            errorProviderInfo.SetError(lblMsg, "");
             lblMsg.Text = "";
         }
 
@@ -126,24 +126,34 @@ namespace AP_CINE_APPLI
 
                 // Initialisation de la variable boolean qui permet d'indique si les données sont valides
                 Boolean dataAreValid = true;
+                string message = "";
 
                 if (cboFilm.SelectedIndex == -1)
                 {
                     errorProviderFilm.SetError(cboFilm, "Veuillez remplir ce champ");
+                    message += "Film invalide\n";
                     dataAreValid = false;
                 }
 
                 if (cboSalle.SelectedIndex == -1)
                 {
                     errorProviderSalle.SetError(cboSalle, "Veuillez remplir ce champ");
+                    message += "Salle invalide\n";
                     dataAreValid = false;
                 }
 
                 if (dateProj.Value.Date < DateTime.Now.Date)
                 {
                     errorProviderDate.SetError(dateProj, "Veuillez remplir ce champ");
+                    message += "Date passée\n";
                     dataAreValid = false;
                 }
+
+                if (!dataAreValid)
+                {
+                    lblMsg.Text = "Données invalides :\n" + message;
+                }
+
                 return dataAreValid;
             }
             catch (Exception ex)
@@ -168,7 +178,10 @@ namespace AP_CINE_APPLI
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
-                // Recherche
+                // Recherche dans la base de données si la nouvelle projection chevauche une autre.
+                // (heure saisie par l'utilisateur - durée du film de la dernière scéance avant l'heure saisie)
+                // (heure saisie par l'utilisateur + durée du film saisi)
+                // Un intervalle de 5 min est ajouté pour vider la salle et la nettoyer
                 OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;
                 cmd.CommandText = "SELECT EXISTS(" +
                                   "SELECT noproj FROM projection " +
@@ -189,40 +202,41 @@ namespace AP_CINE_APPLI
                                                 "AND heureproj <= '" + time + "')))) " +
                                   "AND ADDTIME('" + time + "', " +
                                         "ADDTIME('00:05:00'," +
-                                        "(SELECT duree FROM film WHERE nofilm = " + nofilm + ")))) AS filmBlocked";
+                                            "(SELECT duree FROM film WHERE nofilm = " + nofilm + ")))) AS filmBlocked";
             
                 cmd.Connection = cnn;
                 drr = cmd.ExecuteReader();
                 drr.Read();
 
+                // Conversion de la réponse de la requête précédente en boolean (1 = true / 0 = false)
                 Boolean filmEnCours = Convert.ToBoolean(drr["filmBlocked"]);
                 drr.Close();
                 cnn.Close();
 
+                // Si filmEnCours est vrai, c'est que la nouvelle projection se superpose sur une autre. L'utilisateur en est alors averti.
                 if (filmEnCours)
                 {
-                    lblMsg.Text += "Impossible de créer la projection.\nUn film est en cours\nde diffusion à cette instant";
+                    lblMsg.Text += "Impossible de créer la projection.\nUn film est en cours\nde diffusion à cet instant.";
                     errorProviderInfo.SetError(lblMsg, "Projection déjà programmé");
                 }
 
-                bool existenproj = false;
+                // Vérifie si la nouvelle projection saisie par l'utilisateur n'est pas déjà programmée
+                bool existProj = false;
                 int i = 0;
-                while (!existenproj && i < grdProjection.Rows.Count)
+                while (!existProj && i < grdProjection.Rows.Count)
                 {
-                    if (grdProjection[1, i].Value.ToString() == DateTime.Parse(date).ToString("d") && grdProjection[2, i].Value.ToString().Replace("h", ":") + ":00" == time && grdProjection[5, i].Value.ToString() == salle)
+                    // Si la projection existe déjà, la ligne de celle-ci est surlignée dans "grdProjection"
+                    if (grdProjection[1, i].Value.ToString() == DateTime.Parse(date).ToString("d") && grdProjection[2, i].Value.ToString().Replace("h", ":") + ":00" == time && cboFilm.SelectedItem.ToString() == grdProjection[4, i].Value.ToString() && grdProjection[5, i].Value.ToString() == salle)
                     {
                         grdProjection.Rows[i].Selected = true;
-                        existenproj = true;
-                        lblMsg.Text += "\nUne projection existe déjà à ce moment";
-                        errorProviderInfo.SetError(lblMsg, "Projection déjà programmé");
+                        existProj = true;
+                        lblMsg.Text += "\nCette scéance existe déjà";
+                        errorProviderInfo.SetError(lblMsg, "Projection déjà programmée");
                     }
-                    else
-                    {
-                        i++;
-                    }
+                    else i++;
                 }
 
-                return !filmEnCours && !existenproj;
+                return !filmEnCours;
             }
             catch (Exception ex)
             {
@@ -233,14 +247,19 @@ namespace AP_CINE_APPLI
             }
         }
 
+        /// <summary>
+        /// Permet d'actualiser "grdProjection"
+        /// </summary>
         private void refresh()
         {
             try 
             {
+                // Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
+                // Recherche de toutes les projections triées dans l'ordre suivant : date de projection, jeure de projection et numéro de la salle
                 OdbcCommand cmdproj = new OdbcCommand(); OdbcDataReader drrproj; Boolean existenproj;
                 cmdproj.CommandText = "select * from projection natural join film order by dateproj, heureproj, nosalle";
                 cmdproj.Connection = cnn;
@@ -249,6 +268,7 @@ namespace AP_CINE_APPLI
 
                 grdProjection.Rows.Clear();
 
+                // Insertion des informations des projections dans "grdProjection"
                 while (existenproj == true)
                 {
                     grdProjection.Rows.Add(drrproj["noproj"], DateTime.Parse(drrproj["dateproj"].ToString()).ToString("d"), DateTime.Parse(drrproj["heureproj"].ToString()).ToString("HH") + "h" + DateTime.Parse(drrproj["heureproj"].ToString()).ToString("mm"), drrproj["infoproj"], drrproj["titre"], drrproj["nosalle"]);
@@ -267,45 +287,36 @@ namespace AP_CINE_APPLI
             }
         }
 
+        // Permet de créer une projection avec les saisies utilisateurs
         private void btnAdd_Click(object sender, EventArgs e)
         {
             try
             {
-                CheckData();
-
-                if (dateProj.Value.Date >= DateTime.Now.Date && cboFilm.SelectedIndex > -1 && cboSalle.SelectedIndex > -1)
+                // Vérifie si les saisies utilisateur sont valides et si la projection peut-être créée
+                if (CheckData() && CanCreateProjection(dateProj.Value.ToString("yyyy-MM-dd"), timeProj.Value.ToString("T"), cboSalle.SelectedItem.ToString(), lstIdFilms[cboFilm.SelectedIndex].ToString()))
                 {
-                    if (CanCreateProjection(dateProj.Value.ToString("yyyy-MM-dd"), timeProj.Value.ToString("T"), cboSalle.SelectedItem.ToString(), lstIdFilms[cboFilm.SelectedIndex].ToString()))
-                    {
-                    
-                        OdbcConnection cnn = new OdbcConnection();
-                        cnn.ConnectionString = varglob.strconnect;
-                        cnn.Open();
+                    // Connexion à la base de données
+                    OdbcConnection cnn = new OdbcConnection();
+                    cnn.ConnectionString = varglob.strconnect;
+                    cnn.Open();
 
-                        OdbcCommand cmd = new OdbcCommand();
-                        cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Value.ToString("T") + "' , '" + txtInfo.Text.ToString().Replace("\'", "\\'") + "' , " + lstIdFilms[cboFilm.SelectedIndex] + " , '" + cboSalle.SelectedItem.ToString() + "')";
-                        cmd.Connection = cnn;
-                        cmd.ExecuteReader();
-                        cnn.Close();
-                        string message = ("Projection suivante enregistrée :" +
-                                        "\n Film : " + cboFilm.SelectedItem.ToString() +
-                                        "\nSalle : " + cboSalle.SelectedItem.ToString() +
-                                        "\nDate : " + dateProj.Value.ToString("d") +
-                                        "\nHoraire : " + timeProj.Value.ToString("t"));
-                        lblMsg.Text = message;
-                    }
+                    // Insertion dans la base de données de la nouvelle projection saisie par l'utilisateur
+                    OdbcCommand cmd = new OdbcCommand();
+                    cmd.CommandText = "insert into projection values (null, '" + dateProj.Value.ToString("yyyy-MM-dd") + "' , '" + timeProj.Value.ToString("T") + "' , '" + txtInfo.Text.ToString().Replace("\'", "\\'") + "' , " + lstIdFilms[cboFilm.SelectedIndex] + " , '" + cboSalle.SelectedItem.ToString() + "')";
+                    cmd.Connection = cnn;
+                    cmd.ExecuteReader();
+                    cnn.Close();
 
-                    refresh();
+                    // Message pour signaler à l'utilisateur de l'ajout de la projection
+                    lblMsg.Text = "Projection suivante enregistrée :" +
+                                    "\nFilm : " + cboFilm.SelectedItem.ToString() +
+                                    "\nSalle : " + cboSalle.SelectedItem.ToString() +
+                                    "\nDate : " + dateProj.Value.ToString("d") +
+                                    "\nHoraire : " + timeProj.Value.ToString("t");
                 }
-                else
-                {
-                    string message = "Données invalides :\n";
-                    message += dateProj.Value.Date >= DateTime.Now.Date ? "" : "Date de projection\n";
-                    message += cboFilm.SelectedIndex > -1 ? "" : "Film\n";
-                    message += cboSalle.SelectedIndex > -1 ? "" : "Salle";
 
-                    lblMsg.Text = message;
-                }
+                // Actualisation de "grdProjection"
+                refresh();
             }
             catch (Exception ex)
             {
@@ -315,28 +326,33 @@ namespace AP_CINE_APPLI
             }
         }
 
-
+        // Permet de supprimer la projection sélectionnée dans "grdProjection" par l'utilisateur
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
+                // Suppression des messages d'erreur
                 RemoveError();
 
+                // Demande de confirmation de suppression à l'utilisateur
                 if (grdProjection.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la projection ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                
-                OdbcConnection cnn = new OdbcConnection();
-                cnn.ConnectionString = varglob.strconnect;
-                cnn.Open();
-                
-                OdbcCommand cmd = new OdbcCommand();
-                cmd.CommandText = "delete from projection where noproj =" + grdProjection[0, grdProjection.CurrentRow.Index].Value + ";";
-                cmd.Connection = cnn;
-                cmd.ExecuteReader();
-                cnn.Close();
-                lblMsg.Text = "Projection supprimée";
+                    // Connexion à la base de données
+                    OdbcConnection cnn = new OdbcConnection();
+                    cnn.ConnectionString = varglob.strconnect;
+                    cnn.Open();
+                    
+                    // Suppresion de la projection sélectionnée dans "grdProjection" par l'utilisateur de la base de données
+                    OdbcCommand cmd = new OdbcCommand();
+                    cmd.CommandText = "delete from projection where noproj =" + grdProjection[0, grdProjection.CurrentRow.Index].Value + ";";
+                    cmd.Connection = cnn;
+                    cmd.ExecuteReader();
+                    cnn.Close();
 
-                refresh();
+                    lblMsg.Text = "Projection supprimée";
+
+                    // Actualisation de la base de données
+                    refresh();
                 }
             }
             catch (Exception ex)
