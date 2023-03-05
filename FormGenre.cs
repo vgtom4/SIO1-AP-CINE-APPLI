@@ -37,7 +37,7 @@ namespace AP_CINE_APPLI
                 #region Affichage des genres dans "grdGenre".
                 // Recherche de tous les genres dans la base de données
                 OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr; Boolean existenreg;
-                cmd.CommandText = "select nogenre, libgenre from genre";
+                cmd.CommandText = "select nogenre, libgenre from genre order by libgenre";
                 cmd.Connection = cnn;
                 drr = cmd.ExecuteReader();
                 existenreg = drr.Read();

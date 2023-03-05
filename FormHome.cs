@@ -45,7 +45,7 @@ namespace AP_CINE_APPLI
             Boolean continu = true;
 
             // Demande du mot de passe de la base de données
-            varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
+            varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Saisissez le mot de passe de la base de données");
 
             // La boucle permet de vérifier si le mot de passe saisi au-dessus est le bon.
             while (!goodPWD && continu)
@@ -67,7 +67,7 @@ namespace AP_CINE_APPLI
                     // Si oui, le mot de passe est redemandé
                     if (MessageBox.Show("Erreur de mot de passe. Voulez-vous réessayer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
-                        varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Quel est le mot de passe de votre base de donnée ?");
+                        varglob.strconnect = System.IO.File.ReadAllText(Application.StartupPath + "\\connexion.txt") + Interaction.InputBox("Saisissez le mot de passe de la base de données");
                     }
                     // Sinon, la boucle s'arrête après avoir mis continu à false
                     else
