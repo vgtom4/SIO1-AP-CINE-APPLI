@@ -52,7 +52,7 @@ namespace AP_CINE_APPLI
                 #region Insertion du libellé des genres dans "lstGenre" et de leur ID dans la liste "idGenres"
                 OdbcCommand cmdlstgenre = new OdbcCommand(); OdbcDataReader drrlstgenre; Boolean existenlstgenre;
                 // Recherche de tous les genres dans la base de données
-                cmdlstgenre.CommandText = "select * from genre";
+                cmdlstgenre.CommandText = "select * from genre order by libgenre";
                 cmdlstgenre.Connection = cnn;
                 drrlstgenre = cmdlstgenre.ExecuteReader();
                 existenlstgenre = drrlstgenre.Read();
@@ -258,7 +258,7 @@ namespace AP_CINE_APPLI
                     dataAreValid = false;
                 }
                 
-                if (!dataAreValid) lblMsg.Text = "/!\\Donnée(s) manquante(s) ou invalide(s)/!\\";
+                if (!dataAreValid) lblMsg.Text = "Donnée(s) manquante(s) ou invalide(s)";
                 
                 return dataAreValid;
             }
@@ -465,7 +465,8 @@ namespace AP_CINE_APPLI
             {
                 RemoveError();
 
-                if (cboTitre.Items.Count > 0 && AllowDeleteFilm(idFilms[cboTitre.SelectedIndex].ToString()) && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + cboTitre.SelectedItem, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                // Demande à l'utilisateur une confirmation du film sélectionné dans "cboTitre". Si le film possède une projection, une confirmation de supression des projections liées sera demandée.
+                if (cboTitre.Items.Count > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer le film suivant :\n" + cboTitre.SelectedItem, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes && AllowDeleteFilm(idFilms[cboTitre.SelectedIndex].ToString()))
                 {
                     // Connexion à la base de données
                     OdbcConnection cnn = new OdbcConnection();

@@ -355,8 +355,8 @@ namespace AP_CINE_APPLI
             {
                 RemoveError();
 
-                // Vérifie si "grdSalle" n'est pas vide, si la salle sélectionnée dans "grdSalle" peut-être supprimer et demande une confirmation de suppression à l'utilisateur
-                if (grdSalle.RowCount > 0 && AllowDeleteSalle(grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString()) && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                // Vérifie si "grdSalle" n'est pas vide et demande une confirmation de suppression à l'utilisateur. Si la salle sélectionnée dans "grdSalle" possède une projection, une confirmation de supression des projections liées sera demandée.
+                if (grdSalle.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la salle " + grdSalle[0, grdSalle.CurrentRow.Index].Value + " ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes && AllowDeleteSalle(grdSalle[0, grdSalle.CurrentRow.Index].Value.ToString()))
                 {
                     //Connexion à la base de données
                     OdbcConnection cnn = new OdbcConnection();

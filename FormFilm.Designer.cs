@@ -316,7 +316,7 @@
             // lblMsg
             // 
             this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMsg.Location = new System.Drawing.Point(290, 221);
             this.lblMsg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMsg.Name = "lblMsg";
@@ -406,7 +406,7 @@
             // pbAffFilm
             // 
             this.pbAffFilm.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pbAffFilm.Location = new System.Drawing.Point(12, 20);
+            this.pbAffFilm.Location = new System.Drawing.Point(28, 20);
             this.pbAffFilm.Margin = new System.Windows.Forms.Padding(2);
             this.pbAffFilm.Name = "pbAffFilm";
             this.pbAffFilm.Size = new System.Drawing.Size(112, 177);
