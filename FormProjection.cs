@@ -110,6 +110,7 @@ namespace AP_CINE_APPLI
             errorProviderDate.SetError(dateProj, "");
             errorProviderFilm.SetError(cboFilm, "");
             errorProviderSalle.SetError(cboSalle, "");
+            errorProviderInfo.SetError(cboSalle, "");
             lblMsg.Text = "";
         }
 
@@ -154,19 +155,20 @@ namespace AP_CINE_APPLI
             }
         }
 
+        /// <summary>
+        /// Permet de savoir si une projection peut-être créée avec les informations de projection saisies par l'utilisateur pour éviter qu'une projection se superpose sur une autre.
+        /// </summary>
+        /// <returns>true si la projection peut être créée (pas de superposition sur une autre projection); sinon false</returns>
         private bool CanCreateProjection(string date, string time, string salle, string nofilm)
         {   
             try
             {
-                lblMsg.Text = "";
-                errorProviderInfo.SetError(lblMsg, "");
-
-                Boolean filmEnCours = true;
-
+                // Connexion à la base de données
                 OdbcConnection cnn = new OdbcConnection();
                 cnn.ConnectionString = varglob.strconnect;
                 cnn.Open();
 
+                // Recherche
                 OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;
                 cmd.CommandText = "SELECT EXISTS(" +
                                   "SELECT noproj FROM projection " +
@@ -175,21 +177,25 @@ namespace AP_CINE_APPLI
                                   "AND CAST(heureproj as time) " +
                                   "BETWEEN TIMEDIFF(" +
                                         "'" + time + "', " +
-                                        "(SELECT duree FROM film natural join projection " +
-                                        "WHERE dateproj = '" + date + "' " +
-                                        "AND nosalle = '" + salle + "' " +
-                                        "AND heureproj = (" +
-                                            "SELECT MAX(heureproj) FROM projection " +
+                                        "ADDTIME(" +
+                                            "'00:05:00'," +
+                                            "(SELECT duree FROM film natural join projection " +
                                             "WHERE dateproj = '" + date + "' " +
                                             "AND nosalle = '" + salle + "' " +
-                                            "AND heureproj <= '" + time + "'))) " +
-                                  "AND ADDTIME('" + time + "',(SELECT duree FROM film WHERE nofilm = " + nofilm + "))) AS filmBlocked";
+                                            "AND heureproj = (" +
+                                                "SELECT MAX(heureproj) FROM projection " +
+                                                "WHERE dateproj = '" + date + "' " +
+                                                "AND nosalle = '" + salle + "' " +
+                                                "AND heureproj <= '" + time + "')))) " +
+                                  "AND ADDTIME('" + time + "', " +
+                                        "ADDTIME('00:05:00'," +
+                                        "(SELECT duree FROM film WHERE nofilm = " + nofilm + ")))) AS filmBlocked";
             
                 cmd.Connection = cnn;
                 drr = cmd.ExecuteReader();
                 drr.Read();
 
-                filmEnCours = Convert.ToBoolean(drr["filmBlocked"]);
+                Boolean filmEnCours = Convert.ToBoolean(drr["filmBlocked"]);
                 drr.Close();
                 cnn.Close();
 
@@ -315,6 +321,7 @@ namespace AP_CINE_APPLI
             try
             {
                 RemoveError();
+
                 if (grdProjection.RowCount > 0 && MessageBox.Show("Êtes-vous sûr de vouloir supprimer la projection ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                 
