@@ -286,7 +286,7 @@ namespace AP_CINE_APPLI
                 // Recherche pour vérifier dans la base de données si le même titre existe déjà
                 // Retourne : 1 si c'est le cas; sinon 0
                 OdbcCommand cmd = new OdbcCommand(); OdbcDataReader drr;
-                cmd.CommandText = "select exists(select nofilm from projection where titre ='" + titre.Replace("\'", "\\'") + "') as filmExist";
+                cmd.CommandText = "select exists(select nofilm from film where titre ='" + titre.Replace("\'", "\\'") + "') as filmExist";
                 cmd.Connection = cnn;
                 drr = cmd.ExecuteReader();
                 drr.Read();
@@ -397,7 +397,6 @@ namespace AP_CINE_APPLI
         private void btnAddFilm_Click(object sender, EventArgs e)
         {   try
             {
-                RemoveError();
                 // Vérifie si les entrées sont valides et si le nouveau film n'existe pas déjà
                 if (CheckData() && !CheckExistFilm(txtTitle.Text))
                 {
@@ -422,7 +421,7 @@ namespace AP_CINE_APPLI
 
                     // Récupération de l'ID du nouveau film créé
                     OdbcCommand cmdnofilm = new OdbcCommand(); OdbcDataReader drrnofilm; bool existennofilm;
-                    cmdnofilm.CommandText = "SELECT MAX(nofilm) FROM film";
+                    cmdnofilm.CommandText = "SELECT MAX(nofilm) as lastFilm FROM film";
                     cmdnofilm.Connection = cnn;
                     drrnofilm = cmdnofilm.ExecuteReader();
                     existennofilm = drrnofilm.Read();
@@ -434,7 +433,7 @@ namespace AP_CINE_APPLI
                         // Si l'item i de "lstGenre" est sélectionné, on ajoute une liaison entre le film et le genre
                         if (lstGenre.GetSelected(i) == true)
                         {
-                            cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["nofilm"] + ", " + idGenres[i] + ")";
+                            cmdconcerner.CommandText = "insert into concerner values (" + drrnofilm["lastFilm"] + ", " + idGenres[i] + ")";
                             cmdconcerner.Connection = cnn;
                             cmdconcerner.ExecuteNonQuery();
                         }
