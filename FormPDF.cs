@@ -96,7 +96,8 @@ namespace AP_CINE_APPLI
 
                         // Insertion de l'affiche du film projeté dans le tableau
                         PdfPCell logFilm = new PdfPCell();
-                        logFilm.Image = iTextSharp.text.Image.GetInstance(System.Windows.Forms.Application.StartupPath + "\\affiches\\" + drrpdf["imgaffiche"].ToString());
+                        logFilm.Image = iTextSharp.text.Image.GetInstance(System.Windows.Forms.Application.StartupPath + 
+                                        "\\affiches\\" + drrpdf["imgaffiche"].ToString());
                         logFilm.Rowspan = 2;
                         logFilm.HorizontalAlignment = Element.ALIGN_CENTER;
                         tableau.AddCell(logFilm);
@@ -113,7 +114,9 @@ namespace AP_CINE_APPLI
                         tableau.AddCell(salFilm);
 
                         // Insertion de l'heure de projection dans le tableau
-                        PdfPCell hourFilm = new PdfPCell(new Phrase("Horaire : " + DateTime.Parse(drrpdf["heureproj"].ToString()).Hour + "h" + DateTime.Parse(drrpdf["heureproj"].ToString()).ToString("mm")));
+                        PdfPCell hourFilm = new PdfPCell(new Phrase("Horaire : " + 
+                            DateTime.Parse(drrpdf["heureproj"].ToString()).Hour + "h" + 
+                            DateTime.Parse(drrpdf["heureproj"].ToString()).ToString("mm")));
                         hourFilm.HorizontalAlignment = (Element.ALIGN_CENTER);
                         tableau.AddCell(hourFilm);
 
