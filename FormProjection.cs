@@ -28,6 +28,7 @@ namespace AP_CINE_APPLI
         {
             try
             {
+                
                 cboFilm.FlatStyle = FlatStyle.Flat;
 
                 btnAdd.FlatStyle = FlatStyle.Flat;

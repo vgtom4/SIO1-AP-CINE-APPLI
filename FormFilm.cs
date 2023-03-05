@@ -666,12 +666,12 @@ namespace AP_CINE_APPLI
                 lblActor.Text = "Acteur(s) : " + drrfilm["acteurs"].ToString();
                 lblPublic.Text = "Type de public : " + drrfilm["libpublic"].ToString();
 
-                // Si le synopsis récupéré par la requête dépasse 200 caractères, celui-ci est raccourci et affiché dans lblSynopsis
+                // Si le synopsis récupéré par la requête dépasse 150 caractères, celui-ci est raccourci et affiché dans lblSynopsis
                 string synopsis;
                 synopsis = drrfilm["synopsis"].ToString() + "...";
-                if (synopsis.Length > 200)
+                if (synopsis.Length > 150)
                 {
-                    synopsis = synopsis.Remove(synopsis.Length - 3).Substring(0, 200) + "...";
+                    synopsis = synopsis.Remove(synopsis.Length - 3).Substring(0, 150) + "...";
                 }
                 lblSynopsis.Text = "Synopsis :";
                 lblSynopsis.Text += "\n" + synopsis;

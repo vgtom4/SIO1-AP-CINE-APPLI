@@ -89,10 +89,11 @@
             this.lstGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstGenre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.lstGenre.FormattingEnabled = true;
-            this.lstGenre.ItemHeight = 20;
-            this.lstGenre.Location = new System.Drawing.Point(626, 43);
+            this.lstGenre.ItemHeight = 17;
+            this.lstGenre.Location = new System.Drawing.Point(470, 35);
+            this.lstGenre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lstGenre.Name = "lstGenre";
-            this.lstGenre.Size = new System.Drawing.Size(211, 140);
+            this.lstGenre.Size = new System.Drawing.Size(158, 102);
             this.lstGenre.TabIndex = 4;
             // 
             // txtTitle
@@ -100,11 +101,12 @@
             this.txtTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.txtTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTitle.Location = new System.Drawing.Point(18, 46);
+            this.txtTitle.Location = new System.Drawing.Point(14, 37);
+            this.txtTitle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtTitle.Multiline = true;
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTitle.Size = new System.Drawing.Size(164, 68);
+            this.txtTitle.Size = new System.Drawing.Size(123, 55);
             this.txtTitle.TabIndex = 5;
             // 
             // txtDirector
@@ -113,11 +115,12 @@
             this.txtDirector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.txtDirector.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDirector.Location = new System.Drawing.Point(18, 160);
+            this.txtDirector.Location = new System.Drawing.Point(14, 130);
+            this.txtDirector.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtDirector.Multiline = true;
             this.txtDirector.Name = "txtDirector";
             this.txtDirector.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDirector.Size = new System.Drawing.Size(164, 63);
+            this.txtDirector.Size = new System.Drawing.Size(123, 51);
             this.txtDirector.TabIndex = 6;
             // 
             // cboPublic
@@ -125,13 +128,15 @@
             this.cboPublic.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cboPublic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.cboPublic.Cursor = System.Windows.Forms.Cursors.Default;
+            this.cboPublic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPublic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboPublic.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboPublic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cboPublic.FormattingEnabled = true;
-            this.cboPublic.Location = new System.Drawing.Point(211, 43);
+            this.cboPublic.Location = new System.Drawing.Point(158, 35);
+            this.cboPublic.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboPublic.Name = "cboPublic";
-            this.cboPublic.Size = new System.Drawing.Size(377, 33);
+            this.cboPublic.Size = new System.Drawing.Size(284, 28);
             this.cboPublic.TabIndex = 7;
             // 
             // txtActor
@@ -140,11 +145,12 @@
             this.txtActor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.txtActor.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtActor.Location = new System.Drawing.Point(18, 272);
+            this.txtActor.Location = new System.Drawing.Point(14, 221);
+            this.txtActor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtActor.Multiline = true;
             this.txtActor.Name = "txtActor";
             this.txtActor.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtActor.Size = new System.Drawing.Size(164, 63);
+            this.txtActor.Size = new System.Drawing.Size(123, 51);
             this.txtActor.TabIndex = 11;
             // 
             // timeFilm
@@ -154,10 +160,11 @@
             this.timeFilm.CustomFormat = "";
             this.timeFilm.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.timeFilm.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.timeFilm.Location = new System.Drawing.Point(393, 130);
+            this.timeFilm.Location = new System.Drawing.Point(295, 106);
+            this.timeFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.timeFilm.Name = "timeFilm";
             this.timeFilm.ShowUpDown = true;
-            this.timeFilm.Size = new System.Drawing.Size(135, 38);
+            this.timeFilm.Size = new System.Drawing.Size(102, 32);
             this.timeFilm.TabIndex = 12;
             // 
             // txtInfo
@@ -166,19 +173,21 @@
             this.txtInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.txtInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInfo.Location = new System.Drawing.Point(393, 222);
+            this.txtInfo.Location = new System.Drawing.Point(295, 180);
+            this.txtInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtInfo.Multiline = true;
             this.txtInfo.Name = "txtInfo";
-            this.txtInfo.Size = new System.Drawing.Size(177, 33);
+            this.txtInfo.Size = new System.Drawing.Size(133, 27);
             this.txtInfo.TabIndex = 13;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 11);
+            this.label1.Location = new System.Drawing.Point(9, 9);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 32);
+            this.label1.Size = new System.Drawing.Size(66, 26);
             this.label1.TabIndex = 14;
             this.label1.Text = "Titre :";
             // 
@@ -187,9 +196,10 @@
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(15, 125);
+            this.label2.Location = new System.Drawing.Point(11, 102);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(174, 32);
+            this.label2.Size = new System.Drawing.Size(134, 26);
             this.label2.TabIndex = 15;
             this.label2.Text = "Réalisateur :";
             // 
@@ -198,9 +208,10 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(15, 234);
+            this.label3.Location = new System.Drawing.Point(11, 190);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(125, 32);
+            this.label3.Size = new System.Drawing.Size(98, 26);
             this.label3.TabIndex = 16;
             this.label3.Text = "Acteurs :";
             // 
@@ -209,9 +220,10 @@
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(387, 95);
+            this.label4.Location = new System.Drawing.Point(290, 77);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(106, 32);
+            this.label4.Size = new System.Drawing.Size(83, 26);
             this.label4.TabIndex = 17;
             this.label4.Text = "Durée :";
             // 
@@ -220,9 +232,10 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(620, 199);
+            this.label5.Location = new System.Drawing.Point(465, 162);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(145, 32);
+            this.label5.Size = new System.Drawing.Size(113, 26);
             this.label5.TabIndex = 18;
             this.label5.Text = "Synopsis :";
             // 
@@ -231,9 +244,10 @@
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(387, 185);
+            this.label6.Location = new System.Drawing.Point(290, 150);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(185, 32);
+            this.label6.Size = new System.Drawing.Size(144, 26);
             this.label6.TabIndex = 19;
             this.label6.Text = "Informations :";
             // 
@@ -242,9 +256,10 @@
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(205, 8);
+            this.label7.Location = new System.Drawing.Point(154, 6);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(221, 32);
+            this.label7.Size = new System.Drawing.Size(170, 26);
             this.label7.TabIndex = 20;
             this.label7.Text = "Type de public : ";
             // 
@@ -253,18 +268,20 @@
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(620, 8);
+            this.label8.Location = new System.Drawing.Point(465, 6);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(129, 32);
+            this.label8.Size = new System.Drawing.Size(101, 26);
             this.label8.TabIndex = 21;
             this.label8.Text = "Genres : ";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.pictureBox1.Location = new System.Drawing.Point(234, 148);
+            this.pictureBox1.Location = new System.Drawing.Point(176, 120);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(103, 136);
+            this.pictureBox1.Size = new System.Drawing.Size(77, 110);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
@@ -274,9 +291,10 @@
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(218, 115);
+            this.label9.Location = new System.Drawing.Point(164, 93);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(135, 22);
+            this.label9.Size = new System.Drawing.Size(109, 18);
             this.label9.TabIndex = 23;
             this.label9.Text = "Aperçu affiche :";
             // 
@@ -287,10 +305,11 @@
             this.txtSynopsis.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSynopsis.EnableAutoDragDrop = true;
             this.txtSynopsis.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSynopsis.Location = new System.Drawing.Point(626, 234);
+            this.txtSynopsis.Location = new System.Drawing.Point(470, 190);
+            this.txtSynopsis.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtSynopsis.Name = "txtSynopsis";
             this.txtSynopsis.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-            this.txtSynopsis.Size = new System.Drawing.Size(211, 101);
+            this.txtSynopsis.Size = new System.Drawing.Size(158, 82);
             this.txtSynopsis.TabIndex = 24;
             this.txtSynopsis.Text = "";
             // 
@@ -298,9 +317,10 @@
             // 
             this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMsg.Location = new System.Drawing.Point(387, 272);
+            this.lblMsg.Location = new System.Drawing.Point(290, 221);
+            this.lblMsg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(211, 63);
+            this.lblMsg.Size = new System.Drawing.Size(158, 51);
             this.lblMsg.TabIndex = 26;
             this.lblMsg.Text = "lblMsg";
             // 
@@ -358,9 +378,10 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.cboPublic);
-            this.panel1.Location = new System.Drawing.Point(68, 320);
+            this.panel1.Location = new System.Drawing.Point(51, 260);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(862, 354);
+            this.panel1.Size = new System.Drawing.Size(646, 288);
             this.panel1.TabIndex = 27;
             // 
             // btnImportPicture
@@ -373,9 +394,10 @@
             this.btnImportPicture.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnImportPicture.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnImportPicture.IconSize = 40;
-            this.btnImportPicture.Location = new System.Drawing.Point(264, 290);
+            this.btnImportPicture.Location = new System.Drawing.Point(198, 236);
+            this.btnImportPicture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnImportPicture.Name = "btnImportPicture";
-            this.btnImportPicture.Size = new System.Drawing.Size(45, 45);
+            this.btnImportPicture.Size = new System.Drawing.Size(34, 37);
             this.btnImportPicture.TabIndex = 37;
             this.btnImportPicture.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnImportPicture.UseVisualStyleBackColor = false;
@@ -384,9 +406,10 @@
             // pbAffFilm
             // 
             this.pbAffFilm.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbAffFilm.Location = new System.Drawing.Point(16, 24);
+            this.pbAffFilm.Location = new System.Drawing.Point(12, 20);
+            this.pbAffFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pbAffFilm.Name = "pbAffFilm";
-            this.pbAffFilm.Size = new System.Drawing.Size(150, 218);
+            this.pbAffFilm.Size = new System.Drawing.Size(112, 177);
             this.pbAffFilm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbAffFilm.TabIndex = 27;
             this.pbAffFilm.TabStop = false;
@@ -400,9 +423,10 @@
             this.cboTitre.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboTitre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cboTitre.FormattingEnabled = true;
-            this.cboTitre.Location = new System.Drawing.Point(231, 24);
+            this.cboTitre.Location = new System.Drawing.Point(173, 20);
+            this.cboTitre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboTitre.Name = "cboTitre";
-            this.cboTitre.Size = new System.Drawing.Size(554, 39);
+            this.cboTitre.Size = new System.Drawing.Size(416, 34);
             this.cboTitre.TabIndex = 27;
             this.cboTitre.SelectedIndexChanged += new System.EventHandler(this.cboTitre_SelectedIndexChanged);
             this.cboTitre.TextChanged += new System.EventHandler(this.cboTitre_TextChanged);
@@ -412,9 +436,10 @@
             // 
             this.lblDirector.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDirector.Location = new System.Drawing.Point(226, 102);
+            this.lblDirector.Location = new System.Drawing.Point(170, 83);
+            this.lblDirector.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDirector.Name = "lblDirector";
-            this.lblDirector.Size = new System.Drawing.Size(335, 51);
+            this.lblDirector.Size = new System.Drawing.Size(251, 41);
             this.lblDirector.TabIndex = 27;
             this.lblDirector.Text = "Réalisateur :";
             // 
@@ -423,9 +448,10 @@
             this.lblDuree.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblDuree.AutoSize = true;
             this.lblDuree.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDuree.Location = new System.Drawing.Point(807, 38);
+            this.lblDuree.Location = new System.Drawing.Point(605, 31);
+            this.lblDuree.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDuree.Name = "lblDuree";
-            this.lblDuree.Size = new System.Drawing.Size(76, 25);
+            this.lblDuree.Size = new System.Drawing.Size(61, 20);
             this.lblDuree.TabIndex = 29;
             this.lblDuree.Text = "Durée :";
             // 
@@ -433,9 +459,10 @@
             // 
             this.lblPublic.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblPublic.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPublic.Location = new System.Drawing.Point(575, 102);
+            this.lblPublic.Location = new System.Drawing.Point(431, 83);
+            this.lblPublic.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPublic.Name = "lblPublic";
-            this.lblPublic.Size = new System.Drawing.Size(355, 51);
+            this.lblPublic.Size = new System.Drawing.Size(266, 41);
             this.lblPublic.TabIndex = 31;
             this.lblPublic.Text = "Type de public :";
             // 
@@ -448,9 +475,10 @@
             this.btnDeleteFilm.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
             this.btnDeleteFilm.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnDeleteFilm.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnDeleteFilm.Location = new System.Drawing.Point(936, 515);
+            this.btnDeleteFilm.Location = new System.Drawing.Point(702, 418);
+            this.btnDeleteFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDeleteFilm.Name = "btnDeleteFilm";
-            this.btnDeleteFilm.Size = new System.Drawing.Size(50, 50);
+            this.btnDeleteFilm.Size = new System.Drawing.Size(38, 41);
             this.btnDeleteFilm.TabIndex = 34;
             this.btnDeleteFilm.UseVisualStyleBackColor = false;
             this.btnDeleteFilm.Click += new System.EventHandler(this.btnDeleteFilm_Click);
@@ -464,9 +492,10 @@
             this.btnAddFilm.IconChar = FontAwesome.Sharp.IconChar.Plus;
             this.btnAddFilm.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnAddFilm.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAddFilm.Location = new System.Drawing.Point(936, 450);
+            this.btnAddFilm.Location = new System.Drawing.Point(702, 366);
+            this.btnAddFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAddFilm.Name = "btnAddFilm";
-            this.btnAddFilm.Size = new System.Drawing.Size(50, 50);
+            this.btnAddFilm.Size = new System.Drawing.Size(38, 41);
             this.btnAddFilm.TabIndex = 33;
             this.btnAddFilm.UseVisualStyleBackColor = false;
             this.btnAddFilm.Click += new System.EventHandler(this.btnAddFilm_Click);
@@ -480,9 +509,10 @@
             this.btnClear.IconChar = FontAwesome.Sharp.IconChar.Backspace;
             this.btnClear.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnClear.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnClear.Location = new System.Drawing.Point(12, 515);
+            this.btnClear.Location = new System.Drawing.Point(9, 418);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(50, 50);
+            this.btnClear.Size = new System.Drawing.Size(38, 41);
             this.btnClear.TabIndex = 36;
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -496,9 +526,10 @@
             this.btnResearch.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlass;
             this.btnResearch.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnResearch.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnResearch.Location = new System.Drawing.Point(12, 450);
+            this.btnResearch.Location = new System.Drawing.Point(9, 366);
+            this.btnResearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnResearch.Name = "btnResearch";
-            this.btnResearch.Size = new System.Drawing.Size(50, 50);
+            this.btnResearch.Size = new System.Drawing.Size(38, 41);
             this.btnResearch.TabIndex = 35;
             this.btnResearch.UseVisualStyleBackColor = false;
             this.btnResearch.Click += new System.EventHandler(this.btnResearch_Click);
@@ -509,9 +540,10 @@
             this.lblSynopsis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.lblSynopsis.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSynopsis.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblSynopsis.Location = new System.Drawing.Point(226, 229);
+            this.lblSynopsis.Location = new System.Drawing.Point(170, 186);
+            this.lblSynopsis.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSynopsis.Name = "lblSynopsis";
-            this.lblSynopsis.Size = new System.Drawing.Size(702, 79);
+            this.lblSynopsis.Size = new System.Drawing.Size(526, 64);
             this.lblSynopsis.TabIndex = 37;
             this.lblSynopsis.Text = "Synopsis :";
             // 
@@ -521,9 +553,10 @@
             this.lblActor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.lblActor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblActor.Location = new System.Drawing.Point(226, 163);
+            this.lblActor.Location = new System.Drawing.Point(170, 132);
+            this.lblActor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblActor.Name = "lblActor";
-            this.lblActor.Size = new System.Drawing.Size(336, 50);
+            this.lblActor.Size = new System.Drawing.Size(252, 41);
             this.lblActor.TabIndex = 38;
             this.lblActor.Text = "Acteur(s) :";
             // 
@@ -533,18 +566,19 @@
             this.lblGenre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.lblGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGenre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblGenre.Location = new System.Drawing.Point(575, 163);
+            this.lblGenre.Location = new System.Drawing.Point(431, 132);
+            this.lblGenre.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGenre.Name = "lblGenre";
-            this.lblGenre.Size = new System.Drawing.Size(355, 50);
+            this.lblGenre.Size = new System.Drawing.Size(266, 41);
             this.lblGenre.TabIndex = 39;
             this.lblGenre.Text = "Genre(s) :";
             // 
             // FormFilm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
-            this.ClientSize = new System.Drawing.Size(1000, 700);
+            this.ClientSize = new System.Drawing.Size(750, 569);
             this.Controls.Add(this.lblGenre);
             this.Controls.Add(this.lblActor);
             this.Controls.Add(this.lblSynopsis);
@@ -560,6 +594,7 @@
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormFilm";
             this.Text = "Gestion des films";
             this.Load += new System.EventHandler(this.Film_Load);

@@ -108,7 +108,7 @@ namespace AP_CINE_APPLI
             this.grdProjection.DefaultCellStyle = dataGridViewCellStyle2;
             this.grdProjection.EnableHeadersVisualStyles = false;
             this.grdProjection.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
-            this.grdProjection.Location = new System.Drawing.Point(44, 213);
+            this.grdProjection.Location = new System.Drawing.Point(33, 173);
             this.grdProjection.Margin = new System.Windows.Forms.Padding(0);
             this.grdProjection.MultiSelect = false;
             this.grdProjection.Name = "grdProjection";
@@ -135,7 +135,7 @@ namespace AP_CINE_APPLI
             this.grdProjection.RowTemplate.Height = 24;
             this.grdProjection.RowTemplate.ReadOnly = true;
             this.grdProjection.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdProjection.Size = new System.Drawing.Size(900, 400);
+            this.grdProjection.Size = new System.Drawing.Size(673, 384);
             this.grdProjection.TabIndex = 0;
             // 
             // Column1
@@ -197,9 +197,10 @@ namespace AP_CINE_APPLI
             this.dateProj.CalendarTrailingForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.dateProj.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateProj.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateProj.Location = new System.Drawing.Point(71, 55);
+            this.dateProj.Location = new System.Drawing.Point(46, 44);
+            this.dateProj.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateProj.Name = "dateProj";
-            this.dateProj.Size = new System.Drawing.Size(148, 38);
+            this.dateProj.Size = new System.Drawing.Size(112, 32);
             this.dateProj.TabIndex = 1;
             // 
             // cboSalle
@@ -210,9 +211,10 @@ namespace AP_CINE_APPLI
             this.cboSalle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboSalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cboSalle.FormattingEnabled = true;
-            this.cboSalle.Location = new System.Drawing.Point(291, 54);
+            this.cboSalle.Location = new System.Drawing.Point(198, 42);
+            this.cboSalle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboSalle.Name = "cboSalle";
-            this.cboSalle.Size = new System.Drawing.Size(128, 39);
+            this.cboSalle.Size = new System.Drawing.Size(97, 34);
             this.cboSalle.TabIndex = 2;
             // 
             // cboFilm
@@ -223,9 +225,10 @@ namespace AP_CINE_APPLI
             this.cboFilm.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboFilm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cboFilm.FormattingEnabled = true;
-            this.cboFilm.Location = new System.Drawing.Point(537, 51);
+            this.cboFilm.Location = new System.Drawing.Point(328, 42);
+            this.cboFilm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboFilm.Name = "cboFilm";
-            this.cboFilm.Size = new System.Drawing.Size(293, 39);
+            this.cboFilm.Size = new System.Drawing.Size(315, 34);
             this.cboFilm.TabIndex = 3;
             // 
             // timeProj
@@ -238,9 +241,10 @@ namespace AP_CINE_APPLI
             this.timeProj.CalendarTrailingForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.timeProj.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.timeProj.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.timeProj.Location = new System.Drawing.Point(71, 147);
+            this.timeProj.Location = new System.Drawing.Point(46, 118);
+            this.timeProj.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.timeProj.Name = "timeProj";
-            this.timeProj.Size = new System.Drawing.Size(148, 38);
+            this.timeProj.Size = new System.Drawing.Size(112, 32);
             this.timeProj.TabIndex = 4;
             // 
             // txtInfo
@@ -250,19 +254,22 @@ namespace AP_CINE_APPLI
             this.txtInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.txtInfo.Location = new System.Drawing.Point(291, 154);
+            this.txtInfo.Location = new System.Drawing.Point(198, 124);
+            this.txtInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtInfo.Name = "txtInfo";
-            this.txtInfo.Size = new System.Drawing.Size(181, 31);
+            this.txtInfo.Size = new System.Drawing.Size(225, 25);
             this.txtInfo.TabIndex = 6;
             // 
             // lblMsg
             // 
             this.lblMsg.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblMsg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
+            this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMsg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.lblMsg.Location = new System.Drawing.Point(537, 97);
+            this.lblMsg.Location = new System.Drawing.Point(441, 88);
+            this.lblMsg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(293, 105);
+            this.lblMsg.Size = new System.Drawing.Size(177, 64);
             this.lblMsg.TabIndex = 8;
             // 
             // errorProviderSalle
@@ -287,9 +294,10 @@ namespace AP_CINE_APPLI
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(65, 20);
+            this.label1.Location = new System.Drawing.Point(42, 15);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 32);
+            this.label1.Size = new System.Drawing.Size(58, 26);
             this.label1.TabIndex = 9;
             this.label1.Text = "Date";
             // 
@@ -299,9 +307,10 @@ namespace AP_CINE_APPLI
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label2.Location = new System.Drawing.Point(288, 119);
+            this.label2.Location = new System.Drawing.Point(196, 96);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(170, 32);
+            this.label2.Size = new System.Drawing.Size(132, 26);
             this.label2.TabIndex = 10;
             this.label2.Text = "Informations";
             // 
@@ -311,9 +320,10 @@ namespace AP_CINE_APPLI
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label3.Location = new System.Drawing.Point(65, 113);
+            this.label3.Location = new System.Drawing.Point(42, 91);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 32);
+            this.label3.Size = new System.Drawing.Size(71, 26);
             this.label3.TabIndex = 11;
             this.label3.Text = "Heure";
             // 
@@ -323,9 +333,10 @@ namespace AP_CINE_APPLI
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label5.Location = new System.Drawing.Point(534, 17);
+            this.label5.Location = new System.Drawing.Point(323, 16);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 32);
+            this.label5.Size = new System.Drawing.Size(54, 26);
             this.label5.TabIndex = 13;
             this.label5.Text = "Film";
             // 
@@ -335,9 +346,10 @@ namespace AP_CINE_APPLI
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(195)))), ((int)(((byte)(0)))));
-            this.label7.Location = new System.Drawing.Point(288, 19);
+            this.label7.Location = new System.Drawing.Point(196, 13);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(79, 32);
+            this.label7.Size = new System.Drawing.Size(61, 26);
             this.label7.TabIndex = 15;
             this.label7.Text = "Salle";
             // 
@@ -350,9 +362,10 @@ namespace AP_CINE_APPLI
             this.btnDelete.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
             this.btnDelete.IconColor = System.Drawing.Color.Black;
             this.btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnDelete.Location = new System.Drawing.Point(879, 122);
+            this.btnDelete.Location = new System.Drawing.Point(663, 96);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(50, 50);
+            this.btnDelete.Size = new System.Drawing.Size(38, 41);
             this.btnDelete.TabIndex = 17;
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -366,19 +379,20 @@ namespace AP_CINE_APPLI
             this.btnAdd.IconChar = FontAwesome.Sharp.IconChar.Plus;
             this.btnAdd.IconColor = System.Drawing.Color.Black;
             this.btnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAdd.Location = new System.Drawing.Point(879, 57);
+            this.btnAdd.Location = new System.Drawing.Point(663, 43);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(50, 50);
+            this.btnAdd.Size = new System.Drawing.Size(38, 41);
             this.btnAdd.TabIndex = 16;
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // Projection
+            // FormProjection
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
-            this.ClientSize = new System.Drawing.Size(982, 653);
+            this.ClientSize = new System.Drawing.Size(734, 590);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label7);
@@ -394,7 +408,8 @@ namespace AP_CINE_APPLI
             this.Controls.Add(this.dateProj);
             this.Controls.Add(this.grdProjection);
             this.ForeColor = System.Drawing.Color.Gold;
-            this.Name = "Projection";
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Name = "FormProjection";
             this.Text = "Projection";
             this.Load += new System.EventHandler(this.Projection_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdProjection)).EndInit();
