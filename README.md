@@ -8,3 +8,11 @@ La base de données contient des informations sur :
 - Projections
 
 Le but est de pouvoir récupérer, ajouter, modifier et supprimer des données dans celle-ci.
+
+Images du projet :
+![](imagesProjet/preview_home.png)
+![](imagesProjet/preview_genre.png)
+![](imagesProjet/preview_salle.png)
+![](imagesProjet/preview_film.png)
+![](imagesProjet/preview_projection.png)
+![](imagesProjet/preview_pdf.png)
